@@ -7,7 +7,7 @@
     "build": "node build-static.cjs",
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "node test_endo_tooth11_fix.js && node test_clinical_ai_integration.js && node test_prescriptions_rx_module.js && node test_hof_integration.js && node test_institutional_integration.js && node test_patients_lgpd_module.js && node --test test_safety.js",
+    "test": "node test_endo_tooth11_fix.js && node test_clinical_ai_integration.js && node test_prescriptions_rx_module.js && node test_hof_integration.js && node test_institutional_integration.js && node test_patients_lgpd_module.js && node test_express_module.js && node --test test_safety.js",
     "test:endo": "node test_endo_tooth11_fix.js",
     "test:clinical": "node test_clinical_ai_integration.js",
     "test:rx": "node test_prescriptions_rx_module.js",

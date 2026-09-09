@@ -1,0 +1,1057 @@
+/* ==========================================================================
+   DentalSafe Express — Apple HIG Design System
+   Modo Simplificado em 3 Passos (Clean, Tátil, Lúdico e Responsivo)
+   ========================================================================== */
+
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --bg-app: #f5f5f7;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-card-hover: #ffffff;
+  --bg-input: #ffffff;
+  --bg-input-focus: #ffffff;
+  --text-main: #1d1d1f;
+  --text-sub: #515154;
+  --text-muted: #86868b;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-focus: #0071e3;
+  --border-light: rgba(0, 0, 0, 0.06);
+  --apple-blue: #0071e3;
+  --apple-blue-hover: #0077ed;
+  --apple-blue-soft: rgba(0, 113, 227, 0.08);
+  --apple-blue-border: rgba(0, 113, 227, 0.3);
+  --apple-green: #34c759;
+  --apple-green-soft: rgba(52, 199, 89, 0.12);
+  --apple-orange: #ff9500;
+  --apple-red: #ff3b30;
+  --apple-purple: #af52de;
+  --radius-card: 20px;
+  --radius-btn: 12px;
+  --radius-pill: 9999px;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --shadow-elevated: 0 18px 45px rgba(0, 0, 0, 0.08), 0 3px 8px rgba(0, 0, 0, 0.04);
+  --transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.dark-mode {
+  --bg-app: #000000;
+  --bg-card: rgba(28, 28, 30, 0.85);
+  --bg-card-hover: rgba(38, 38, 42, 0.95);
+  --bg-input: rgba(44, 44, 46, 0.8);
+  --bg-input-focus: rgba(54, 54, 58, 0.95);
+  --text-main: #f5f5f7;
+  --text-sub: #a1a1a6;
+  --text-muted: #86868b;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-light: rgba(255, 255, 255, 0.06);
+  --apple-blue-soft: rgba(10, 132, 255, 0.16);
+  --shadow-card: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Header Superior Apple Style
+   ========================================================================== */
+.express-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+body.dark-mode .express-header {
+  background: rgba(20, 20, 22, 0.8);
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #0071e3, #5856d6);
+  color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+
+.brand-text h1 {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-express {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #34c759, #30b0c7);
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.5px;
+}
+
+.brand-text p {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-pill-subtle {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+body.dark-mode .btn-pill-subtle {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-pill-subtle:hover {
+  background: var(--apple-blue);
+  color: #ffffff;
+  border-color: var(--apple-blue);
+}
+
+.theme-toggle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: var(--transition);
+}
+
+.theme-toggle-btn:hover {
+  background: var(--apple-blue-soft);
+  color: var(--apple-blue);
+}
+
+/* ==========================================================================
+   Container Principal & Stepper Wizard
+   ========================================================================== */
+.express-container {
+  max-width: 860px;
+  margin: 24px auto 60px;
+  padding: 0 18px;
+  width: 100%;
+  flex: 1;
+}
+
+/* Barra de Passos Apple Style */
+.stepper-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 6px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.step-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  border: none;
+  background: transparent;
+}
+
+.step-item .step-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+body.dark-mode .step-item .step-circle {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.step-item.active {
+  background: #ffffff;
+  color: var(--apple-blue);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .step-item.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #64d2ff;
+}
+
+.step-item.active .step-circle {
+  background: var(--apple-blue);
+  color: #ffffff;
+}
+
+.step-item.completed {
+  color: var(--apple-green);
+}
+
+.step-item.completed .step-circle {
+  background: var(--apple-green);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Painéis do Wizard (Passo 1, 2, 3)
+   ========================================================================== */
+.wizard-step {
+  display: none;
+  animation: fadeInStep 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.wizard-step.active-step {
+  display: block;
+}
+
+@keyframes fadeInStep {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 30px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 22px;
+}
+
+.card-panel-header {
+  margin-bottom: 22px;
+}
+
+.card-panel-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-panel-header p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   Formulários e Inputs Apple
+   ========================================================================== */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.apple-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 14.5px;
+  transition: var(--transition);
+  outline: none;
+}
+
+.apple-input:focus {
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+}
+
+.sub-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.sub-divider::before,
+.sub-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ==========================================================================
+   Passo 2: Seleção Rápida de Procedimentos (Ícones e Cards)
+   ========================================================================== */
+.procedures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.proc-chip-card {
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+  text-align: left;
+}
+
+.proc-chip-card:hover {
+  border-color: var(--apple-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.proc-chip-card.selected {
+  background: var(--apple-blue-soft);
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 1px var(--apple-blue);
+}
+
+.proc-chip-card .icon-bubble {
+  font-size: 22px;
+  margin-bottom: 2px;
+}
+
+.proc-chip-card .proc-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.proc-chip-card .proc-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   ODONTOGRAMA LÚDICO (Visual, Tátil & Anatômico)
+   ========================================================================== */
+.ludic-odonto-wrapper {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px 16px;
+  margin-bottom: 24px;
+}
+
+body.dark-mode .ludic-odonto-wrapper {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.odonto-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.mode-segmented-control {
+  display: flex;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  gap: 3px;
+}
+
+body.dark-mode .mode-segmented-control {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.segment-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.segment-btn.active {
+  background: #ffffff;
+  color: var(--apple-blue);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .segment-btn.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.quick-teeth-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill-preset {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text-sub);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+body.dark-mode .pill-preset {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.pill-preset:hover {
+  background: var(--apple-blue-soft);
+  border-color: var(--apple-blue);
+  color: var(--apple-blue);
+}
+
+.pill-preset.clear:hover {
+  background: rgba(255, 59, 48, 0.1);
+  border-color: var(--apple-red);
+  color: var(--apple-red);
+}
+
+/* Tabuleiro Lúdico dos Dentes */
+.odonto-canvas-board {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+.arch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.arch-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.teeth-linear-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.quadrant-divider {
+  width: 2px;
+  height: 48px;
+  background: linear-gradient(180deg, transparent, var(--border), transparent);
+  margin: 0 4px;
+}
+
+/* Dente Lúdico Individual */
+.ludic-tooth {
+  width: 44px;
+  height: 64px;
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 2px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+body.dark-mode .ludic-tooth {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ludic-tooth:hover {
+  transform: translateY(-3px) scale(1.05);
+  border-color: var(--apple-blue);
+  box-shadow: 0 6px 14px rgba(0, 113, 227, 0.16);
+}
+
+.ludic-tooth.selected {
+  background: linear-gradient(145deg, #0071e3, #5856d6);
+  border-color: #0071e3;
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.35);
+  transform: translateY(-2px);
+}
+
+.ludic-tooth .fdi-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.ludic-tooth.selected .fdi-label {
+  color: #ffffff;
+}
+
+.ludic-tooth .tooth-svg-wrap {
+  width: 24px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  transition: var(--transition);
+}
+
+.ludic-tooth:hover .tooth-svg-wrap {
+  color: var(--apple-blue);
+}
+
+.ludic-tooth.selected .tooth-svg-wrap {
+  color: #ffffff;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+.ludic-tooth .tooth-type-sub {
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.ludic-tooth.selected .tooth-type-sub {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Indicador de dentes selecionados */
+.odonto-status-box {
+  margin-top: 14px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+}
+
+body.dark-mode .odonto-status-box {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.selected-teeth-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tooth-badge {
+  background: var(--apple-blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+}
+
+/* ==========================================================================
+   Condições de Saúde (Chips de 1 clique)
+   ========================================================================== */
+.health-chips-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.health-toggle-chip {
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.health-toggle-chip:hover {
+  border-color: var(--apple-blue);
+}
+
+.health-toggle-chip.active {
+  background: rgba(255, 59, 48, 0.08);
+  border-color: var(--apple-red);
+  color: var(--apple-red);
+  font-weight: 600;
+}
+
+.health-toggle-chip.healthy.active {
+  background: var(--apple-green-soft);
+  border-color: var(--apple-green);
+  color: var(--apple-green);
+}
+
+/* ==========================================================================
+   Botões de Ação do Wizard
+   ========================================================================== */
+.wizard-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.btn-apple-primary {
+  background: linear-gradient(135deg, #0071e3, #0077ed);
+  color: #ffffff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
+  transition: var(--transition);
+}
+
+.btn-apple-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 113, 227, 0.4);
+}
+
+.btn-apple-secondary {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  padding: 14px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+body.dark-mode .btn-apple-secondary {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-apple-secondary:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   Passo 3: Visualização do TCLE & Documento Oficial Timbrado
+   ========================================================================== */
+.tcle-official-sheet {
+  background: #ffffff;
+  color: #1d1d1f;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  padding: 36px 40px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 24px;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+body.dark-mode .tcle-official-sheet {
+  background: #ffffff;
+  color: #1d1d1f; /* Mantém fundo branco e texto preto estilo folha de papel impressa */
+}
+
+.tcle-sheet-header {
+  text-align: center;
+  border-bottom: 2px solid #0071e3;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.tcle-sheet-header h2 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0071e3;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.tcle-sheet-header p {
+  font-size: 12px;
+  color: #6e6e73;
+}
+
+.tcle-metadata-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  font-size: 12.5px;
+}
+
+.tcle-body-content h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin: 16px 0 6px;
+  border-left: 3px solid #0071e3;
+  padding-left: 8px;
+}
+
+.tcle-body-content p {
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.tcle-signatures-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px dashed #cbd5e1;
+  text-align: center;
+}
+
+.sig-box-line {
+  border-top: 1px solid #334155;
+  margin-top: 40px;
+  padding-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Módulo de Atestado & Receita Sequencial Apple Style
+   ========================================================================== */
+.post-action-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--apple-blue-border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.post-action-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.post-action-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-action-title .badge-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--apple-blue-soft);
+  color: var(--apple-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.post-action-title h3 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.days-picker-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.day-chip {
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.day-chip:hover {
+  border-color: var(--apple-blue);
+}
+
+.day-chip.active {
+  background: var(--apple-blue);
+  color: #fff;
+  border-color: var(--apple-blue);
+}
+
+.rx-presets-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.rx-preset-chip {
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+}
+
+.rx-preset-chip:hover {
+  border-color: var(--apple-blue);
+  transform: translateY(-2px);
+}
+
+.rx-preset-chip.active {
+  background: var(--apple-blue-soft);
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 1px var(--apple-blue);
+}
+
+.rx-preset-chip strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.rx-preset-chip span {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.3;
+  display: block;
+}
+
+/* ==========================================================================
+   Canvas de Assinatura Digital Touch/Mouse
+   ========================================================================== */
+.signature-pad-wrap {
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  background: #ffffff;
+  margin-top: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.signature-pad-wrap canvas {
+  width: 100%;
+  height: 140px;
+  display: block;
+  cursor: crosshair;
+}
+
+.signature-clear-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Modais e Impressão
+   ========================================================================== */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .express-header,
+  .stepper-nav,
+  .wizard-actions,
+  .post-action-card,
+  .print-hide {
+    display: none !important;
+  }
+
+  .express-container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .card-panel {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .tcle-official-sheet {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    page-break-after: always;
+  }
+}
