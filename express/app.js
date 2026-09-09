@@ -49,23 +49,47 @@ const state = {
   }
 };
 
-// SVGs Anatômicos Lúdicos dos Dentes
+// SVGs Anatômicos Lúdicos dos Dentes (Apple Premium Vector Art)
 const TOOTH_SVGS = {
-  molar: `<svg viewBox="0 0 32 36" fill="currentColor" width="22" height="26">
-    <path d="M7 6C7 3.8 8.8 2 11 2H21C23.2 2 25 3.8 25 6C26.5 7.5 27 10 27 13C27 17 25 20 23 23L22 33C22 34 21 34.5 20 34C19 33.5 18 31 17 28C16.5 26.5 15.5 26.5 15 28C14 31 13 33.5 12 34C11 34.5 10 34 10 33L9 23C7 20 5 17 5 13C5 10 5.5 7.5 7 6Z" opacity="0.85"/>
-    <path d="M11 6C11 7.5 13 8.5 16 8.5C19 8.5 21 7.5 21 6" stroke="#fff" stroke-width="1.2" fill="none" opacity="0.6"/>
+  molar: `<svg viewBox="0 0 36 40" fill="currentColor" width="24" height="28">
+    <!-- Raízes Anatômicas com Bifurcação Suave -->
+    <path d="M8 20 C7 25 6 32 9 37 C10.5 38.5 12 37 12.5 32 C13 27 13.5 24 14.5 22 C15.5 24 16 27 16.5 32 C17 37 18.5 38.5 20 37 C23 32 22 25 21 20 Z" opacity="0.9"/>
+    <path d="M21 20 C22 25 24 31 26.5 35 C27.5 36.5 29 35.5 29 33 C28.5 27 27.5 22 26 19 Z" opacity="0.8"/>
+    <!-- Corpo Coronário com Cúspides Anatômicas -->
+    <path d="M5 8 C5 4 8 2 12 2 C14.5 2 16.5 3.5 18 3.5 C19.5 3.5 21.5 2 24 2 C28 2 31 4 31 8 C31.8 11.5 31.5 15.5 29 18 C26.5 20.5 22 21 18 21 C14 21 9.5 20.5 7 18 C4.5 15.5 4.2 11.5 5 8 Z"/>
+    <!-- Fissura Oclusal e Brilho de Esmalte -->
+    <path d="M10 7 C13 9 15 9 18 8 C21 9 23 9 26 7" stroke="rgba(255,255,255,0.8)" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <path d="M18 8 L18 15" stroke="rgba(255,255,255,0.6)" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+    <!-- Destaque Especular Apple -->
+    <ellipse cx="12" cy="5" rx="3.5" ry="1.2" fill="#ffffff" opacity="0.85"/>
+    <ellipse cx="24" cy="5" rx="3.5" ry="1.2" fill="#ffffff" opacity="0.85"/>
   </svg>`,
-  premolar: `<svg viewBox="0 0 28 36" fill="currentColor" width="20" height="26">
-    <path d="M7 6C7 3.8 8.8 2 11 2H17C19.2 2 21 3.8 21 6C22.5 7.5 23 10 23 13C23 17 21.5 20 20 23L19 33C19 34 18 34.5 17 34C16.2 33.5 15.5 30 14 27C12.5 30 11.8 33.5 11 34C10 34.5 9 34 9 33L8 23C6.5 20 5 17 5 13C5 10 5.5 7.5 7 6Z" opacity="0.85"/>
-    <circle cx="14" cy="8" r="2" fill="#fff" opacity="0.5"/>
+  premolar: `<svg viewBox="0 0 32 40" fill="currentColor" width="22" height="28">
+    <!-- Raiz Dupla Afilada -->
+    <path d="M9 20 C8 25 7 32 10.5 37 C12 38.5 13.5 37 14 31 C14.5 25 15 22 16 20 C17 22 17.5 25 18 31 C18.5 37 20 38.5 21.5 37 C25 32 24 25 23 20 Z" opacity="0.9"/>
+    <!-- Coroa Bicuspidada -->
+    <path d="M6 8 C6 4 9 2 13 2 C15 2 15.5 3 16 3 C16.5 3 17 2 19 2 C23 2 26 4 26 8 C26.8 11.5 26.5 15 24 18 C22 20 19 20.5 16 20.5 C13 20.5 10 20 8 18 C5.5 15 5.2 11.5 6 8 Z"/>
+    <!-- Sulco de Esmalte e Brilho -->
+    <path d="M11 7 C13.5 8.5 18.5 8.5 21 7" stroke="rgba(255,255,255,0.8)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="16" cy="5" rx="4" ry="1.2" fill="#ffffff" opacity="0.85"/>
   </svg>`,
-  canine: `<svg viewBox="0 0 26 36" fill="currentColor" width="18" height="26">
-    <path d="M13 1.5C14.5 3.5 20 6.5 20 11C20 16 18 20 17 24L15.5 33.5C15.2 34.5 14 34.8 13.5 34C13 33 12 28 12 24C11 20 6 16 6 11C6 6.5 11.5 3.5 13 1.5Z" opacity="0.85"/>
-    <path d="M13 4L13 12" stroke="#fff" stroke-width="1.2" opacity="0.6"/>
+  canine: `<svg viewBox="0 0 30 40" fill="currentColor" width="20" height="28">
+    <!-- Raiz Única Robusta e Convexa -->
+    <path d="M9.5 19 C10 24 11 31 13 36.5 C13.8 38.5 16.2 38.5 17 36.5 C19 31 20 24 20.5 19 Z" opacity="0.9"/>
+    <!-- Cúspide Pontiaguda Característica -->
+    <path d="M5.5 11 C5.5 6.5 9 3 13 1.5 C14.2 1 15.8 1 17 1.5 C21 3 24.5 6.5 24.5 11 C24.8 14 24 17 21 19 C18.5 20.2 11.5 20.2 9 19 C6 17 5.2 14 5.5 11 Z"/>
+    <!-- Crista Vestibular Longitudinal -->
+    <path d="M15 3.5 L15 15" stroke="rgba(255,255,255,0.75)" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+    <ellipse cx="15" cy="4" rx="2" ry="1.5" fill="#ffffff" opacity="0.9"/>
   </svg>`,
-  incisor: `<svg viewBox="0 0 24 36" fill="currentColor" width="18" height="26">
-    <path d="M5 4C5 2.8 6 2 7.2 2H16.8C18 2 19 2.8 19 4V13C19 17.5 17 21 16 25L14.5 33.5C14.2 34.5 13.2 34.8 12.8 34C12 32.5 11 28 11 25C10 21 5 17.5 5 13V4Z" opacity="0.85"/>
-    <rect x="7" y="4" width="10" height="2" rx="1" fill="#fff" opacity="0.6"/>
+  incisor: `<svg viewBox="0 0 28 40" fill="currentColor" width="19" height="28">
+    <!-- Raiz Cônica Graciosa -->
+    <path d="M9 19 C9.5 24 10.5 30 12.5 36 C13.2 38 14.8 38 15.5 36 C17.5 30 18.5 24 19 19 Z" opacity="0.9"/>
+    <!-- Borda Incisal Espatulada e Reta -->
+    <path d="M4.5 5 C4.5 3 6.5 2 9 2 L19 2 C21.5 2 23.5 3 23.5 5 L23.5 13 C23.5 16.5 21.5 19 18.5 19.5 L9.5 19.5 C6.5 19 4.5 16.5 4.5 13 Z"/>
+    <!-- Brilho Linear de Esmalte -->
+    <rect x="7" y="3.5" width="14" height="1.8" rx="0.9" fill="#ffffff" opacity="0.85"/>
+    <path d="M8 10 C11 11 17 11 20 10" stroke="rgba(255,255,255,0.4)" stroke-width="1" fill="none"/>
   </svg>`
 };
 
