@@ -1,0 +1,668 @@
+[
+  {
+    "id": "fousp_cirurgia_sisos",
+    "category": "Universidade",
+    "institution_name": "FOUSP — Faculdade de Odontologia da Universidade de São Paulo",
+    "specialty": "Cirurgia Bucomaxilofacial",
+    "title": "TCLE Institucional FOUSP — Cirurgia Oral Menor e Terceiros Molares Inclusos",
+    "normative_grounding": "Resolução CFO 118/2012 (Art. 9º, VI e Art. 11, IV); Código de Defesa do Consumidor (Lei 8.078/90, Art. 6º, III e Art. 14, § 4º); STJ REsp 1.058.927/MT e REsp 1.540.580/DF (Dever autônomo de informação e obrigação de meio); Protocolos da Disciplina de Cirurgia da FOUSP.",
+    "clinical_evidence": "Diretrizes Cirúrgicas FOUSP; Rood & Shehab (Br J Oral Maxillofac Surg); Pogrel MA (J Oral Maxillofac Surg); Peterson's Principles of Oral and Maxillofacial Surgery.",
+    "essential_clauses": [
+      "Notação exata dos terceiros molares a serem operados (ex.: 18, 28, 38, 48) e indicação cirúrgica clara (profilática, ortodôntica ou patológica).",
+      "Esclarecimento expresso sobre a contiguidade anatômica radicular com o canal mandibular e feixe vásculo-nervoso alveolar inferior.",
+      "Autorização fundamentada para sepultamento radicular intencional (coronectomia) caso seja constatado alto risco neurológico no transoperatório.",
+      "Previsão qualitativa de edema, trismo muscular, dor pós-operatória e hematoma facial como resposta tecidual inflamatória natural esperada.",
+      "Obrigação do paciente de repouso físico, aplicação de gelo e abstenção rigorosa de bochechos vigorosos, sucção por canudo e tabagismo."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Parestesia Transitória do Nervo Alveolar Inferior ou Lingual",
+        "rate": "Intercorrência Específica da Anatomia",
+        "consequence": "Sensação de dormência, formigamento ou insensibilidade no lábio inferior, queixo e hemilíngua, com recuperação gradual."
+      },
+      {
+        "risk": "Parestesia Persistente / Lesão Neural Definitiva",
+        "rate": "Risco Raro, porém Grave",
+        "consequence": "Comprometimento sensitivo prolongado decorrente de íntimo entrelaçamento das raízes com o nervo demonstrado no exame radiológico."
+      },
+      {
+        "risk": "Alveolite Seca (Fibrinolítica)",
+        "rate": "Intercorrência Comum (potencializada em fumantes)",
+        "consequence": "Perda precoce do coágulo sanguíneo por esforço, bochechos ou sucção, gerando dor aguda tratável em consultório."
+      },
+      {
+        "risk": "Comunicação Buco-Sinusal (Molares Superiores)",
+        "rate": "Intercorrência Específica da Anatomia",
+        "consequence": "Abertura involuntária da cavidade do seio maxilar pela proximidade radicular, exigindo retalho cirúrgico e repouso sinusal."
+      },
+      {
+        "risk": "Fratura Mandibular Trans ou Pós-Operatória",
+        "rate": "Risco Raro em Inclusões Profundas",
+        "consequence": "Fragilidade estrutural óssea em mandíbulas atróficas com dentes profundamente impactados, exigindo dieta pastosa prolongada."
+      }
+    ],
+    "full_tcle_text": "FACULDADE DE ODONTOLOGIA DA UNIVERSIDADE DE SÃO PAULO — FOUSP\nSERVIÇO DE CIRURGIA E TRAUMATOLOGIA BUCOMAXILOFACIAL\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO INSTITUCIONAL PARA CIRURGIA ORAL E SISOS\n\n1. DADOS DO PROCEDIMENTO E AUTORIZAÇÃO:\nEu, paciente (ou meu representante legal), devidamente identificado no prontuário clínico, declaro que autorizo a equipe cirúrgica a realizar o procedimento de EXODONTIA DE TERCEIROS MOLARES (SISOS) E/OU CIRURGIA ORAL MENOR sob anestesia local odontológica.\n\n2. ESCLARECIMENTO TÉCNICO E NATUREZA DA OBRIGAÇÃO:\nFui informado(a) em linguagem clara de que o ato cirúrgico consiste em incisão na gengiva, eventual desgaste ósseo cuidadoso (osteotomia) e divisão controlada do dente (odontossecção) para remoção segura. A cirurgia bucal é regida por OBRIGAÇÃO DE MEIO (STJ REsp 1.058.927/MT): o profissional compromete-se a empregar técnica asséptica e materiais adequados, dependendo a cicatrização da resposta biológica do organismo.\n\n3. RISCOS INERENTES E CIÊNCIA QUALITATIVA EXPRESSA:\nDeclaro plena ciência dos riscos específicos informados previamente pelo corpo docente/discente:\na) Parestesia do Nervo Alveolar Inferior e Lingual: O íntimo contato das raízes inferiores com o canal mandibular pode acarretar perda temporária ou raramente prolongada da sensibilidade tátil e gustativa no lábio inferior, queixo e língua.\nb) Sepultamento Radicular Justificado: Se durante o ato cirúrgico houver risco iminente de lesão irreversível ao nervo ou perigo de fratura óssea, autorizo a remoção da coroa e o sepultamento seguro dos ápices radiculares hígidos (técnica de coronectomia).\nc) Alveolite e Desconforto Pós-Operatório: A perda antecipada do coágulo por sucção, bochecho vigoroso ou fumo causa dor e inflamação no alvéolo (alveolite seca), necessitando curativo em consultório.\nd) Comunicação Buco-Sinusal: Em dentes superiores próximos ao seio maxilar, pode ocorrer comunicação transitória com a cavidade sinusal, requerendo manobra imediata de fechamento e repouso estrito.\n\n4. COMPROMISSO DO PACIENTE:\nComprometo-me a seguir todas as orientações pós-operatórias: manter compressas frias, repouso físico, alimentação pastosa e fria, não fumar, não ingerir bebidas alcoólicas, tomar rigorosamente os medicamentos prescritos e retornar pontualmente para revisão e remoção de pontos.",
+    "bibliographic_citation": "FOUSP. Protocolos Clínicos de Cirurgia Bucomaxilofacial da FOUSP; Rood JP, Shehab BA. Br J Oral Maxillofac Surg; CFO Resolução 118/2012; STJ REsp 1.540.580/DF.",
+    "is_public": true
+  },
+  {
+    "id": "fop_unicamp_implante",
+    "category": "Universidade",
+    "institution_name": "FOP-UNICAMP — Faculdade de Odontologia de Piracicaba (UNICAMP)",
+    "specialty": "Implantodontia",
+    "title": "TCLE Institucional FOP-UNICAMP — Implantes Osseointegrados e Enxertos Ósseos",
+    "normative_grounding": "Resolução CFO 118/2012; Resolução CFO 278/2025; Código Civil Brasileiro (Art. 951); CDC (Lei 8.078/90, Art. 6º, III); Protocolo da Área de Implantodontia da FOP-UNICAMP.",
+    "clinical_evidence": "Albrektsson T, Brånemark PI; Esposito M et al. Cochrane Database of Systematic Reviews; Buser D. 20 Years of Guided Bone Regeneration; Lindhe J. Clinical Periodontology and Implant Dentistry.",
+    "essential_clauses": [
+      "Reconhecimento da osseointegração como fenômeno de fixação biológica celular viva, não havendo garantia mecânica absoluta de integração.",
+      "Esclarecimento sobre a reabsorção fisiológica e remodelação biológica natural dos biomateriais de enxerto ósseo.",
+      "Dever imperioso de retorno periódico para profilaxia profissional e sondagem preventiva contra a peri-implantite.",
+      "Declaração obrigatória de tabagismo, bruxismo descontrolado, diabetes ou uso de bisfosfonatos como fatores que elevam o risco biológico.",
+      "Previsão de tempo de espera biológico de cicatrização óssea profunda antes da instalação da prótese definitiva."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Falha de Osseointegração / Perda Precoce do Implante",
+        "rate": "Resposta Biológica Imunológica Individual",
+        "consequence": "Ausência de união óssea microscópica estável, exigindo remoção do implante e reintervenção após cicatrização."
+      },
+      {
+        "risk": "Mucosite Peri-implantar (Inflamação Reversível)",
+        "rate": "Intercorrência Comum Reversível",
+        "consequence": "Sangramento gengival ao redor do pino por acúmulo de biofilme, tratável com higienização profissional."
+      },
+      {
+        "risk": "Peri-implantite (Infecção com Reabsorção Óssea)",
+        "rate": "Complicação Infecciosa Crônica Previsível",
+        "consequence": "Perda progressiva do osso de suporte decorrente de bactérias e falta de higiene rigorosa ou ausência em manutenções."
+      },
+      {
+        "risk": "Perfuração da Membrana Sinusal de Schneider",
+        "rate": "Intercorrência Específica em Levantamento de Seio",
+        "consequence": "Pequena abertura na mucosa sinusal durante descolamento, selada com membrana de barreira ou adiamento cirúrgico."
+      },
+      {
+        "risk": "Exposição Precoce de Enxerto Ósseo / Deiscência",
+        "rate": "Intercorrência Cicatricial",
+        "consequence": "Abertura parcial da gengiva com visualização do biomaterial, exigindo antissepsia tópica rigorosa."
+      }
+    ],
+    "full_tcle_text": "FACULDADE DE ODONTOLOGIA DE PIRACICABA — UNICAMP\nDEPARTAMENTO DE PRÓTESE E PERIODONTIA — CLÍNICA DE IMPLANTODONTIA\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO INSTITUCIONAL PARA IMPLANTES E ENXERTOS\n\n1. DO PROCEDIMENTO:\nAutorizo a instalação de implante(s) dentário(s) biocompatível(is) e, se necessário para ancoragem estável, a realização de enxertia óssea com uso de membranas protetoras reabsorvíveis ou não reabsorvíveis.\n\n2. DA NATUREZA BIOLÓGICA E DA OBRIGAÇÃO:\nDeclaro compreender que a osseointegração é um processo biológico no qual as células vivas formam contato estrutural com o titânio. Portanto, a obrigação do cirurgião-dentista é de MEIO (emprego rigoroso de técnica asséptica e materiais aprovados pela ANVISA), dependendo a união óssea da resposta imunitária e regenerativa do meu próprio organismo.\n\n3. ADVERTÊNCIA DE RISCOS QUALITATIVOS:\nFui orientado(a) detalhadamente sobre as seguintes intercorrências possíveis:\n- Não Integração do Implante: O implante pode não fixar perfeitamente ao osso (fibrointegração), demandando sua remoção e novo procedimento após período de reparo tecidual.\n- Peri-implantite: A falta de higienização diária com fio dental ou a ausência às consultas de retorno permite a proliferação de bactérias que reabsorvem o osso de sustentação do implante.\n- Enxertos Ósseos e Levantamento de Seio Maxilar: Pode ocorrer exposição parcial do enxerto, reabsorção biológica natural do biomaterial ou pequena perfuração na membrana sinusal prontamente tratada pela equipe.\n\n4. OBRIGAÇÕES VITALÍCIAS DO PACIENTE:\nAssumo o compromisso expresso de comparecer às consultas periódicas de controle radiográfico e limpeza profissional peri-implantar pelo restante da vida dos implantes, comunicando imediatamente qualquer sintoma anormal (dor, mobilidade ou sangramento).",
+    "bibliographic_citation": "FOP-UNICAMP. Manual de Consentimento Informado em Cirurgia e Periodontia da FOP-UNICAMP; Esposito M et al. Cochrane Database Syst Rev; CFO Resolução 278/2025.",
+    "is_public": true
+  },
+  {
+    "id": "fo_ufrj_endodontia",
+    "category": "Universidade",
+    "institution_name": "FO-UFRJ — Faculdade de Odontologia da Universidade Federal do Rio de Janeiro",
+    "specialty": "Endodontia",
+    "title": "TCLE Institucional FO-UFRJ — Tratamento e Retratamento Endodôntico (Canal)",
+    "normative_grounding": "Resolução CFO 118/2012; CDC (Lei 8.078/90, Art. 6º, III e Art. 14, § 3º, II - Culpa exclusiva do consumidor por não reabilitação); Diretrizes da Associação Brasileira de Endodontia (SBEndo) e FO-UFRJ.",
+    "clinical_evidence": "Siqueira JF Jr, Rôças IN. Clinical Implications of Bacterial Persistence. J Endod; Cohen's Pathways of the Pulp; Torabinejad M. Endodontics: Principles and Practice.",
+    "essential_clauses": [
+      "Identificação exata do dente a ser desvitalizado ou retratado com menção radiográfica da condição da polpa e osso periapical.",
+      "Informação de que variações anatômicas extremas (curvaturas acentuadas, canais atrésicos e deltas apicais) são fatores limitantes biológicos naturais.",
+      "Autorização para conduta clínica em caso de fratura involuntária de lima endodôntica (ultrapassagem/bypass, remoção ultrassônica ou proservação com selamento apical).",
+      "Advertência expressa sobre dor reflexa temporária pós-instrumentação (flare-up inflamatório), controlável com analgésicos e anti-inflamatórios.",
+      "OBRIGAÇÃO MANDATÓRIA de restauração definitiva / colocação de coroa protética em ATÉ 30 DIAS para evitar fratura vertical e perda do dente (CDC Art. 14, § 3º, II)."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Fratura Involuntária de Instrumento (Lima de NiTi / Aço)",
+        "rate": "Intercorrência por Fadiga Mecânica e Curvatura",
+        "consequence": "Separação de fragmento milimétrico flexível; conduta de contorno, remoção segura ou incorporação ao selamento do canal."
+      },
+      {
+        "risk": "Extravasamento de Solução Antisséptica (Hipoclorito)",
+        "rate": "Intercorrência Rara por Abertura Apical Ampla",
+        "consequence": "Sensação momentânea de queimação, inchaço súbito e arroxeamento local, controlado com suporte medicamentoso imediato."
+      },
+      {
+        "risk": "Perfuração Radicular / Falsa Via Acidental",
+        "rate": "Intercorrência em Canais Estreitos ou Calcificados",
+        "consequence": "Pequeno desvio na trajetória original do canal, tratado com cimento biocerâmico mineral reparador (MTA)."
+      },
+      {
+        "risk": "Fratura Radicular Vertical por Demora na Coroa",
+        "rate": "Complicação Estrutural por Falha do Paciente",
+        "consequence": "Perda irreparável do dente se o paciente não realizar a cobertura protética definitiva no prazo prescrito."
+      },
+      {
+        "risk": "Agudização Pós-Operatória (Flare-up Inflamatório)",
+        "rate": "Desconforto Inflamatório Transitório",
+        "consequence": "Dor e inchaço temporários causados por desequilíbrio transitório de bactérias periapicais durante a desinfecção."
+      }
+    ],
+    "full_tcle_text": "UNIVERSIDADE FEDERAL DO RIO DE JANEIRO — FO-UFRJ\nDEPARTAMENTO DE ODONTOLOGIA CLÍNICA — DISCIPLINA DE ENDODONTIA\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA TRATAMENTO DE CANAL\n\n1. IDENTIFICAÇÃO DO TRATAMENTO:\nAutorizo o tratamento ou retratamento do canal do(s) dente(s) especificado(s) no plano clínico, visando a desinfecção mecânico-química do espaço interno da raiz e o seu selamento tridimensional.\n\n2. LIMITAÇÕES ANATÔMICAS E OBRIGAÇÃO DE MEIO:\nFui devidamente esclarecido(a) de que os canais radiculares apresentam ramificações microscópicas, curvaturas acentuadas e calcificações anatômicas complexas. O tratamento endodôntico constitui OBRIGAÇÃO DE MEIO, não sendo possível garantir esterilização absoluta de todas as reentrâncias microscópicas radiculares em todos os casos biológicos.\n\n3. INTERCORRÊNCIAS CLÍNICAS PREVISTAS:\nDeclaro ter recebido explicações detalhadas sobre:\n- Fratura de Instrumento: As limas endodônticas são instrumentos metálicos finos que sofrem fadiga ao girar em canais curvos, podendo sofrer separação involuntária de fragmento. O fragmento é estéril e biocompatível, autorizando a equipe a ultrapassá-lo, removê-lo ou selá-lo com segurança dentro da raiz.\n- Extravasamento de Solução Antisséptica: Caso a solução irrigadora ultrapasse o forame apical natural, pode ocorrer dor aguda momentânea e edema local, revertidos com suporte clínico ambulatorial.\n- Perfuração Radicular: Desvio anatômico acidental em canais atrésicos, vedado com cimentos biocerâmicos especializados.\n\n4. CLÁUSULA RESOLUTIVA DE REABILITAÇÃO CORONÁRIA EM ATÉ 30 DIAS:\nTenho ciência inequívoca de que o dente tratado endodonticamente perde sua hidratação biológica e resistência elástica natural. Comprometo-me formalmente a realizar a RESTAURAÇÃO DEFINITIVA OU COROA PROTÉTICA NO PRAZO MÁXIMO DE 30 DIAS corridos. Estou ciente de que mastigar sobre restauração provisória provocará quebra vertical do dente e perda da raiz, caracterizando Culpa Exclusiva do Consumidor (Art. 14, § 3º, II do CDC).",
+    "bibliographic_citation": "FO-UFRJ. Diretrizes da Clínica Integrada e Endodontia da FO-UFRJ; Siqueira JF Jr, Rôças IN. Endod Topics; Torabinejad M. Endodontics: Principles and Practice.",
+    "is_public": true
+  },
+  {
+    "id": "fo_ufmg_periodontia",
+    "category": "Universidade",
+    "institution_name": "FO-UFMG — Faculdade de Odontologia da Univ. Federal de Minas Gerais",
+    "specialty": "Periodontia",
+    "title": "TCLE Institucional FO-UFMG — Terapia Periodontal Básica e Cirúrgica",
+    "normative_grounding": "Resolução CFO 118/2012; Código de Defesa do Consumidor (Lei 8.078/90, Art. 6º, III); Consenso Mundial EFP/AAP; Diretrizes da Sociedade Brasileira de Periodontologia (SOBRAPI).",
+    "clinical_evidence": "Lindhe J, Lang NP. Clinical Periodontology; Tonetti MS et al. Staging and grading of periodontitis. J Periodontol; Chapple ILC et al.",
+    "essential_clauses": [
+      "Caracterização da periodontite como patologia inflamatória bacteriana crônica sem cura biológica espontânea definitiva.",
+      "Esclarecimento de que o desinchaço da gengiva sadia gera retração tecidual natural inevitável e pequenos espaços negros interdentais ('black spaces').",
+      "Alerta sobre sensibilidade transitória das raízes ao frio e alimentos cítricos após a remoção do cálculo bacteriano.",
+      "OBRIGATORIEDADE de retornos regulares para Terapia Periodontal de Suporte profissional para controle da perda óssea.",
+      "Advertência sobre a influência direta do tabagismo e do diabetes descompensado no agravamento da destruição periodontal."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Hipersensibilidade Radicular Cervical Pós-Raspagem",
+        "rate": "Desconforto Comum e Transitório",
+        "consequence": "Sensibilidade passageira a líquidos frios nos primeiros dias após desobstrução das superfícies radiculares."
+      },
+      {
+        "risk": "Retração Gengival Terapêutica e Espaços Negros ('Black Spaces')",
+        "rate": "Consequência Sadia da Cura Biológica",
+        "consequence": "Dentes aparentando maior comprimento decorrente do desinchaço e cicatrização dos tecidos gengivais inflamados."
+      },
+      {
+        "risk": "Mobilidade Dentária Transitória Inicial",
+        "rate": "Adaptação Biológica Provisória",
+        "consequence": "Leve aumento inicial de mobilidade decorrente da reorganização dos ligamentos até fixação das fibras colágenas."
+      },
+      {
+        "risk": "Recidiva e Perda Óssea por Abandono de Manutenção",
+        "rate": "Risco Biológico Decorrente da Cronicidade",
+        "consequence": "Reativação da doença com destruição do suporte ósseo caso o paciente falte às limpezas periódicas de suporte."
+      }
+    ],
+    "full_tcle_text": "UNIVERSIDADE FEDERAL DE MINAS GERAIS — FO-UFMG\nDEPARTAMENTO DE CLÍNICA, PATOLOGIA E CIRURGIA ODONTOLÓGICAS — PERIODONTIA\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO INSTITUCIONAL PARA TRATAMENTO PERIODONTAL\n\n1. DO DIAGNÓSTICO E TRATAMENTO PROPOSTO:\nAutorizo o tratamento de gengivite e/ou periodontite através de raspagem e alisamento radicular supra e subgengival, irrigação antisséptica e, se indicado, procedimentos cirúrgicos periodontais a retalho ou enxertos teciduais.\n\n2. DA NATUREZA CRÔNICA DA DOENÇA E DAS LIMITAÇÕES:\nDeclaro compreender que a Periodontite é uma DOENÇA INFLAMATÓRIA CRÔNICA, cujo controle contínuo depende do combate ao biofilme bacteriano. A responsabilidade do cirurgião-dentista é de MEIO, consistindo em desinfectar e criar condições favoráveis para que meu organismo estabilize a perda óssea.\n\n3. CONSEQUÊNCIAS ESTÉTICAS E BIOLÓGICAS DA CURA:\nFui formalmente advertido(a) e compreendo as seguintes transformações naturais dos tecidos:\n- Retração Gengival e Espaços Pretos: A gengiva doente e inchada desinflama e retrai ao ser curada, expondo parte da raiz e criando pequenos espaços entre os dentes. Isso não é erro técnico, mas sim PROVA CLÍNICA DE CURA e desinflamação;\n- Sensibilidade ao Frio: A exposição das raízes limpas pode causar sensibilidade temporária ao frio e ao ar, controlável com cremes dentais dessensibilizantes e aplicação tópica de flúor;\n- Mobilidade Provisória: Dentes com suporte ósseo reduzido podem apresentar discreta mobilidade temporária até o assentamento das fibras gengivais.\n\n4. OBRIGAÇÃO DE MANUTENÇÃO VITALÍCIA (TERAPIA DE SUPORTE):\nTenho ciência de que o sucesso depende do meu autocuidado diário (escovação correta e uso diário de fio dental). Comprometo-me a retornar pontualmente para as sessões de Terapia Periodontal de Suporte nos prazos determinados pelo cirurgião-dentista. Declaro ciência de que faltas nas consultas de manutenção permitirão a volta das bactérias com risco iminente de perda dos dentes.",
+    "bibliographic_citation": "FO-UFMG. Manual de Condutas Clínicas em Periodontia da FO-UFMG; Tonetti MS et al. J Periodontol; Diretrizes SOBRAPI.",
+    "is_public": true
+  },
+  {
+    "id": "forp_usp_odontopediatria",
+    "category": "Universidade",
+    "institution_name": "FORP-USP — Faculdade de Odontologia de Ribeirão Preto (USP)",
+    "specialty": "Odontopediatria",
+    "title": "TCLE Institucional FORP-USP — Odontopediatria e Cariostático (DFA)",
+    "normative_grounding": "Estatuto da Criança e do Adolescente - ECA (Lei 8.069/90, Arts. 7º e 17); Código Civil Brasileiro (Arts. 3º e 1.634 - Poder Familiar); Código de Ética Odontológica (Res. CFO 118/2012, Art. 11, IV); Diretrizes da American Academy of Pediatric Dentistry (AAPD).",
+    "clinical_evidence": "Guedes-Pinto AC. Odontopediatria; AAPD Guideline on Behavior Guidance; Rosenblatt A, Stamford TC, Niederman R. J Dent Res.",
+    "essential_clauses": [
+      "Assinatura compulsória de pai, mãe ou tutor legal com comprovação do poder familiar sobre a criança menor de idade.",
+      "Menção explícita sobre técnicas de manejo comportamental infantil (falar-mostrar-fazer e estabilização protetora humanizada quando estritamente indispensável).",
+      "Consentimento específico e inequívoco para uso de Diamino Fluoreto de Prata (DFA) e aviso de manchas pretas irreversíveis na lesão.",
+      "Alerta sobre risco de comprometimento do dente permanente sucessor (Anomalia de Turner) se infecções em dentes decíduos não forem tratadas.",
+      "Dever de vigilância contínua dos pais por todo o período pós-anestésico para prevenir mordedura involuntária de lábio e língua."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Mancha Negra Definitiva por Diamino Fluoreto de Prata (DFA)",
+        "rate": "Consequência Química Terapêutica Inevitável",
+        "consequence": "A prata do medicamento precipita no tecido cariado gerando pigmentação escura definitiva e endurecida."
+      },
+      {
+        "risk": "Mordedura Traumática Pós-Anestésica (Lábio / Bochecha)",
+        "rate": "Risco Frequente Evitável com Vigilância dos Pais",
+        "consequence": "A criança mastiga os próprios tecidos moles enquanto anestesiada, gerando ferida inflamatória volumosa."
+      },
+      {
+        "risk": "Dano ao Germe do Dente Permanente Sucessor (Turner)",
+        "rate": "Consequência da Evolução da Infecção Prévia",
+        "consequence": "Infecções não tratadas na raiz do dente de leite contaminam o germe permanente em formação, gerando defeitos no esmalte."
+      },
+      {
+        "risk": "Necessidade de Estabilização Protetora Transitória",
+        "rate": "Manejo Comportamental de Segurança",
+        "consequence": "Contenção física cuidadosa temporária para impedir movimentos bruscos com instrumentos cortantes."
+      }
+    ],
+    "full_tcle_text": "FACULDADE DE ODONTOLOGIA DE RIBEIRÃO PRETO — FORP-USP\nDEPARTAMENTO DE CLÍNICA INFANTIL — DISCIPLINA DE ODONTOPEDIATRIA\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ATENDIMENTO ODONTOPEDIÁTRICO\n\n1. QUALIFICAÇÃO DO MENOR E DO RESPONSÁVEL LEGAL:\nEu, responsável legal pelo(a) menor identificado(a) no prontuário, no pleno exercício do Poder Familiar (Art. 1.634 do Código Civil e Art. 7º do ECA), autorizo a realização do plano de tratamento odontopediátrico proposto.\n\n2. PROCEDIMENTOS AUTORIZADOS E MANEJO COMPORTAMENTAL:\nAutorizo a realização de exames clínicos, radiografias com proteção de chumbo, profilaxia, aplicação de selantes, restaurações, pulpotomias, tratamentos endodônticos e extrações de dentes de leite. Fui informado(a) de que a clínica utiliza técnicas psicológicas de condicionamento ('Dizer-Mostrar-Fazer'). Em situações de risco iminente de acidente com instrumentos cortantes, autorizo a estabilização protetora cuidadosa para a segurança da própria criança.\n\n3. USO ESPECÍFICO DE CARIOSTÁTICO (DIAMINO FLUORETO DE PRATA - DFA):\nDeclaro CIÊNCIA PLENA E CONSENTIMENTO EXPRESSO para a aplicação de Diamino Fluoreto de Prata (DFA). Fui informado(a) de que este medicamento paralisa a cárie e impede que a infecção avance para o canal do dente, mas CAUSA MANCHAMENTO PRETO ESCURO DEFINITIVO E IRREVERSÍVEL na área onde havia tecido cariado, não constituindo falha estética ou técnica culposa.\n\n4. CUIDADOS PÓS-ANESTÉSICOS E DEVER DE VIGILÂNCIA DOS PAIS:\nFui orientado(a) de que a anestesia deixa lábios, língua e bochechas dormentes por algumas horas. ASSUMO O DEVER E A OBRIGAÇÃO DE MANTER VIGILÂNCIA CONSTANTE sobre a criança até o fim completo da dormência, impedindo rigorosamente que ela morda, aperte ou machuque os próprios lábios e bochechas.",
+    "bibliographic_citation": "FORP-USP. Normas Clínicas de Odontopediatria da FORP-USP; American Academy of Pediatric Dentistry Guidelines; ECA (Lei 8.069/90).",
+    "is_public": true
+  },
+  {
+    "id": "fob_usp_dentistica_facetas",
+    "category": "Universidade",
+    "institution_name": "FOB-USP — Faculdade de Odontologia de Bauru (USP)",
+    "specialty": "Dentística e Prótese Estética",
+    "title": "TCLE Institucional FOB-USP — Facetas Cerâmicas e Lentes de Contato Dental",
+    "normative_grounding": "Código de Defesa do Consumidor (Lei 8.078/90, Art. 6º, III e Art. 14); STJ REsp 1.304.736/RS (Obrigação de resultado estético mitigada pelas limitações biológicas); Resolução CFO 118/2012.",
+    "clinical_evidence": "Magne P, Belser U. Bonded Porcelain Restorations; Radz GM. Minimum thickness anterior restorations; Layton DM et al. Int J Prosthodont.",
+    "essential_clauses": [
+      "Consentimento expresso para o desgaste dental irreversível de esmalte e dentina, com perda definitiva da estrutura hígida natural.",
+      "Declaração de dependência vitalícia de peças protéticas: os dentes preparados jamais poderão retornar ao estado natural virgem.",
+      "Aprovação do projeto estético mediante teste em boca ('mock-up' diagnóstico aprovado no espelho pelo próprio paciente).",
+      "Esclarecimento sobre a possibilidade de sensibilidade pós-operatória ao frio e risco de necessidade de tratamento de canal em preparos profundos.",
+      "Obrigatoriedade de confecção e uso noturno de Placa Miorrelaxante de Proteção em caso de histórico de bruxismo ou apertamento."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Desgaste Irreversível de Esmalte Saudável",
+        "rate": "Consequência Mecânica Permanente e Irreversível",
+        "consequence": "Perda definitiva da superfície natural original; o dente dependerá de peças cerâmicas aderidas pelo resto da vida."
+      },
+      {
+        "risk": "Hipersensibilidade Dentinária Térmica Pós-Cimentação",
+        "rate": "Desconforto Frequente e Transitório",
+        "consequence": "Sensibilidade a alimentos frios ou quentes durante período de acomodação do complexo dentina-polpa."
+      },
+      {
+        "risk": "Fratura Marginal ou Lascamento da Cerâmica (Chipping)",
+        "rate": "Risco Mecânico Potencializado por Hábitos Parafuncionais",
+        "consequence": "Fraturas parciais por microimpactos ou forças mastigatórias excessivas em alimentos muito duros ou bruxismo."
+      },
+      {
+        "risk": "Descimentação Acidental da Peça Cerâmica",
+        "rate": "Intercorrência Mecânica Restaurável",
+        "consequence": "Descolamento da faceta exigindo recimentação adesiva imediata em consultório."
+      },
+      {
+        "risk": "Inflamação Pulpar com Necessidade de Canal",
+        "rate": "Risco Biológico Raro em Preparos Profundos",
+        "consequence": "Reação inflamatória da polpa por atrito mecânico ou proximidade de cáries prévias profundas."
+      }
+    ],
+    "full_tcle_text": "FACULDADE DE ODONTOLOGIA DE BAURU — FOB-USP\nDEPARTAMENTO DE DENTÍSTICA, ENDODONTIA E MATERIAIS ODONTOLÓGICOS\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO INSTITUCIONAL PARA FACETAS E LENTES CERÂMICAS\n\n1. PROJETO ESTÉTICO E AUTORIZAÇÃO:\nAutorizo a realização do tratamento restaurador estético com FACETAS CERÂMICAS / LENTES DE CONTATO DENTAL no(s) dente(s) acordado(s), declarando que participei ativamente da escolha da cor, formato e harmonia do sorriso através de teste prévio em boca ('mock-up') ou simulação fotográfica.\n\n2. NATUREZA IRREVERSÍVEL DO DESGASTE DENTAL:\nDeclaro que fui detalhada e expressamente advertido(a) de que o procedimento exige o PREPARO DENTÁRIO COM DESGASTE DE ESMALTE E/OU DENTINA. Este desgaste é DEFINITIVO E IRREVERSÍVEL. Tenho conhecimento inequívoco de que meus dentes jamais voltarão ao estado natural e que dependerei permanentemente, pelo resto de minha vida, do uso de facetas ou coroas cerâmicas.\n\n3. RISCOS E LIMITAÇÕES BIOLÓGICAS:\nFui esclarecido(a) de que a estética dental é limitada pela biologia dos tecidos vivos:\n- Sensibilidade ao Frio: É comum sensibilidade dentinária transitória nas primeiras semanas após o preparo e a cimentação;\n- Tratamento de Canal Tardio: Em casos raros de preparos profundos, a polpa dental pode inflamar irreversivelmente, demandando canal através da faceta;\n- Lascamento e Quebras: Cerâmicas dentais são materiais nobres e estéticos, porém vítreos e frágeis a impactos diretos de torção. Não devem ser utilizadas para mastigar alimentos excessivamente duros (ossos, balas duras, gelo), roer unhas ou abrir embalagens com os dentes.\n\n4. PROTEÇÃO CONTRA BRUXISMO E DEVER DE MANUTENÇÃO:\nEm caso de bruxismo ou apertamento dental, COMPROMETO-ME A CONFECCIONAR E UTILIZAR DIARIAMENTE PLACA RÍGIDA NOTURNA de proteção oclusal. Reconheço que a quebra de facetas provocada por recusa em usar a placa ou mastigação de objetos inadequados configura culpa exclusiva do paciente (CDC Art. 14, § 3º, II).",
+    "bibliographic_citation": "FOB-USP. Cadernos de Dentística e Materiais Dentários da FOB-USP; Magne P, Belser U; STJ REsp 1.304.736/RS; Layton DM et al.",
+    "is_public": true
+  },
+  {
+    "id": "unesp_araraquara_ortodontia",
+    "category": "Universidade",
+    "institution_name": "FOAr-UNESP — Faculdade de Odontologia de Araraquara (UNESP)",
+    "specialty": "Ortodontia",
+    "title": "TCLE Institucional UNESP — Tratamento Ortodôntico Corretivo e Alinhadores",
+    "normative_grounding": "Resolução CFO 118/2012; Código Civil (Art. 951); Código de Defesa do Consumidor (Lei 8.078/90, Art. 6º, III e Art. 14, § 3º, II); Diretrizes da ABOR.",
+    "clinical_evidence": "Proffit WR, Fields HW; Weltman B et al. Root resorption in orthodontics. Am J Orthod; Al-Jewair TS et al.",
+    "essential_clauses": [
+      "Esclarecimento de que a previsão de tempo de tratamento é estimativa biológica média que depende da cooperação, uso das peças e assiduidade do paciente.",
+      "Previsão de reabsorção radicular apical externa fisiológica associada à movimentação ortodôntica biomecânica.",
+      "Advertência sobre manchas brancas e cáries ao redor de peças ortodônticas decorrentes de escovação deficiente.",
+      "OBRIGAÇÃO INDISCUTÍVEL DE USO DE CONTENÇÕES ORTODÔNTICAS (fixas e móveis) após a remoção do aparelho ativo.",
+      "Declaração expressa de que a recidiva ortodôntica provocada pelo abandono da contenção constitutes CULPA EXCLUSIVA DO PACIENTE."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Reabsorção Radicular Apical Externa Leve",
+        "rate": "Fenômeno Biológico Inerente à Movimentação",
+        "consequence": "Pequeno encurtamento do ápice da raiz comum durante a remodelação óssea biomecânica."
+      },
+      {
+        "risk": "Reabsorção Radicular Severa",
+        "rate": "Risco Raro por Predisposição Individual",
+        "consequence": "Diminuição mais expressiva do comprimento radicular por resposta óssea individual atípica, monitorada em radiografias."
+      },
+      {
+        "risk": "Recidiva do Apinhamento por Abandono de Contenção",
+        "rate": "Consequência Certa por Falta do Paciente",
+        "consequence": "Desalinhamento dentário causado pela memória elástica das fibras gengivais na ausência do uso da contenção."
+      },
+      {
+        "risk": "Manchas Brancas e Desmineralização peri-braquete",
+        "rate": "Risco Previsível por Higiene Deficiente",
+        "consequence": "Manchas opacas permanentes no esmalte causadas por biofilme bacteriano retido no aparelho fixo."
+      }
+    ],
+    "full_tcle_text": "FACULDADE DE ODONTOLOGIA DE ARARAQUARA — UNESP\nDEPARTAMENTO DE CLÍNICA INFANTIL E ORTODONTIA\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO INSTITUCIONAL PARA TRATAMENTO ORTODÔNTICO\n\n1. OBJETIVOS DO TRATAMENTO E ESTIMATIVA TEMPORAL:\nAutorizo o tratamento ortodôntico por aparelhos fixos ou alinhadores transparentes. Declaro ciência de que a previsão de tempo apresentada é ESTIMATIVA BIOLÓGICA que depende da minha assiduidade e cooperação. Quebras repetidas de peças, descolamento de braquetes ou uso de alinhadores por menos de 22 horas diárias prolongarão o tempo de tratamento.\n\n2. REABSORÇÃO RADICULAR E RESPOSTA BIOLÓGICA:\nFui informado(a) de que a movimentação dentária exige reabsorção e aposição óssea contínua. É cientificamente comprovado que graus leves de reabsorção apical (pequeno encurtamento da ponta da raiz) ocorrem na grande maioria dos pacientes como fenômeno biológico natural, sendo monitorado por exames radiográficos de controle.\n\n3. HIGIENIZAÇÃO E CUIDADOS:\nComprometo-me a higienizar rigorosamente dentes e aparelhos após as refeições. A negligência na escovação acumula biofilme ao redor dos braquetes, provocando manchas brancas opacas permanentes no esmalte, cáries e gengivite severa.\n\n4. FASE DE CONTENÇÃO — CLÁUSULA MANDATÓRIA DE NÃO RECIDIVA:\nDeclaro CIÊNCIA CATEGÓRICA de que os tecidos possuem 'memória biológica' e tendem a retornar à posição original (recidiva ortodôntica). Ao término do aparelho ativo, OBRIGO-ME A UTILIZAR RIGOROSAMENTE AS CONTENÇÕES conforme prescrição. Tenho ciência de que o abandono ou perda da contenção provocará novo desalinhamento dentário, caracterizando CULPA EXCLUSIVA DO CONSUMIDOR (CDC Art. 14, § 3º, II), cabendo exclusivamente a mim custear um eventual retratamento.",
+    "bibliographic_citation": "FOAr-UNESP. Diretrizes de Pós-Graduação em Ortodontia da FOAr-UNESP; Proffit WR; Weltman B et al.; CDC Art. 14, § 3º, II.",
+    "is_public": true
+  },
+  {
+    "id": "cfo_harmonizacao_orofacial",
+    "category": "CFO/CRO",
+    "institution_name": "Conselho Federal de Odontologia (CFO)",
+    "specialty": "Harmonização Orofacial (HOF)",
+    "title": "TCLE Padrão CFO — Harmonização Orofacial (Toxina Botulínica e Ácido Hialurônico)",
+    "normative_grounding": "Resolução CFO 198/2019; Resolução CFO 230/2020; Código de Ética Odontológica (Res. CFO 118/2012); STJ REsp 1.304.736/RS.",
+    "clinical_evidence": "DeLorenzi C. Complications of Injectable Fillers. Aesthet Surg J; Rohrich RJ et al. Facial Danger Zones. Plast Reconstr Surg.",
+    "essential_clauses": [
+      "Reconhecimento das assimetrias estáticas e dinâmicas faciais pré-existentes como limitação biológica da harmonização.",
+      "Autorização irrevogável e antecipada para injeção imediata de Hialuronidase de urgência diante de qualquer suspeita de oclusão de vaso.",
+      "Alerta qualitativo sobre efeitos adversos comuns como equimose, hematomas, inchaço e dor leve a moderada nos pontos de injeção.",
+      "Esclarecimento expresso sobre o risco raríssimo, porém documentado mundialmente, de necrose cutânea e amaurose (cegueira por embolia retrógrada).",
+      "Proibição de massagens caseiras, exercícios físicos intensos e exposição solar direta nas primeiras 48 horas."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Equimose e Hematoma no Ponto de Injeção",
+        "rate": "Efeito Comum e Transitório por Punção",
+        "consequence": "Manchas roxas superficiais decorrentes de pequenas transfixações capilares, reabsorvidas espontaneamente em alguns dias."
+      },
+      {
+        "risk": "Ptose Palpebral por Difusão de Toxina Botulínica",
+        "rate": "Intercorrência Temporária Reversível",
+        "consequence": "Queda temporária da pálpebra superior por difusão muscular involuntária da toxina, com recuperação espontânea."
+      },
+      {
+        "risk": "Oclusão Vascular / Isquemia Cutânea",
+        "rate": "Intercorrência Grave com Protocolo de Urgência",
+        "consequence": "Obstrução de pequeno vaso pelo gel preenchedor, exigindo dissolução imediata com hialuronidase para prevenir necrose."
+      },
+      {
+        "risk": "Amaurose Retrógrada (Comprometimento Visual)",
+        "rate": "Risco Raro com Advertência de Urgência",
+        "consequence": "Embolização retrógrada inadvertida para ramos oftálmicos, demandando avaliação e intervenção oftalmológica conjunta imediata."
+      },
+      {
+        "risk": "Biofilme Tardio e Nódulos Inflamatórios",
+        "rate": "Intercorrência Imunológica Tardia",
+        "consequence": "Nódulos inflamatórios tardios que podem surgir semanas ou meses após a aplicação, tratados com medicação."
+      }
+    ],
+    "full_tcle_text": "CONSELHO FEDERAL DE ODONTOLOGIA — CFO\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PADRÃO NORMATIVO\nHARMONIZAÇÃO OROFACIAL (HOF) — RESOLUÇÕES CFO 198/2019 E CFO 230/2020\n\n1. NATUREZA DO ATO E CONSENTIMENTO DO PACIENTE:\nEu, devidamente informado(a) sobre a especialidade regulamentada pela Resolução CFO 198/2019, manifesto meu consentimento livre e esclarecido para a realização de procedimentos biomédicos funcionais e estéticos da face com o uso de substâncias preenchedoras, toxina botulínica e/ou bioestimuladores.\n\n2. ASSIMETRIAS PRÉ-EXISTENTES E LIMITES DO TRATAMENTO:\nDeclaro ciência de que a face humana apresenta assimetrias ósseas e musculares anatômicas naturais pré-existentes entre os lados direito e esquerdo, as quais foram fotografadas e discutidas antes do procedimento. A busca por simetria absoluta não encontra amparo na biologia humana e não deve ser esperada como obrigação contratual (STJ REsp 1.304.736/RS).\n\n3. PROTOCOLO DE EMERGÊNCIA VASCULAR E AUTORIZAÇÃO DE HIALURONIDASE:\nDeclaro CIÊNCIA EXPRESSA de que a injeção de ácido hialurônico envolve risco intrínseco de compressão vascular involuntária. Por esta razão, AUTORIZO FORMAL E ANTECIPADAMENTE a equipe a injetar imediatamente HIALURONIDASE DE URGÊNCIA caso haja suspeita de sofrimento vascular (dor incomum, branqueamento ou arroxeamento cutâneo), adotando as medidas de descompressão preconizadas pelo CFO.\n\n4. ADVERTÊNCIA DE RISCOS ESPECÍFICOS:\nFui informado(a) sobre:\na) Hematomas e Inchaço: Sangramento subcutâneo pontual e edema temporário;\nb) Ptose Palpebral: Queda temporária de pálpebra por difusão muscular da toxina botulínica, com resolução gradual;\nc) Isquemia Tecidual e Risco Oftálmico: Risco de sofrimento tecidual e risco raríssimo de comprometimento visual por refluxo vascular na artéria oftálmica.\n\n5. TERMO DE CONDUTA PÓS-PROCEDIMENTO:\nComprometo-me a não massagear os locais tratados, não deitar nas primeiras horas após toxina, suspender treinos intensos por 48 horas e comunicar IMEDIATAMENTE a clínica caso perceba manchas incomuns ou dor aguda.",
+    "bibliographic_citation": "Conselho Federal de Odontologia. Resoluções CFO 198/2019 e 230/2020; DeLorenzi C. Aesthet Surg J; STJ REsp 1.304.736/RS.",
+    "is_public": true
+  },
+  {
+    "id": "crosp_cirurgia_ambulatorial",
+    "category": "CFO/CRO",
+    "institution_name": "Conselho Regional de Odontologia de São Paulo (CRO-SP)",
+    "specialty": "Cirurgia Oral Ambulatorial",
+    "title": "TCLE Modelo Orientativo CRO-SP — Procedimentos Cirúrgicos em Consultório",
+    "normative_grounding": "Código de Ética Odontológica (Resolução CFO 118/2012, Art. 9º, VI e Art. 11, IV e X); Lei Federal 5.081/66; Orientações Técnicas do CRO-SP.",
+    "clinical_evidence": "CRO-SP. Guia de Boas Práticas e Documentação Odontológica; Código de Defesa do Consumidor Art. 6º, III.",
+    "essential_clauses": [
+      "Declaração fidedigna da anamnese de saúde: alergias a medicamentos/anestésicos, hipertensão, diabetes, gravidez e uso de anticoagulantes.",
+      "Informação clara sobre o direito do paciente de revogar o consentimento antes do início da intervenção cirúrgica.",
+      "Previsão de reações esperadas à anestesia local odontológica (dormência facial prolongada e sensação de peso).",
+      "Compromisso formal de seguir as recomendações de pós-operatório (repouso, dieta fria, não fumar e retorno para remoção de pontos).",
+      "Garantia de entrega da 2ª via física original do termo de consentimento rubricada e assinada para guarda do paciente."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Dor, Edema e Trismo Pós-Cirúrgico",
+        "rate": "Resposta Inflamatória Fisiológica Comum",
+        "consequence": "Dificuldade temporária para abrir a boca e inchaço nos tecidos operados nas primeiras 72 horas."
+      },
+      {
+        "risk": "Sangramento Persistente / Hemorragia Secundária",
+        "rate": "Intercorrência por Esforço ou Falha do Coágulo",
+        "consequence": "Escorrimento de sangue contínuo por perda precoce do coágulo ou esforço físico indevido."
+      },
+      {
+        "risk": "Infecção Pós-Operatória de Ferida Cirúrgica",
+        "rate": "Intercorrência Infecciosa Tratável",
+        "consequence": "Dor tardia, secreção e inflamação demandando reavaliação profissional e uso de antibioticoterapia."
+      },
+      {
+        "risk": "Equimose e Manchas Arroxeadas na Face",
+        "rate": "Reação Tecidual Transitória",
+        "consequence": "Extravasamento capilar de sangue para os tecidos subcutâneos com manchas que somem gradualmente."
+      }
+    ],
+    "full_tcle_text": "CONSELHO REGIONAL DE ODONTOLOGIA DE SÃO PAULO — CRO-SP\nCOMISSÃO DE ÉTICA E BIOÉTICA ODONTOLÓGICA\nMODELO ORIENTATIVO DE TCLE PARA ATOS CIRÚRGICOS AMBULATORIAIS\n\n1. MANIFESTAÇÃO DE VONTADE INFORMADA:\nPor meio deste instrumento, eu, paciente ou responsável legal, autorizo a realização do procedimento cirúrgico odontológico sob os cuidados do cirurgião-dentista com inscrição regular no CRO-SP.\n\n2. ESCLARECIMENTOS SOBRE O ATO CIRÚRGICO E DIREITOS:\nDeclaro que:\n- Tive a oportunidade de fazer perguntas e esclarecer todas as dúvidas em linguagem simples e acessível;\n- Sei que tenho o direito de recusar ou revogar este consentimento a qualquer momento antes do início da cirurgia;\n- Recebi orientações claras sobre as alternativas de tratamento e sobre os riscos da recusa do procedimento.\n\n3. RISCOS E DESCONFORTOS PÓS-OPERATÓRIOS:\nCompreendo que intervenções cirúrgicas na boca podem acarretar desconfortos e intercorrências previsíveis:\n- Inchaço na face, rigidez para abrir a boca e desconforto doloroso nas primeiras 72 horas;\n- Sangramento discreto e possibilidade de hematomas que regridem espontaneamente;\n- Risco de infecção cirúrgica caso não sejam seguidas as orientações de higiene e medicamentos prescritos.\n\n4. CUMPRIMENTO DAS RECOMENDAÇÕES E ENTREGA DA 2ª VIA:\nComprometo-me a seguir rigorosamente as orientações de pós-operatório. Declaro expressamente que recebi neste ato a SEGUNDA VIA ORIGINAL DESTE TERMO para minha guarda domiciliar.",
+    "bibliographic_citation": "CRO-SP. Guia de Orientação Profissional e Bioética do CRO-SP; CFO Resolução 118/2012; Lei Federal 5.081/66.",
+    "is_public": true
+  },
+  {
+    "id": "cfo_sedacao_oxido_nitroso",
+    "category": "CFO/CRO",
+    "institution_name": "Conselho Federal de Odontologia (CFO)",
+    "specialty": "Sedação Consciente Inalatória",
+    "title": "TCLE Padrão CFO — Sedação Consciente Inalatória com Mistura de N2O e O2",
+    "normative_grounding": "Resolução CFO 51/2004 (Uso de Sedação Consciente com Óxido Nitroso); Código de Ética Odontológica (Res. CFO 118/2012); Lei Federal 5.081/66.",
+    "clinical_evidence": "Malamed SF. Sedation: A Guide to Patient Management; ADA Guidelines for Sedation; Pareceres Técnicos do CFO.",
+    "essential_clauses": [
+      "Declaração expressa de que a sedação inalatória NÃO é anestesia geral: o paciente permanece acordado, consciente e com reflexos de proteção íntegros.",
+      "Exigência rigorosa de jejum prévio de no mínimo 2 a 3 horas para sólidos e 2 horas para líquidos claros.",
+      "Proibição do procedimento em pacientes com obstrução nasal aguda (resfriados graves) ou cirurgias de ouvido recentes.",
+      "Obrigatoriedade da presença contínua de acompanhante adulto durante e após o procedimento.",
+      "Monitoramento contínuo dos sinais vitais (oximetria de pulso e frequência cardíaca) durante toda a sedação."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Náusea e Vômito Transitórios",
+        "rate": "Desconforto Digestivo Leve e Passageiro",
+        "consequence": "Desconforto gástrico leve associado à profundidade da mistura ou quebra do jejum prévio."
+      },
+      {
+        "risk": "Sensação de Tontura ou Disforia Passageira",
+        "rate": "Sensação Transitória Revertida com Oxigênio Puro",
+        "consequence": "Sensação atípica de vertigem ou euforia passageira revertida imediatamente com oxigênio a 100%."
+      },
+      {
+        "risk": "Ineficácia da Sedação por Ansiedade Extrema",
+        "rate": "Limitação Biológica e Psicológica Individual",
+        "consequence": "Incapacidade de relaxamento através de via inalatória leve, demandando reagendamento ou apoio hospitalar."
+      }
+    ],
+    "full_tcle_text": "CONSELHO FEDERAL DE ODONTOLOGIA — CFO\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PADRÃO NORMATIVO\nSEDAÇÃO CONSCIENTE INALATÓRIA COM ÓXIDO NITROSO E OXIGÊNIO (RESOLUÇÃO CFO 51/2004)\n\n1. AUTORIZAÇÃO E HABILITAÇÃO PROFISSIONAL:\nAutorizo o cirurgião-dentista responsável, devidamente habilitado perante o Conselho Regional de Odontologia nos termos da Resolução CFO 51/2004, a administrar sedação consciente inalatória com a mistura gasosa medicinal de Óxido Nitroso (N2O) e Oxigênio (O2).\n\n2. COMPREENSÃO DO MÉTODO DE SEDAÇÃO:\nDeclaro compreender perfeitamente que:\n- A sedação inalatória NÃO É ANESTESIA GERAL: eu permanecerei plenamente acordado(a) e consciente durante todo o procedimento, relaxado(a), capaz de conversar, engolir espontaneamente e responder aos comandos da equipe;\n- Todos os meus reflexos de proteção respiratória (tosse e deglutição) permanecerão preservados;\n- O método não dispensa o uso do anestésico local nos dentes que demandem bloqueio doloroso.\n\n3. REQUISITOS DE JEJUM E ESTADO DE SAÚDE:\nDeclaro sob compromisso de verdade que:\n- Cumpri o JEJUM PRÉVIO de no mínimo 2 a 3 horas para alimentos sólidos e 2 horas para líquidos transparentes;\n- Não apresento obstrução nasal por gripes ou rinites ativas que impeçam a respiração pela máscara nasal;\n- Não possuo histórico recente de cirurgia de ouvido ou problemas pulmonares específicos contraindicados.\n\n4. CONTROLE E ALTA CLÍNICA:\nFui informado(a) de que a sedação causa agradável sensação de relaxamento. Ao término do atendimento, receberei oxigênio puro a 100% para eliminação completa dos gases, recuperando integralmente a coordenação motora antes de receber alta acompanhado(a).",
+    "bibliographic_citation": "Conselho Federal de Odontologia. Resolução CFO 51/2004; Malamed SF. Sedation; CFO Código de Ética.",
+    "is_public": true
+  },
+  {
+    "id": "crorj_protese_reabilitacao",
+    "category": "CFO/CRO",
+    "institution_name": "Conselho Regional de Odontologia do Rio de Janeiro (CRO-RJ)",
+    "specialty": "Prótese Dentária",
+    "title": "TCLE Modelo Orientativo CRO-RJ — Prótese Dentária e Reabilitação Oral",
+    "normative_grounding": "Resolução CFO 118/2012; Código Civil (Art. 951); CDC (Lei 8.078/90, Art. 6º, III e Art. 14, § 4º); Diretrizes da Sociedade Brasileira de Reabilitação Oral.",
+    "clinical_evidence": "Pegoraro LF et al. Prótese Fixa; Zarb GA, Hobkirk JA. Prosthodontic Treatment for Edentulous Patients; Shillinburg HT.",
+    "essential_clauses": [
+      "Discriminação da modalidade protética aprovada: Prótese Fixa, Prótese Total Convencional (Dentadura), Prótese Parcial Removível (PPR) ou Prótese sobre Implantes.",
+      "Declaração de necessidade de período de adaptação muscular, mastigatória e fonética.",
+      "Previsão de surgimento inicial de pequenas úlceras traumáticas pelo atrito da nova base protética sobre a gengiva desdentada.",
+      "Alerta sobre a reabsorção contínua e natural dos ossos maxilares desdentados, exigindo reembasamento ou troca periódica do aparelho.",
+      "Aprovação estética e funcional obrigatória da montagem dos dentes em cera antes da confecção definitiva."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Adaptação Neuromuscular e Dificuldade Mastigatória Inicial",
+        "rate": "Processo Fisiológico Natural de Acomodação",
+        "consequence": "Cansaço muscular, salivação aumentada e dificuldade temporária na pronúncia de palavras nas primeiras semanas."
+      },
+      {
+        "risk": "Úlceras Traumáticas na Gengiva por Pressão",
+        "rate": "Intercorrência Inicial Eliminada com Ajustes",
+        "consequence": "Pequenos pontos doloridos decorrentes do assentamento da prótese, aliviados com desgastes em consultório."
+      },
+      {
+        "risk": "Reabsorção Óssea Contínua e Perda de Retenção",
+        "rate": "Evolução Biológica Natural do Rebordo Desdentado",
+        "consequence": "Diminuição natural do osso ao longo dos anos, tornando a prótese frouxa e exigindo reembasamentos regulares."
+      },
+      {
+        "risk": "Desgaste ou Quebra Mecânica dos Dentes Artificiais",
+        "rate": "Fadiga Material com o Uso Contínuo",
+        "consequence": "Desgaste natural das peças acrílicas decorrente da mastigação diária de alimentos."
+      }
+    ],
+    "full_tcle_text": "CONSELHO REGIONAL DE ODONTOLOGIA DO RIO DE JANEIRO — CRO-RJ\nCOMISSÃO DE PRÓTESE DENTÁRIA E REABILITAÇÃO ORAL\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO INSTITUCIONAL PARA PRÓTESE DENTÁRIA\n\n1. IDENTIFICAÇÃO DO PROJETO REABILITADOR:\nAutorizo o planejamento e a confecção da prótese dentária acordada (prótese fixa, dentadura convencional, prótese parcial removível ou prótese sobre implantes), ciente de suas indicações e limitações funcionais.\n\n2. APROVAÇÃO DAS ETAPAS E ESTÉTICA VISUAL:\nDeclaro que participei das provas clínicas e aprovei diante do espelho a forma, cor e montagem dos dentes antes da finalização definitiva do trabalho laboratorial.\n\n3. ADAPTAÇÃO, MASTIGAÇÃO E FONÉTICA:\nFui informado(a) de que a cavidade oral requer um PERÍODO DE ADAPTAÇÃO NEUROMUSCULAR:\n- É comum sentir a boca cheia, ter salivação aumentada e sentir pequenas dificuldades passageiras na fala;\n- Podem surgir pequenas feridas na gengiva decorrentes da acomodação da prótese, sendo proibido tentar desgastar a prótese em casa com lixas ou facas;\n- Todos os ajustes oclusais devem ser realizados exclusivamente pelo cirurgião-dentista em consultas de retorno.\n\n4. REABSORÇÃO ÓSSEA VITALÍCIA E REEMBASAMENTO:\nDeclaro ciência de que a mandíbula e a maxila onde não existem dentes naturais passam por processo contínuo de REABSORÇÃO ÓSSEA NATURAL. Por isso, a prótese poderá perder retenção com o passar dos anos, obrigando-me a retornar periodicamente para avaliações e reembasamentos profissionais.",
+    "bibliographic_citation": "CRO-RJ. Guia de Procedimentos Protéticos do CRO-RJ; Pegoraro LF et al. Prótese Fixa; CFO Resolução 118/2012.",
+    "is_public": true
+  },
+  {
+    "id": "cfo_dtm_dor_orofacial",
+    "category": "CFO/CRO",
+    "institution_name": "Conselho Federal de Odontologia (CFO)",
+    "specialty": "DTM e Dor Orofacial",
+    "title": "TCLE Padrão CFO — Manejo de Disfunção Temporomandibular e Placa Miorrelaxante",
+    "normative_grounding": "Resolução CFO 118/2012; Resolução CFO 25/2002; Diretrizes da Comissão de DTM do CFO.",
+    "clinical_evidence": "Okeson JP. Management of Temporomandibular Disorders; Carrara SV, Conti PCR. Termo de consenso em DTM. Dental Press; Schiffman E et al.",
+    "essential_clauses": [
+      "Caracterização da DTM como uma condição crônica, dolorosa e de etiologia biopsicossocial multifatorial (estresse, ansiedade e hábitos de apertamento).",
+      "Esclarecimento de que o objetivo terapêutico é o CONTROLE DA DOR E PROTEÇÃO MECÂNICA DOS DENTES, sem promessa de cura definitiva de estalidos na ATM.",
+      "Prescrição da Placa Oclusal Estabilizadora Rígida em Resina Acrílica e proibição terminante de placas de silicone macias para bruxismo.",
+      "Necessidade de retornos periódicos para ajuste oclusal da placa à medida que a musculatura relaxa.",
+      "Compromisso do paciente de adotar mudanças de estilo de vida, controle de hábitos parafuncionais diurnos e higiene do sono."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Persistência de Ruídos Articulares (Estalidos na ATM)",
+        "rate": "Limitação Anatômica Crônica do Disco",
+        "consequence": "A placa alivia a dor e protege o osso, mas estalidos articulares crônicos podem persistir sem risco imediato."
+      },
+      {
+        "risk": "Flutuação dos Sintomas em Períodos de Estresse",
+        "rate": "Característica Biopsicossocial da Condição",
+        "consequence": "Retorno passageiro de dores de cabeça ou na mandíbula durante fases de estresse emocional ou tensão."
+      },
+      {
+        "risk": "Desajuste Oclusal da Placa pelo Desespasmo Muscular",
+        "rate": "Necessidade Periódica de Ajustes Clínicos",
+        "consequence": "Mudança natural nos pontos de contato com o relaxamento muscular, exigindo ajustes em consultório."
+      },
+      {
+        "risk": "Risco de Mordida Aberta com Placas Parciais Inadequadas",
+        "rate": "Risco Prevenido com Placa Rígida Total",
+        "consequence": "Movimentações dentárias indesejáveis prevenidas com o uso estrito de placa de cobertura total dos dentes."
+      }
+    ],
+    "full_tcle_text": "CONSELHO FEDERAL DE ODONTOLOGIA — CFO\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PADRÃO NORMATIVO\nDISFUNÇÃO TEMPOROMANDIBULAR E DOR OROFACIAL (RESOLUÇÃO CFO 25/2002)\n\n1. CONSENTIMENTO PARA TRATAMENTO CLÍNICO E CONSERVADOR:\nAutorizo o cirurgião-dentista a conduzir o tratamento clínico para controle de sinais e sintomas de Disfunção Temporomandibular (DTM) e bruxismo, com a confecção e instalação de Placa Oclusal Estabilizadora rígida em resina e orientações de suporte.\n\n2. NATUREZA CRÔNICA E OBJETIVOS TERAPÊUTICOS:\nDeclaro ciência de que as DTMs são CONDIÇÕES DE SAÚDE CRÔNICAS E MULTIFATORIAIS relacionadas à musculatura, articulação da mandíbula (ATM) e tensão emocional (estresse, ansiedade e apertamento diurno). O objetivo é o CONTROLE DA DOR E A PROTEÇÃO MECÂNICA DOS DENTES, não havendo garantia de cura definitiva ou eliminação imediata de estalidos na articulação.\n\n3. CONDUTAS OBRIGATÓRIAS DO PACIENTE:\nComprometo-me a:\n- Usar a placa oclusal rigorosamente durante as noites de sono e higienizá-la com água fria e sabão neutro;\n- Comparecer às consultas de retorno para refinamento dos ajustes da placa;\n- Seguir as orientações de termoterapia, exercícios suaves e controle de hábitos durante o dia (não morder canetas, não apoiar a mão no queixo e não apertar os dentes acordado).\n\n4. CIÊNCIA DE EXCLUSIVIDADE DE MEIO:\nCompreendo que a resposta ao tratamento varia de pessoa para pessoa e que picos de ansiedade podem gerar oscilações de dor, constituindo a evolução biológica natural da condição crônica.",
+    "bibliographic_citation": "Conselho Federal de Odontologia. Resolução CFO 25/2002; Carrara SV, Conti PCR. Dental Press J Orthod; Okeson JP. Elsevier.",
+    "is_public": true
+  },
+  {
+    "id": "abol_pericial_exodontia_parestesia",
+    "category": "Artigo Científico / ABOL",
+    "institution_name": "ABOL — Associação Brasileira de Odontologia Legal",
+    "specialty": "Odontologia Legal e Forense",
+    "title": "Diretriz Pericial ABOL — Blindagem Médico-Legal para Exodontias e Risco de Parestesia",
+    "normative_grounding": "Código de Defesa do Consumidor (Lei 8.078/90, Art. 6º, III e Art. 14, § 4º); STJ REsp 1.540.580/DF; STJ REsp 1.871.939/SP; Jurisprudência Consolidada da Revista Brasileira de Odontologia Legal (RBOL).",
+    "clinical_evidence": "RBOL; Silva M. Compêndio de Odontologia Legal; França GV. Medicina Legal; Pogrel MA. J Am Dent Assoc.",
+    "essential_clauses": [
+      "Individualização pericial estrita: vedação absoluta a termos genéricos pré-impressos sob pena de nulidade perante os tribunais.",
+      "Identificação dos dentes com registro da relação anatômica de proximidade com o nervo alveolar inferior vista em radiografia ou tomografia computadorizada (CBCT).",
+      "Fixação pericial de prazos biológicos de neurapraxia (recuperação sensorial lenta e progressiva) e alerta de risco raro permanente por dilaceração radicular.",
+      "Cláusula de Sepultamento Radicular Estratégico (Coronectomia) fundamentada pericialmente para afastar alegação de imperícia em juízo.",
+      "Rubrica em todas as laudas e exigência de entrega prévia da 2ª via original fora do ambiente da cadeira cirúrgica."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Neurapraxia / Parestesia Transitória do NAI e Lingual",
+        "rate": "Intercorrência de Estiramento com Recuperação Lenta",
+        "consequence": "Sensação de dormência ou formigamento no lábio e queixo com retorno sensorial gradual em semanas ou meses."
+      },
+      {
+        "risk": "Neurotmese / Lesão Nervosa Definitiva",
+        "rate": "Risco Anatômico Raro em Raízes Dilaceradas",
+        "consequence": "Comprometimento sensitivo permanente por íntima adesão anatômica do nervo às raízes do dente."
+      },
+      {
+        "risk": "Alteração Temporária do Paladar (Disgeusia)",
+        "rate": "Intercorrência Sensorial Transitória",
+        "consequence": "Pequena alteração no paladar na parte lateral da língua por edema adjacente ao nervo lingual."
+      }
+    ],
+    "full_tcle_text": "ASSOCIAÇÃO BRASILEIRA DE ODONTOLOGIA LEGAL — ABOL\nDIRETRIZ PERICIAL FORENSE DE BLINDAGEM DOCUMENTAL\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PADRÃO PERICIAL JUDICIAL\n\n1. FUNDAMENTAÇÃO PERICIAL E VALOR PROBATÓRIO:\nO presente instrumento atende aos parâmetros periciais da Associação Brasileira de Odontologia Legal (ABOL) e do Superior Tribunal de Justiça (STJ REsp 1.540.580/DF e REsp 1.871.939/SP), possuindo individualização cirúrgica estrita.\n\n2. RELAÇÃO ANATÔMICA COM O CANAL MANDIBULAR:\nDeclaro que recebi explicações detalhadas sobre meus exames radiográficos/tomográficos. Fui informado(a) de que as raízes do(s) dente(s) a ser(em) extraído(s) mantêm íntima proximidade com o CANAL MANDIBULAR, trajeto anatômico do NERVO ALVEOLAR INFERIOR, bem como proximidade com o NERVO LINGUAL.\n\n3. RISCO NEUROLÓGICO E CIÊNCIA QUALITATIVA:\nFui expressa e pericialmente advertido(a) de que a manipulação cirúrgica para remoção do dente pode provocar:\na) Parestesia Transitória: Neurapraxia por estiramento mecânico ou edema cirúrgico, provocando dormência no lábio inferior, queixo ou língua, regredindo com acompanhamento profissional e laserterapia;\nb) Parestesia Prolongada: Risco biológico inerente à anatomia cirúrgica decorrente de aderência extrema das raízes ao feixe nervoso.\n\n4. AUTORIZAÇÃO PERICIAL DE CORONECTOMIA (SEPULTAMENTO APICAL):\nCaso o cirurgião-dentista constate, no transoperatório, que a remoção forçada da ponta da raiz provocará lesão definitiva no nervo, FICA EXPRESSAMENTE AUTORIZADA A CONDUTA RECONHECIDA DE SEPULTAMENTO RADICULAR INTENCIONAL (CORONECTOMIA), removendo-se a coroa e preservando-se a ponta da raiz estéril dentro do osso, o que afasta qualquer imperícia técnica pericial.\n\n5. REGISTRO E SEGUNDA VIA:\nDeclaro que este termo me foi explicado e entregue FORA DA CADEIRA CIRÚRGICA, tendo-me sido concedido tempo hábil de reflexão, encontrando-se uma via original assinada em minhas mãos.",
+    "bibliographic_citation": "ABOL. Diretrizes Forenses para Prontuários Odontológicos; STJ REsp 1.540.580/DF; STJ REsp 1.871.939/SP; Silva M. Odontologia Legal.",
+    "is_public": true
+  },
+  {
+    "id": "scielo_hof_protocolo_vascular",
+    "category": "Artigo Científico / ABOL",
+    "institution_name": "SciELO / Rev. Bras. Odontol. Legal — Estudo Multicêntrico HOF",
+    "specialty": "Harmonização Orofacial e Emergências",
+    "title": "Protocolo Clínico-Legal SciELO — Consentimento Específico para Risco Vascular em HOF",
+    "normative_grounding": "Artigos SciELO Saúde Coletiva e Odontologia Forense; DeLorenzi C; CDC (Art. 14, § 4º - Dever de pronta resposta técnica médica); Código Civil (Arts. 186 e 927).",
+    "clinical_evidence": "DeLorenzi C. Aesthet Surg J; Funt D, Pavicic T. Clin Cosmet Investig Dermatol; Beleznay K et al. Aesthet Surg J.",
+    "essential_clauses": [
+      "Ciência de que qualquer injeção facial de preenchedores, mesmo com cânulas, envolve risco intrínseco de compressão ou invasão vascular acidental.",
+      "Autorização expressa de urgência para aplicação imediata de Hialuronidase em alta dose e medidas vasodilatadoras caso haja branqueamento da pele ou dor súbita.",
+      "Obrigação do paciente de inspecionar a pele diante do espelho e avisar imediatamente a clínica ao menor sinal de manchas escuras ou dor desproporcional.",
+      "Aviso sobre zonas faciais de maior cautela vascular (dorso nasal, asa nasal e glabela) e risco de embolia oftálmica.",
+      "Reconhecimento pericial de que o pronto atendimento com hialuronidase de urgência comprova zelo profissional e mitiga danos teciduais."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Oclusão Vascular Arterial Aguda",
+        "rate": "Urgência Clínica com Protocolo de Resposta Imediata",
+        "consequence": "Diminuição do fluxo de sangue no vaso, com dor aguda e palidez cutânea revertidas com hialuronidase."
+      },
+      {
+        "risk": "Necrose Cutânea por Isquemia não Tratada",
+        "rate": "Complicação Grave Prevenida com Diagnóstico Rápido",
+        "consequence": "Perda tecidual superficial caso a falta de oxigenação não seja desfeita prontamente com enzimas dissolventes."
+      },
+      {
+        "risk": "Amaurose Retrógrada por Embolia Oftálmica",
+        "rate": "Complicação Rara com Protocolo de Apoio Oftalmológico",
+        "consequence": "Comprometimento súbito da visão por refluxo retrógrado na artéria oftálmica, demandando atendimento emergencial imediato."
+      }
+    ],
+    "full_tcle_text": "SCIELO ODONTOLOGIA FORENSE & REVISTA BRASILEIRA DE ODONTOLOGIA LEGAL\nPROTOCOLO CLÍNICO-LEGAL BASEADO EM EVIDÊNCIAS MULTICÊNTRICAS\nTERMO DE CONSENTIMENTO ESPECÍFICO PARA PROCEDIMENTOS INJETÁVEIS E CONDUTA VASCULAR\n\n1. ALVO ANATÔMICO E NATUREZA DO PROCEDIMENTO:\nAutorizo a injeção de ácido hialurônico nas regiões faciais indicadas no prontuário. Declaro ciência de que a anatomia dos vasos sanguíneos da face apresenta ramificações microscópicas individuais variáveis e complexas.\n\n2. PROTOCOLO DE INTERVENÇÃO IMEDIATA COM HIALURONIDASE:\nFui extensamente esclarecido(a) com base nos consensos científicos mundiais de que o material preenchedor pode, de forma involuntária, comprimir ou invadir pequeno ramo vascular. Diante de qualquer sinal clínico de sofrimento da pele (palidez, dor incomum ou mancha rendilhada), AUTORIZO FORMAL E IRREVOGAVELMENTE a equipe a:\na) Aplicar imediatamente injeções de HIALURONIDASE DE URGÊNCIA para dissolução enzimática acelerada do preenchedor;\nb) Prescrever medicamentos vasodilatadores, corticoterapia e medidas hiperêmicas;\nc) Encaminhar para acompanhamento complementar conjunto caso necessário.\n\n3. DEVER DE COMUNICAÇÃO IMEDIATA PELO PACIENTE:\nComprometo-me formalmente a examinar minha pele no espelho nas primeiras 12 horas. OBRIGO-ME A ENTRAR EM CONTATO IMEDIATO VIA TELEFONE/WHATSAPP DA CLÍNICA caso sinta:\n- Dor desproporcional que não cede com analgésico;\n- Aparecimento de áreas esbranquiçadas, violáceas ou manchadas na pele;\n- Alteração visual ou vista embaçada (situação que demanda pronto-socorro oftalmológico urgente).\n\n4. RECONHECIMENTO JURÍDICO DA PRONTA ATUAÇÃO:\nDeclaro ciência de que a prontidão da equipe na aplicação do protocolo internacional de hialuronidase afasta a ocorrência de omissão técnica, comprovando o cumprimento do dever de zelo profissional.",
+    "bibliographic_citation": "DeLorenzi C. Aesthet Surg J; Funt D, Pavicic T. Clin Cosmet Investig Dermatol; Beleznay K et al. Aesthet Surg J; SciELO Odontologia Forense.",
+    "is_public": true
+  },
+  {
+    "id": "intl_endo_journal_acidentes",
+    "category": "Artigo Científico / ABOL",
+    "institution_name": "International Endodontic Journal & SciELO Odontologia",
+    "specialty": "Endodontia Baseada em Evidências",
+    "title": "TCLE Evidências Científicas — Acidentes e Complicações no Tratamento de Canal",
+    "normative_grounding": "International Endodontic Journal; Siqueira Jr & Rôças (SciELO/PubMed); European Society of Endodontology Guidelines; CFO Res. 118/2012.",
+    "clinical_evidence": "McGuigan MB, Louca C, Duncan HF. Br Dent J; Guivarc'h M et al. J Endod; Siqueira JF Jr. Int Endod J.",
+    "essential_clauses": [
+      "Explicação técnica sobre fadiga metálica cíclica e torcional de instrumentos rotatórios de níquel-titânio acionados a motor.",
+      "Protocolo científico em caso de fratura de lima: o fragmento é biocompatível e pode atuar como selamento seguro quando a desinfecção foi concluída.",
+      "Esclarecimento sobre a irrigação antisséptica necessária com hipoclorito de sódio e conduta no raro extravasamento apical.",
+      "Aviso sobre a persistência bacteriana em túbulos microscópicos profundos em lesões periapicais crônicas refratárias.",
+      "Termo de ciência de que dentes despolpados sofrem perda de elasticidade e exigem coroa de reforço."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Fratura Involuntária de Instrumento Rotatório (NiTi)",
+        "rate": "Intercorrência Inerente à Fadiga em Canais Curvos",
+        "consequence": "Separação mecânica do metal na raiz; conduta de contorno, remoção por ultrassom ou selamento biológico com fragmento."
+      },
+      {
+        "risk": "Acidente com Hipoclorito de Sódio (Extravasamento Apical)",
+        "rate": "Intercorrência Rara com Forame Amplo",
+        "consequence": "Reação química periapical temporária com queimação súbita e edema, controlada com suporte medicamentoso."
+      },
+      {
+        "risk": "Perfuração Radicular em Canais Atrésicos",
+        "rate": "Intercorrência em Canais Estreitos e Calcificados",
+        "consequence": "Comunicação acidental tratada e selada com cimento reparador à base de silicato de cálcio (MTA)."
+      },
+      {
+        "risk": "Persistência Bacteriana em Lesões Crônicas",
+        "rate": "Limitação Microbiológica Inerente",
+        "consequence": "Bactérias alojadas em deltas microscópicos exigindo retratamento ou cirurgia parendodôntica complementar."
+      }
+    ],
+    "full_tcle_text": "INTERNATIONAL ENDODONTIC JOURNAL & SCIELO ODONTOLOGIA\nREPOSITÓRIO CIENTÍFICO BASEADO EM EVIDÊNCIAS FORENSES E MICROBIOLÓGICAS\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA COMPLICAÇÕES ENDODÔNTICAS\n\n1. INDICAÇÃO E LIMITAÇÕES CIENTÍFICAS:\nAutorizo o tratamento ou retratamento do canal radicular, ciente de que a endodontia busca desinfectar a raiz, mas que bactérias crônicas podem se alojar em ramificações microscópicas impossíveis de serem completamente eliminadas por qualquer método existente, podendo raramente requerer intervenções complementares.\n\n2. DA FADIGA E FRATURA INVOLUNTÁRIA DE LIMAS:\nDeclaro ter sido informado(a) de que os instrumentos que limpam o canal são limas de ligas de Níquel-Titânio milimétricas acionadas a motor. Em canais com curvas acentuadas ou calcificações, esses instrumentos sofrem esforço físico natural de fadiga mecânica, podendo ocorrer a SEPARAÇÃO INVOLUNTÁRIA DE UM FRAGMENTO METÁLICO. Fui orientado(a) de que o fragmento é estéril e biocompatível, ficando a equipe autorizada a tentar sua remoção por ultrassom, ultrapassá-lo ou incorporá-lo como obturação segura e selada com cimento biocerâmico.\n\n3. DO EXTRAVASAMENTO DE SOLUÇÃO ANTIMICROBIANA:\nPara erradicação das bactérias, é imperativo o uso de solução antisséptica de hipoclorito de sódio. Tenho ciência de que, raramente, a solução pode passar pela abertura natural da ponta da raiz, provocando dor momentânea e inchaço, situação tratada pela equipe com bloqueio anestésico, compressas térmicas e medicamentos de suporte.\n\n4. COMPROMISSO DE PROTEÇÃO DA COROA:\nEstou plenamente ciente de que o dente tratado de canal deve ser protegido por restauração definitiva ou coroa protética. Assumo a responsabilidade por eventuais quebras irreversíveis caso demore mais de 30 dias para realizar o reforço protético.",
+    "bibliographic_citation": "McGuigan MB, Louca C, Duncan HF. Br Dent J; Guivarc'h M et al. J Endod; Siqueira JF Jr. Int Endod J; European Society of Endodontology Guidelines.",
+    "is_public": true
+  },
+  {
+    "id": "cochrane_jomi_implantes_periimplantite",
+    "category": "Artigo Científico / ABOL",
+    "institution_name": "Cochrane Database of Systematic Reviews & JOMI",
+    "specialty": "Implantodontia Baseada em Evidências",
+    "title": "TCLE Científico — Riscos Biológicos, Perda Tardia e Peri-Implantite",
+    "normative_grounding": "Cochrane Database of Systematic Reviews; International Journal of Oral & Maxillofacial Implants (JOMI); Consenso do European Workshop on Periodontology; CDC Art. 6º, III.",
+    "clinical_evidence": "Esposito M et al. Cochrane Database Syst Rev; Derks J, Tomasi C. J Clin Periodontol; Albrektsson T et al. Int J Oral Maxillofac Implants.",
+    "essential_clauses": [
+      "Apresentação dos fatores biológicos de sobrevida dos implantes de titânio e do caráter celular da osseointegração.",
+      "Esclarecimento minucioso sobre a Peri-implantite como infecção bacteriana destrutiva que reabsorve o osso ao redor do implante ao longo dos anos.",
+      "Alerta sobre a multiplicação acentuada de riscos em pacientes tabagistas ou com diabetes descompensado.",
+      "Perda óssea marginal fisiológica esperada de remodelação biológica natural ao redor da plataforma protética.",
+      "Compromisso compulsório de manutenção clínica profissional semestral e higiene diária sob pena de perda do suporte ósseo."
+    ],
+    "risks_and_statistics": [
+      {
+        "risk": "Peri-implantite Tardia com Destruição Óssea",
+        "rate": "Complicação Infecciosa Crônica Previsível",
+        "consequence": "Perda progressiva de suporte ósseo ao redor das roscas de titânio causada por biofilme bacteriano sem higiene rigorosa."
+      },
+      {
+        "risk": "Perda Precoce de Osseointegração",
+        "rate": "Falha de Resposta Celular Óssea Individual",
+        "consequence": "Falta de união óssea estável antes da confecção da prótese, multiplicada em pacientes fumantes ou diabéticos."
+      },
+      {
+        "risk": "Afrouxamento ou Quebra do Parafuso Protético",
+        "rate": "Sobrecarga Mastigatória Mecânica",
+        "consequence": "Fadiga mecânica dos parafusos de fixação causada por forças mastigatórias excessivas ou bruxismo."
+      },
+      {
+        "risk": "Mucosite Peri-implantar Inflamatória",
+        "rate": "Reação Gengival Reversível com Limpeza",
+        "consequence": "Gengiva inflamada ao redor do pino, revertida com raspagem delicada e higienização adequada."
+      }
+    ],
+    "full_tcle_text": "COCHRANE DATABASE OF SYSTEMATIC REVIEWS & JOMI\nCONSÓRCIO DE EVIDÊNCIAS CLÍNICAS E PERICIAIS EM IMPLANTODONTIA\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO BASEADO EM REVISÕES SISTEMÁTICAS\n\n1. EVIDÊNCIAS CIENTÍFICAS E TRATAMENTO COM IMPLANTES:\nAutorizo o tratamento de reabilitação por implantes dentários, ciente de que o implante proporciona excelente suporte mastigatório, mas que a fixação ao osso (osseointegração) é uma resposta biológica celular viva do meu corpo, dependente de condições imunes e de saúde geral.\n\n2. FATORES SISTÊMICOS E HÁBITOS DE RISCO:\nFui informado(a) de que o sucesso dos implantes é prejudicado por condições clínicas comprovadas:\n- Tabagismo: O fumo diário reduz a oxigenação dos tecidos ósseos e multiplica o risco de perda precoce e infecções;\n- Diabetes Descompensado: Níveis descontrolados de glicose dificultam a cicatrização e aumentam riscos infecciosos;\n- Histórico de Doença na Gengiva (Periodontite): Pacientes com histórico de perda dental por problemas periodontais têm maior propensão à colonização bacteriana ao redor de implantes.\n\n3. RISCO DE PERI-IMPLANTITE TARDIA:\nDeclaro CIÊNCIA CATEGÓRICA de que os implantes exigem tantos ou mais cuidados de higiene que os dentes naturais. O acúmulo de sujeira e bactérias causa PERI-IMPLANTITE — infecção destrutiva que amolece e reabsorve o osso de sustentação do implante. A prevenção exige uso diário de fio dental e escovas interdentais.\n\n4. PROTOCOLO OBRIGATÓRIO DE RETORNO SEMESTRAL:\nComprometo-me formalmente a comparecer às consultas semestrais de controle e profilaxia profissional. A falta a essas manutenções afasta qualquer presunção de falha do serviço odontológico, respondendo o paciente pela perda óssea decorrente do abandono das revisões (CDC Art. 14, § 3º, II).",
+    "bibliographic_citation": "Esposito M et al. Cochrane Database of Systematic Reviews; Derks J, Tomasi C. J Clin Periodontol; Albrektsson T et al.; 6th European Workshop on Periodontology.",
+    "is_public": true
+  }
+]

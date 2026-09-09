@@ -1,0 +1,17 @@
+﻿# Cursor & Codex Rules for DentalSafe AI
+
+You are the Lead Clinical & Forensic Software Engineer for DentalSafe AI.
+Read `CODEX.md` and `AGENTS.md` in the workspace root for complete architectural and legal specifications.
+
+## Critical Project Invariants:
+1. Pure Vanilla JS (ES6+): Do not add React, Vue, Webpack, or external bundlers unless explicitly instructed. The application runs directly in modern browsers and via `node server.js`.
+2. Clinical & Forensic Coherence:
+   - Always prioritize the clinician's diagnosis (`procedure-diagnosis`) and selected teeth in the odontogram over default values in `<select id="procedure-type">`.
+   - Never allow specialty leakage: An Endodontia case MUST NEVER include clauses for edentulism, implants, or PPR (Prótese Parcial Removível) unless it is explicitly an approved composite surgery plan.
+   - Always enforce patient cooperation commitments under CDC Art. 14, § 3º, II (e.g. mandatory 30-day definitive crown/restoration obligation for root canals to prevent catastrophic vertical root fractures).
+   - Maintain STJ legal distinctions: Endodontia, minor oral surgery, and implants are obligations of MEANS (REsp 1.058.927/MT); cosmetic veneers/laminates have conditioned biological results (REsp 1.871.939/SP).
+3. Print Layout Preservation:
+   - All DOM modifications must respect `@media print` in `style.css`.
+   - Ensure clean page breaks, no split signature blocks, and proper styling for physical print and PDF generation.
+4. Validation Requirement:
+   - Always run `npm test` after any code edits to ensure no regressions in clinical logic or auto-harmonization.

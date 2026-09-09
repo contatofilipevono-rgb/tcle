@@ -1,0 +1,32 @@
+{
+  "name": "dentalsafe-tcle-ai",
+  "version": "2.1.0",
+  "description": "Plataforma Clínica e Pericial Odontológica para Emissão de TCLEs, Prescrições e Orientações Pós-Operatórias",
+  "main": "server.js",
+  "scripts": {
+    "build": "node build-static.cjs",
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test_endo_tooth11_fix.js && node test_clinical_ai_integration.js && node test_prescriptions_rx_module.js && node test_hof_integration.js && node test_institutional_integration.js && node test_patients_lgpd_module.js && node --test test_safety.js",
+    "test:endo": "node test_endo_tooth11_fix.js",
+    "test:clinical": "node test_clinical_ai_integration.js",
+    "test:rx": "node test_prescriptions_rx_module.js",
+    "test:patients": "node test_patients_lgpd_module.js",
+    "share": "C:\\Users\\Valer\\.gemini\\antigravity\\scratch\\cloudflared.exe tunnel --url http://localhost:3000 --http-host-header localhost",
+    "deploy": "npm test && npm run build && npx surge ./dist dentalsafe-tcle-ai.surge.sh"
+  },
+  "keywords": [
+    "odontologia",
+    "tcle",
+    "cfo",
+    "stj",
+    "prescricoes",
+    "forense",
+    "ia-clinica"
+  ],
+  "author": "DentalSafe AI Team",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "isomorphic-git": "^1.41.9"
+  }
+}

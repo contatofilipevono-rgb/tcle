@@ -1,0 +1,2811 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DentalSafe AI — TCLE Odontológico</title>
+  <meta name="description" content="Gerador de Termo de Consentimento Livre e Esclarecido odontológico hiper-personalizado — Padrão ABOL, CFO 118/2012, CDC, Código Civil e STJ.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Supabase JS v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== LOGIN OVERLAY ===================== -->
+<div id="login-overlay" style="display:none;">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="login-brand-icon">
+        <img src="assets/apple_dentalsafe_logo.jpg" alt="DentalSafe AI" class="brand-logo-img">
+      </div>
+      <div>
+        <h2>DentalSafe <span>AI</span></h2>
+        <p>Proteção Jurídica Odontológica</p>
+      </div>
+    </div>
+    <h3 class="login-title">Entrar na Plataforma</h3>
+    <div id="login-error" class="login-error" style="display:none;"></div>
+    <div class="form-group">
+      <label for="login-email">E-mail</label>
+      <input type="email" id="login-email" placeholder="seu@clinica.com.br" autocomplete="email">
+    </div>
+    <div class="form-group" style="margin-top:10px;">
+      <label for="login-password">Senha</label>
+      <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary btn-lg" id="login-btn" onclick="DS.signIn()" style="width:100%;margin-top:14px;justify-content:center;">
+      <i class="ri-login-box-line"></i> Entrar
+    </button>
+    <div class="login-footer">
+      <i class="ri-shield-keyhole-line"></i>
+      Acesso protegido por Row Level Security (Supabase)
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TOAST ===================== -->
+<div id="ds-toast" class="ds-toast"></div>
+
+<div class="app-container">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+    <div class="macos-traffic-lights">
+      <span class="traffic-light close"></span>
+      <span class="traffic-light minimize"></span>
+      <span class="traffic-light expand"></span>
+    </div>
+    <div class="brand">
+      <div class="brand-icon">
+        <img src="assets/apple_dentalsafe_logo.jpg" alt="DentalSafe AI" class="brand-logo-img">
+      </div>
+      <div class="brand-text">
+        <h2>DentalSafe <span>AI</span></h2>
+        <p>Proteção Jurídica Odontológica</p>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <button class="nav-item active" data-tab="generator-tab">
+        <i class="ri-magic-line"></i><span>Gerar TCLE por IA</span>
+      </button>
+      <button class="nav-item" data-tab="patients-tab">
+        <i class="ri-user-heart-line"></i><span>Pacientes</span>
+        <span class="pill-badge" id="patients-count" style="background:linear-gradient(135deg,#34c759,#248a3d);color:#fff;font-weight:700;">0</span>
+      </button>
+      <button class="nav-item" data-tab="hof-tab">
+        <i class="ri-sparkling-line"></i><span>Harmonização (HOF)</span>
+        <span class="pill-badge" style="background:linear-gradient(135deg,#bf5af2,#9333ea);color:#fff;font-weight:700;">PRO</span>
+      </button>
+      <button class="nav-item" data-tab="prescriptions-tab">
+        <i class="ri-capsule-line"></i><span>Receitas &amp; Atestados</span>
+        <span class="pill-badge" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;font-weight:700;">NOVO</span>
+      </button>
+      <button class="nav-item" data-tab="history-tab">
+        <i class="ri-folder-shield-2-line"></i><span>Prontuários Salvos</span>
+        <span class="pill-badge" id="history-count">3</span>
+      </button>
+      <button class="nav-item" data-tab="intercurrences-tab">
+        <i class="ri-first-aid-kit-line"></i><span>Intercorrências: O Que Fazer</span>
+        <span class="pill-badge" style="background:#ef4444;color:#fff;font-weight:700;">SOS</span>
+      </button>
+      <button class="nav-item" data-tab="settings-tab">
+        <i class="ri-user-settings-line"></i><span>Admin &amp; Cirurgião</span>
+      </button>
+      <button class="nav-item" data-tab="kiwify-tab">
+        <i class="ri-money-dollar-circle-line"></i><span>Vendas Kiwify</span>
+        <span class="pill-badge" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-weight:700;">SaaS</span>
+      </button>
+    </nav>
+
+    <div style="padding: 10px 16px 0;">
+      <button type="button" class="btn btn-secondary btn-sm" style="width:100%;font-size:11px;opacity:0.85;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);" onclick="openLegalBackgroundModal()">
+        <i class="ri-shield-keyhole-line"></i><span>Base Jurídica (Background)</span>
+      </button>
+    </div>
+
+    <div class="sidebar-footer" onclick="openSurgeonAdminSettings()" style="cursor:pointer;" title="Clique para configurar o Cirurgião-Dentista e a Clínica">
+      <div class="clinic-badge">
+        <i class="ri-user-star-line"></i>
+        <div class="clinic-info">
+          <strong id="clinic-name-display">Configure o profissional</strong>
+          <small id="clinic-cro-display">CRO não informado</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main-content">
+    <header class="top-bar">
+      <div class="header-title">
+        <h1 id="page-title">Gerador de TCLE</h1>
+        <p id="page-subtitle">Termo de Consentimento individualizado por paciente</p>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleAppleTheme()" title="Alternar Modo Claro/Escuro (Apple HIG)">
+          <i class="ri-sun-line"></i> <span>Modo Claro</span>
+        </button>
+        <span id="live-risk-badge" class="live-risk-badge risk-low" title="Análise de Risco Jurídico e Clínico em tempo real"><i class="ri-shield-check-line"></i> Risco Jurídico: Normal</span>
+        <button id="top-surgeon-btn" class="theme-toggle-btn" onclick="openSurgeonAdminSettings()" title="Configurar Cirurgião-Dentista Responsável &amp; Dados da Clínica">
+          <i class="ri-user-star-line"></i> <span id="top-surgeon-name-display">Configure o profissional</span>
+        </button>
+        <button id="privacy-mode-btn" class="theme-toggle-btn" onclick="togglePrivacyMode()" title="Modo Consultório / Privacidade LGPD: Oculta dados pessoais sensíveis (CPF, telefone, endereço) na tela">
+          <i class="ri-eye-off-line"></i> <span id="privacy-mode-label">Privacidade LGPD</span>
+        </button>
+        <button id="session-clear-btn" class="theme-toggle-btn" onclick="clearPatientSessionLGPD()" title="Encerrar Atendimento e Limpar Dados do Paciente Atual (LGPD Art. 18)">
+          <i class="ri-user-unfollow-line"></i> <span>Novo Paciente</span>
+        </button>
+        <span id="top-gemini-badge" class="pill-badge" style="background:linear-gradient(135deg,rgba(10,132,255,0.15),rgba(191,90,242,0.15));color:var(--text-main);font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid rgba(191,90,242,0.3);cursor:pointer;display:inline-flex;align-items:center;gap:5px;" onclick="openSurgeonAdminSettings()" title="Clique para configurar o motor Donti IA TCLE"><i class="ri-sparkling-fill" style="color:#bf5af2;"></i> <span id="top-gemini-label">Motor local</span></span>
+        <span class="ai-status"><span class="pulse"></span> Regras clínicas locais</span>
+        <!-- Barra de usuário logado -->
+        <div id="user-bar" class="user-bar" style="display:none;">
+          <i class="ri-building-line"></i>
+          <div class="user-info">
+            <span id="user-clinic-name" class="user-clinic">Clínica</span>
+            <span id="user-email-display" class="user-email">email</span>
+          </div>
+          <button class="btn-signout" onclick="DS.signOut()" title="Sair">
+            <i class="ri-logout-box-line"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ======= TAB GERADOR ======= -->
+    <section id="generator-tab" class="tab-content active">
+
+      <!-- Stepper -->
+      <div class="stepper">
+        <div class="step active" data-step="1">
+          <div class="step-bubble">1</div>
+          <div class="step-info"><span class="step-title">Paciente</span></div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="2">
+          <div class="step-bubble">2</div>
+          <div class="step-info"><span class="step-title">Anamnese</span></div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="3">
+          <div class="step-bubble">3</div>
+          <div class="step-info"><span class="step-title">Revisão</span></div>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="4">
+          <div class="step-bubble">4</div>
+          <div class="step-info"><span class="step-title">PDF</span></div>
+        </div>
+      </div>
+
+      <!-- ===== STEP 1 ===== -->
+      <div class="step-card active" id="step-1-card">
+        <div class="card-header">
+          <div class="card-header-icon cyan"><i class="ri-user-3-line"></i></div>
+          <div>
+            <h3>Dados do Paciente e Procedimento</h3>
+            <p>Preencha os dados do paciente e selecione o procedimento proposto.</p>
+          </div>
+        </div>
+
+        <!-- Busca de Paciente Existente -->
+        <div class="patient-search-wrap" id="patient-search-wrap">
+          <div class="patient-search-bar">
+            <i class="ri-user-search-line"></i>
+            <input
+              type="text"
+              id="patient-search-input"
+              placeholder="Buscar paciente existente por nome ou CPF…"
+              oninput="DS.onPatientSearchInput(this.value)"
+            >
+            <span class="search-hint">↑ Cadastro reutilizável</span>
+          </div>
+          <div id="patient-search-dropdown" class="patient-dropdown" style="display:none;"></div>
+        </div>
+
+        <!-- BLOCO 0: DADOS DO CIRURGIÃO-DENTISTA RESPONSÁVEL (ADMIN / EMISSOR) -->
+        <div class="form-block admin-dentist-block" id="admin-surgeon-block" style="background:rgba(10,132,255,0.04);border:1px solid rgba(10,132,255,0.22);border-radius:14px;padding:18px;margin-bottom:20px;">
+          <div class="block-label" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--primary);">
+            <span style="font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px;">
+              <i class="ri-user-star-line" style="font-size:18px;"></i> Cirurgião-Dentista Responsável (Administrador / Emissor do TCLE)
+            </span>
+            <span class="pill-badge" style="background:rgba(10,132,255,0.15);color:var(--primary);font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;">
+              <i class="ri-shield-check-line"></i> Papel Timbrado &amp; Assinatura
+            </span>
+          </div>
+          <div class="form-grid cols-4">
+            <div class="form-group col-span-2">
+              <label for="dentist-name-input">Nome Completo do Cirurgião-Dentista <span class="req">*</span></label>
+              <input type="text" id="dentist-name-input" placeholder="Ex: Dr. Rafael Andrade" value="" oninput="syncSurgeonData('name', this.value)">
+            </div>
+            <div class="form-group">
+              <label for="dentist-cro-input">Inscrição CRO / UF <span class="req">*</span></label>
+              <input type="text" id="dentist-cro-input" placeholder="Ex: CRO/SP 114.892" value="" oninput="syncSurgeonData('cro', this.value)">
+            </div>
+            <div class="form-group">
+              <label for="dentist-spec-input">Especialidade do Cirurgião</label>
+              <input type="text" id="dentist-spec-input" placeholder="Ex: Implantodontista" value="" oninput="syncSurgeonData('spec', this.value)">
+            </div>
+            <div class="form-group col-span-2">
+              <label for="clinic-name-input">Nome da Clínica / Consultório</label>
+              <input type="text" id="clinic-name-input" placeholder="Ex: CLÍNICA ODONTOLÓGICA" value="" oninput="syncSurgeonData('clinic', this.value)">
+            </div>
+            <div class="form-group">
+              <label for="clinic-phone-input">WhatsApp / Telefone Comercial</label>
+              <input type="tel" id="clinic-phone-input" placeholder="Ex: (11) 3289-0000" value="" oninput="syncSurgeonData('phone', this.value)">
+            </div>
+            <div class="form-group">
+              <label for="clinic-city-input">Cidade / UF ou Endereço</label>
+              <input type="text" id="clinic-city-input" placeholder="Ex: São Paulo / SP" value="" oninput="syncSurgeonData('city', this.value)">
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">
+            <small style="color:var(--text-muted);font-size:11.5px;">
+              <i class="ri-information-line"></i> Estes dados saem automaticamente no cabeçalho timbrado, na Seção 1 (Qualificação) e nas assinaturas periciais.
+            </small>
+            <div style="display:flex;gap:8px;">
+              <button type="button" class="btn btn-sm btn-outline" onclick="openSurgeonAdminSettings()" title="Acessar aba com endereço completo, e-mail e configurações de clínica"><i class="ri-settings-3-line"></i> Mais Configurações</button>
+              <button type="button" class="btn btn-sm btn-primary" onclick="saveSurgeonDefaultProfile()" title="Salvar dados como padrão permanente neste navegador"><i class="ri-save-line"></i> Salvar Perfil Padrão</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO A -->
+        <div class="form-block">
+          <div class="block-label"><i class="ri-user-line"></i> A — Qualificação do Paciente</div>
+          <div class="form-grid cols-4">
+            <div class="form-group col-span-2">
+              <label for="patient-name">Nome Completo <span class="req">*</span></label>
+              <input type="text" id="patient-name" placeholder="Nome completo conforme documento">
+            </div>
+            <div class="form-group">
+              <label for="patient-cpf">CPF <span class="req">*</span></label>
+              <input type="text" id="patient-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)">
+            </div>
+            <div class="form-group">
+              <label for="patient-rg">RG / Expedidor</label>
+              <input type="text" id="patient-rg" placeholder="00.000.000-X SSP/UF">
+            </div>
+            <div class="form-group">
+              <label for="patient-dob">Data de Nascimento</label>
+              <input type="date" id="patient-dob">
+            </div>
+            <div class="form-group">
+              <label for="patient-phone">WhatsApp / Celular</label>
+              <input type="tel" id="patient-phone" placeholder="(11) 99999-9999">
+            </div>
+            <div class="form-group col-span-2">
+              <label for="patient-address">Endereço Completo</label>
+              <input type="text" id="patient-address" placeholder="Logradouro, nº, Bairro, Cidade/UF">
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO B: Situação Jurídica e Tempo de Reflexão -->
+        <div class="form-block">
+          <div class="block-label"><i class="ri-scales-3-line"></i> B — Situação Jurídica e Tempo de Reflexão (ABOL / CFO)</div>
+          <div class="form-grid cols-2">
+            <div class="form-group col-span-2">
+              <label for="patient-legal-status">Capacidade Civil / Situação Legal <span class="req">*</span></label>
+              <select id="patient-legal-status" onchange="toggleGuardianFields()">
+                <option value="adult">Adulto Plenamente Capaz (18+ anos)</option>
+                <option value="minor-under16">Menor Absolutamente Incapaz (&lt;16 anos) — Assina o Responsável Legal</option>
+                <option value="minor-16-18">Menor Relativamente Incapaz (16–18 anos) — Assina Paciente + Responsável</option>
+                <option value="pcd-curatela">PCD com Curatela Judicial — Assina o Curador Nomeado</option>
+                <option value="illiterate">Paciente Analfabeto — Impressão Digital + Testemunhas a Rogo</option>
+                <option value="emergency">Urgência/Emergência — Exceção Legal (Consentimento Pós-Estabilização)</option>
+              </select>
+            </div>
+            <div id="guardian-fields" style="display:none;" class="col-span-2">
+              <div class="form-grid cols-3">
+                <div class="form-group">
+                  <label for="guardian-name">Nome do Responsável / Curador <span class="req">*</span></label>
+                  <input type="text" id="guardian-name" placeholder="Nome completo">
+                </div>
+                <div class="form-group">
+                  <label for="guardian-cpf">CPF do Responsável</label>
+                  <input type="text" id="guardian-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)">
+                </div>
+                <div class="form-group">
+                  <label for="guardian-relationship">Grau de Parentesco / Vínculo</label>
+                  <input type="text" id="guardian-relationship" placeholder="Ex: Mãe, Pai, Curador Judicial">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="proposal-date">Data de Apresentação e Entrega da Proposta <span class="req">*</span></label>
+              <input type="date" id="proposal-date" title="Recomendação ABOL: prova de que o termo não foi assinado em cima da hora">
+              <small style="color:var(--text-muted);font-size:11px;">Comprova tempo de reflexão prévio fora do consultório.</small>
+            </div>
+            <div class="form-group" style="display:flex;flex-direction:column;justify-content:center;">
+              <label class="checkbox-label" style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-main);cursor:pointer;margin-top:10px;">
+                <input type="checkbox" id="check-cooling-off" style="width:16px;height:16px;accent-color:var(--cyan);">
+                <span>Declaração expressa de <strong>tempo hábil para reflexão</strong> e esclarecimento de dúvidas (sem coação).</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO C: Procedimento e Anestesia -->
+        <div class="form-block">
+          <div class="block-label"><i class="ri-tooth-line"></i> C — Procedimento e Protocolo Anestésico</div>
+          <div class="form-grid cols-4">
+            <div class="form-group col-span-2">
+              <label for="procedure-type">Procedimento Principal <span class="req">*</span></label>
+              <select id="procedure-type" onchange="onProcedureChange(); updateLiveRiskScore();">
+                <option value="implante">Implantodontia (Implante Osseointegrado / Enxerto Ósseo)</option>
+                <option value="protocolo_implante">Prótese Protocolo Fixo Sobre Implantes (All-on-4 / Branemark / Carga Imediata)</option>
+                <option value="harmonizacao">Harmonização Orofacial — HOF (Toxina Botulínica / Preenchimento)</option>
+                <option value="facetas">Facetas e Lentes de Contato em Porcelana ou Resina Composta</option>
+                <option value="sisos">Cirurgia de Terceiros Molares (Extração de Sisos Inclusos)</option>
+                <option value="cirurgia_oral">Cirurgia Oral Menor (Exodontias Múltiplas / Alveoloplastia / Raízes)</option>
+                <option value="frenectomia">Frenectomia Labial e Lingual (Tratamento de Anquiloglossia / Diastema)</option>
+                <option value="canal">Endodontia — Tratamento ou Retratamento de Canal Radicular</option>
+                <option value="apicectomia">Cirurgia Parendodôntica (Apicectomia / Retrobturação Biocerâmica MTA)</option>
+                <option value="periodontia">Periodontia — Raspagem e Cirurgia Periodontal a Retalho</option>
+                <option value="gengivoplastia">Gengivoplastia &amp; Aumento de Coroa (Sorriso Gengival / Espaço Biológico)</option>
+                <option value="enxerto_gengival">Cirurgia Plástica Periodontal &amp; Enxerto Conjuntivo (Palato)</option>
+                <option value="protese">Prótese Dentária — Prótese Fixa, Removível (PPR) ou Total</option>
+                <option value="restauracao">Dentística — Restaurações Diretas em Resina Composta</option>
+                <option value="ortodontia">Ortodontia / Alinhadores Invisíveis (Tratamento de Longo Prazo)</option>
+                <option value="clareamento">Clareamento Dental (Consultório / Caseiro Supervisionado)</option>
+                <option value="odontopediatria">Odontopediatria (Atendimento Infantil / Dentes Decíduos / D.F.A.)</option>
+                <option value="dtm">DTM e Dor Orofacial (Placa Oclusal Estabilizadora / Bruxismo)</option>
+                <option value="ronco_apneia">Odontologia do Sono (Dispositivo de Avanço Mandibular - DAM / Apneia SAOS)</option>
+                <option value="sedacao_oxido">Sedação Consciente Inalatória com Óxido Nitroso e Oxigênio (N2O/O2)</option>
+                <option value="outro">Outro Procedimento — Descrição Manual</option>
+              </select>
+            </div>
+            <div class="form-group col-span-2">
+              <label for="procedure-anesthesia">Protocolo Anestésico Previsto <span class="req">*</span></label>
+              <select id="procedure-anesthesia" onchange="checkAnesthesiaSafety(); updateLiveRiskScore();">
+                <option value="infiltrativa-com-vaso">Anestesia Infiltrativa Local c/ Vasoconstritor (Lidocaína 2% / Articaína 4% + Epinefrina)</option>
+                <option value="bloqueio-com-vaso">Bloqueio Regional de Tronco Nervoso (NAI, Lingual, Bucal) c/ Vasoconstritor</option>
+                <option value="sem-vasoconstritor">Anestesia Local SEM Vasoconstritor (Mepivacaína 3% pura — Cardiopatas/HAS)</option>
+                <option value="sedacao-oxido">Anestesia Local + Sedação Consciente Inalatória (Óxido Nitroso e Oxigênio)</option>
+                <option value="sedacao-oral">Anestesia Local + Pré-medicação Ansiolítica Oral (Benzodiazepínico)</option>
+                <option value="topica">Apenas Anestesia Tópica / Procedimento Superficial</option>
+              </select>
+              <div id="anesthesia-safety-alert" class="anesthesia-alert-box" style="display:none;"></div>
+            </div>
+            <div class="form-group">
+              <label for="procedure-budget">Valor do Orçamento</label>
+              <input type="text" id="procedure-budget" placeholder="R$ 0.000,00">
+            </div>
+            <div class="form-group">
+              <label for="procedure-sessions">Nº de Sessões (Estimativa)</label>
+              <input type="text" id="procedure-sessions" placeholder="Ex: 3 a 4 sessões">
+            </div>
+            <div class="form-group col-span-2">
+              <label for="procedure-material"><i class="ri-medicine-bottle-line"></i> Material / Produto Utilizado</label>
+              <select id="procedure-material" onchange="onProcedureMaterialChange(); updateLiveRiskScore();">
+                <option value="padrao" selected>Material Convencional / Padrão Clínico</option>
+                <option value="Implante de Titânio Puro Osseointegrado">Implante de Titânio Puro Osseointegrado</option>
+                <option value="Cerâmica Pura / Zircônia / Dissilicato de Lítio (E.max)">Cerâmica Pura / Zircônia / Dissilicato (E.max)</option>
+                <option value="Resina Composta Nanoparticulada Estética">Resina Composta Nanoparticulada</option>
+                <option value="Ácido Hialurônico">Ácido Hialurônico</option>
+                <option value="Toxina Botulínica Tipo A">Toxina Botulínica Tipo A</option>
+                <option value="Biomaterial de Enxerto Ósseo Mineral">Biomaterial de Enxerto Ósseo Mineral</option>
+                <option value="Cimento Biocerâmico Bioativo (MTA)">Cimento Biocerâmico Bioativo (MTA)</option>
+                <option value="Alinhadores Invisíveis Termoplásticos">Alinhadores Invisíveis Termoplásticos</option>
+                <option value="outro">Outro Material (Especificar)</option>
+              </select>
+            </div>
+            <div class="form-group col-span-4" id="wrap-material-custom" style="display:none;">
+              <label for="procedure-material-custom"><i class="ri-edit-line"></i> Especificação do Material</label>
+              <input type="text" id="procedure-material-custom" placeholder="Digite o nome ou especificação do material...">
+            </div>
+
+            <!-- AUDITOR DE COERÊNCIA CLÍNICA EM TEMPO REAL POR IA (ANTI-NULIDADE STJ) -->
+            <div class="col-span-4" id="ai-coherence-box" style="display:none;background:linear-gradient(135deg,rgba(15,23,42,0.95),rgba(30,41,59,0.9));border:1px solid rgba(14,165,233,0.45);border-radius:10px;padding:14px 18px;margin:6px 0 14px 0;box-shadow:0 4px 20px rgba(0,0,0,0.25);">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span class="pulse-dot" style="width:10px;height:10px;border-radius:50%;background:#10b981;box-shadow:0 0 10px #10b981;display:inline-block;"></span>
+                  <strong style="font-size:13px;color:var(--text-main);display:flex;align-items:center;gap:6px;">
+                    <i class="ri-brain-line" style="color:var(--cyan);font-size:16px;"></i> Auditor de Coerência Clínica por IA (Validação STJ)
+                  </strong>
+                </div>
+                <div id="ai-coherence-status-pill" style="font-size:11px;padding:3px 10px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;border:1px solid rgba(16,185,129,0.3);font-weight:700;">
+                  100% Condizente
+                </div>
+              </div>
+              <div id="ai-coherence-msg" style="font-size:12.5px;color:var(--text-muted);line-height:1.5;">
+                A IA verifica se o que você digitou no diagnóstico/região é 100% condizente com o procedimento selecionado e as caixas marcadas.
+              </div>
+              <div id="ai-coherence-actions" style="margin-top:10px;display:none;">
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-sync-ai-procedure" onclick="applyAISuggestedProcedure()" style="font-size:11.5px;padding:5px 14px;display:inline-flex;align-items:center;gap:6px;background:var(--primary);color:#fff;border:none;">
+                  <i class="ri-magic-line"></i> <span id="ai-sync-btn-label">Sincronizar Procedimento com a IA</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Intercorrências e Procedimentos Específicos Relatados -->
+            <div class="col-span-4" style="background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.25);border-radius:8px;padding:12px 16px;margin:4px 0 10px 0;">
+              <div style="font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                <i class="ri-git-merge-line"></i> Procedimentos Específicos Relatados / Intercorrências Previstas (Ativação por Clique ou IA)
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:12px;">
+                <label class="checkbox-label" style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;color:var(--text-main);">
+                  <input type="checkbox" id="proc-needs-canal" style="width:17px;height:17px;accent-color:var(--cyan);margin-top:2px;">
+                  <span><strong>Tratamento de Canal (Endodontia)</strong> — Riscos de fratura por curvatura anatômica, NaOCl e restauração definitiva conforme indicação.</span>
+                </label>
+                <label class="checkbox-label" style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;color:var(--text-main);">
+                  <input type="checkbox" id="proc-needs-graft" style="width:17px;height:17px;accent-color:var(--cyan);margin-top:2px;">
+                  <span><strong>Enxerto Ósseo / Biomaterial</strong> — Previsão de remodelação biológica fisiológica parcial e deiscência de sutura.</span>
+                </label>
+                <label class="checkbox-label" style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;color:var(--text-main);">
+                  <input type="checkbox" id="proc-needs-extraction" style="width:17px;height:17px;accent-color:var(--cyan);margin-top:2px;">
+                  <span><strong>Exodontia / Extração Associada</strong> — Alveolite seca, fratura radicular e sepultamento justificado (STJ).</span>
+                </label>
+                <label class="checkbox-label" style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;color:var(--text-main);">
+                  <input type="checkbox" id="proc-needs-paresthesia" style="width:17px;height:17px;accent-color:var(--cyan);margin-top:2px;">
+                  <span><strong>Proximidade Nervosa (NAI / Lingual)</strong> — Risco de dormência/parestesia temporária ou permanente.</span>
+                </label>
+                <label class="checkbox-label" style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;color:var(--text-main);">
+                  <input type="checkbox" id="proc-needs-coroa" style="width:17px;height:17px;accent-color:var(--cyan);margin-top:2px;">
+                  <span><strong>Dente Fragilizado / Exigência de Coroa</strong> — Planejamento da restauração definitiva após o canal.</span>
+                </label>
+                <label class="checkbox-label" style="display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;color:var(--text-main);">
+                  <input type="checkbox" id="proc-needs-hof-vascular" style="width:17px;height:17px;accent-color:var(--cyan);margin-top:2px;">
+                  <span><strong>HOF — Emergência Vascular</strong> — Autorização expressa imediata de aplicação de Hialuronidase em alta dose.</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- ODONTOGRAMA INTERATIVO CLICÁVEL -->
+            <div class="odontogram-wrapper col-span-4">
+              <div class="odontogram-header">
+                <div class="odontogram-title">
+                  <i class="ri-tooth-line"></i>
+                  <strong>Odontograma Interativo — Notação FDI (Permanente &amp; Decídua)</strong>
+                </div>
+                <div class="odonto-presets">
+                  <button type="button" class="odonto-preset-btn" onclick="selectTeethPreset('sisos')"><i class="ri-sparkling-line"></i> Sisos (18, 28, 38, 48)</button>
+                  <button type="button" class="odonto-preset-btn" onclick="selectTeethPreset('ant-sup')">Anteriores Sup.</button>
+                  <button type="button" class="odonto-preset-btn" onclick="selectTeethPreset('ant-inf')">Anteriores Inf.</button>
+                  <button type="button" class="odonto-preset-btn" onclick="selectTeethPreset('arc-sup')">Arcada Sup.</button>
+                  <button type="button" class="odonto-preset-btn" onclick="selectTeethPreset('arc-inf')">Arcada Inf.</button>
+                  <button type="button" class="odonto-preset-btn" onclick="selectTeethPreset('decid-todos')">Todos Decíduos (51–85)</button>
+                  <button type="button" class="odonto-preset-btn" onclick="selectTeethPreset('todos')">Todos Permanentes</button>
+                  <button type="button" class="odonto-preset-btn clear" onclick="clearTeethSelection()"><i class="ri-close-line"></i> Limpar</button>
+                </div>
+              </div>
+
+              <!-- Seletor de Tipo de Dentição -->
+              <div class="odonto-mode-switch">
+                <button type="button" id="odonto-mode-perm" class="mode-btn active" onclick="setOdontoMode('perm')">
+                  <i class="ri-user-smile-line"></i> Dentição Permanente / Adulto (Elementos 11 a 48)
+                </button>
+                <button type="button" id="odonto-mode-decid" class="mode-btn" onclick="setOdontoMode('decid')">
+                  <i class="ri-bear-smile-line"></i> Odontopediatria / Dentes Decíduos (Elementos 51 a 85)
+                </button>
+              </div>
+
+              <!-- Board 1: Dentição Permanente -->
+              <div class="odontogram-board" id="odonto-board-perm">
+                <!-- Arcada Superior -->
+                <div class="odonto-arch-row arch-upper">
+                  <div class="arch-label">Arcada Superior Permanente (Maxila)</div>
+                  <div class="quadrants-wrapper">
+                    <!-- Q1: Superior Direito (18 ao 11) -->
+                    <div class="quadrant-box q1" title="Quadrante 1 — Superior Direito">
+                      <span class="q-badge">Q1 (Sup. Direito)</span>
+                      <div class="teeth-row" id="teeth-q1">
+                        <button type="button" class="tooth-btn molar siso" data-fdi="18" onclick="toggleTooth('18')" title="18 — 3º Molar Sup. Dir. (Siso)"><span class="fdi-num">18</span><small>Siso</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="17" onclick="toggleTooth('17')" title="17 — 2º Molar Sup. Dir."><span class="fdi-num">17</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="16" onclick="toggleTooth('16')" title="16 — 1º Molar Sup. Dir."><span class="fdi-num">16</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn premolar" data-fdi="15" onclick="toggleTooth('15')" title="15 — 2º Pré-molar Sup. Dir."><span class="fdi-num">15</span><small>Pré</small></button>
+                        <button type="button" class="tooth-btn premolar" data-fdi="14" onclick="toggleTooth('14')" title="14 — 1º Pré-molar Sup. Dir."><span class="fdi-num">14</span><small>Pré</small></button>
+                        <button type="button" class="tooth-btn canine" data-fdi="13" onclick="toggleTooth('13')" title="13 — Canino Sup. Dir."><span class="fdi-num">13</span><small>Canino</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="12" onclick="toggleTooth('12')" title="12 — Incisivo Lat. Sup. Dir."><span class="fdi-num">12</span><small>Inc.L</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="11" onclick="toggleTooth('11')" title="11 — Incisivo Cent. Sup. Dir."><span class="fdi-num">11</span><small>Inc.C</small></button>
+                      </div>
+                    </div>
+                    <div class="midline-vertical"></div>
+                    <!-- Q2: Superior Esquerdo (21 ao 28) -->
+                    <div class="quadrant-box q2" title="Quadrante 2 — Superior Esquerdo">
+                      <span class="q-badge">Q2 (Sup. Esquerdo)</span>
+                      <div class="teeth-row" id="teeth-q2">
+                        <button type="button" class="tooth-btn incisor" data-fdi="21" onclick="toggleTooth('21')" title="21 — Incisivo Cent. Sup. Esq."><span class="fdi-num">21</span><small>Inc.C</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="22" onclick="toggleTooth('22')" title="22 — Incisivo Lat. Sup. Esq."><span class="fdi-num">22</span><small>Inc.L</small></button>
+                        <button type="button" class="tooth-btn canine" data-fdi="23" onclick="toggleTooth('23')" title="23 — Canino Sup. Esq."><span class="fdi-num">23</span><small>Canino</small></button>
+                        <button type="button" class="tooth-btn premolar" data-fdi="24" onclick="toggleTooth('24')" title="24 — 1º Pré-molar Sup. Esq."><span class="fdi-num">24</span><small>Pré</small></button>
+                        <button type="button" class="tooth-btn premolar" data-fdi="25" onclick="toggleTooth('25')" title="25 — 2º Pré-molar Sup. Esq."><span class="fdi-num">25</span><small>Pré</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="26" onclick="toggleTooth('26')" title="26 — 1º Molar Sup. Esq."><span class="fdi-num">26</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="27" onclick="toggleTooth('27')" title="27 — 2º Molar Sup. Esq."><span class="fdi-num">27</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar siso" data-fdi="28" onclick="toggleTooth('28')" title="28 — 3º Molar Sup. Esq. (Siso)"><span class="fdi-num">28</span><small>Siso</small></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="odonto-occlusal-plane">
+                  <span>Plano Oclusal Médio</span>
+                </div>
+
+                <!-- Arcada Inferior -->
+                <div class="odonto-arch-row arch-lower">
+                  <div class="quadrants-wrapper">
+                    <!-- Q4: Inferior Direito (48 ao 41) -->
+                    <div class="quadrant-box q4" title="Quadrante 4 — Inferior Direito">
+                      <span class="q-badge">Q4 (Inf. Direito)</span>
+                      <div class="teeth-row" id="teeth-q4">
+                        <button type="button" class="tooth-btn molar siso" data-fdi="48" onclick="toggleTooth('48')" title="48 — 3º Molar Inf. Dir. (Siso)"><span class="fdi-num">48</span><small>Siso</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="47" onclick="toggleTooth('47')" title="47 — 2º Molar Inf. Dir."><span class="fdi-num">47</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="46" onclick="toggleTooth('46')" title="46 — 1º Molar Inf. Dir."><span class="fdi-num">46</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn premolar" data-fdi="45" onclick="toggleTooth('45')" title="45 — 2º Pré-molar Inf. Dir."><span class="fdi-num">45</span><small>Pré</small></button>
+                        <button type="button" class="tooth-btn premolar" data-fdi="44" onclick="toggleTooth('44')" title="44 — 1º Pré-molar Inf. Dir."><span class="fdi-num">44</span><small>Pré</small></button>
+                        <button type="button" class="tooth-btn canine" data-fdi="43" onclick="toggleTooth('43')" title="43 — Canino Inf. Dir."><span class="fdi-num">43</span><small>Canino</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="42" onclick="toggleTooth('42')" title="42 — Incisivo Lat. Inf. Dir."><span class="fdi-num">42</span><small>Inc.L</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="41" onclick="toggleTooth('41')" title="41 — Incisivo Cent. Inf. Dir."><span class="fdi-num">41</span><small>Inc.C</small></button>
+                      </div>
+                    </div>
+                    <div class="midline-vertical"></div>
+                    <!-- Q3: Inferior Esquerdo (31 ao 38) -->
+                    <div class="quadrant-box q3" title="Quadrante 3 — Inferior Esquerdo">
+                      <span class="q-badge">Q3 (Inf. Esquerdo)</span>
+                      <div class="teeth-row" id="teeth-q3">
+                        <button type="button" class="tooth-btn incisor" data-fdi="31" onclick="toggleTooth('31')" title="31 — Incisivo Cent. Inf. Esq."><span class="fdi-num">31</span><small>Inc.C</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="32" onclick="toggleTooth('32')" title="32 — Incisivo Lat. Inf. Esq."><span class="fdi-num">32</span><small>Inc.L</small></button>
+                        <button type="button" class="tooth-btn canine" data-fdi="33" onclick="toggleTooth('33')" title="33 — Canino Inf. Esq."><span class="fdi-num">33</span><small>Canino</small></button>
+                        <button type="button" class="tooth-btn premolar" data-fdi="34" onclick="toggleTooth('34')" title="34 — 1º Pré-molar Inf. Esq."><span class="fdi-num">34</span><small>Pré</small></button>
+                        <button type="button" class="tooth-btn premolar" data-fdi="35" onclick="toggleTooth('35')" title="35 — 2º Pré-molar Inf. Esq."><span class="fdi-num">35</span><small>Pré</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="36" onclick="toggleTooth('36')" title="36 — 1º Molar Inf. Esq."><span class="fdi-num">36</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="37" onclick="toggleTooth('37')" title="37 — 2º Molar Inf. Esq."><span class="fdi-num">37</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar siso" data-fdi="38" onclick="toggleTooth('38')" title="38 — 3º Molar Inf. Esq. (Siso)"><span class="fdi-num">38</span><small>Siso</small></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="arch-label">Arcada Inferior Permanente (Mandíbula)</div>
+                </div>
+              </div>
+
+              <!-- Board 2: Dentição Decídua (Odontopediatria) -->
+              <div class="odontogram-board" id="odonto-board-decid" style="display:none;">
+                <!-- Arcada Superior Decídua -->
+                <div class="odonto-arch-row arch-upper">
+                  <div class="arch-label">Arcada Superior Decídua (Maxila Infantil)</div>
+                  <div class="quadrants-wrapper">
+                    <!-- Q5: Superior Direito (55 ao 51) -->
+                    <div class="quadrant-box q5" title="Quadrante 5 — Superior Direito Decíduo">
+                      <span class="q-badge">Q5 (Sup. Dir. Decíduo)</span>
+                      <div class="teeth-row" id="teeth-q5">
+                        <button type="button" class="tooth-btn molar" data-fdi="55" onclick="toggleTooth('55')" title="55 — 2º Molar Sup. Dir. Decíduo"><span class="fdi-num">55</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="54" onclick="toggleTooth('54')" title="54 — 1º Molar Sup. Dir. Decíduo"><span class="fdi-num">54</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn canine" data-fdi="53" onclick="toggleTooth('53')" title="53 — Canino Sup. Dir. Decíduo"><span class="fdi-num">53</span><small>Canino</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="52" onclick="toggleTooth('52')" title="52 — Incisivo Lat. Sup. Dir. Decíduo"><span class="fdi-num">52</span><small>Inc.L</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="51" onclick="toggleTooth('51')" title="51 — Incisivo Cent. Sup. Dir. Decíduo"><span class="fdi-num">51</span><small>Inc.C</small></button>
+                      </div>
+                    </div>
+                    <div class="midline-vertical"></div>
+                    <!-- Q6: Superior Esquerdo (61 ao 65) -->
+                    <div class="quadrant-box q6" title="Quadrante 6 — Superior Esquerdo Decíduo">
+                      <span class="q-badge">Q6 (Sup. Esq. Decíduo)</span>
+                      <div class="teeth-row" id="teeth-q6">
+                        <button type="button" class="tooth-btn incisor" data-fdi="61" onclick="toggleTooth('61')" title="61 — Incisivo Cent. Sup. Esq. Decíduo"><span class="fdi-num">61</span><small>Inc.C</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="62" onclick="toggleTooth('62')" title="62 — Incisivo Lat. Sup. Esq. Decíduo"><span class="fdi-num">62</span><small>Inc.L</small></button>
+                        <button type="button" class="tooth-btn canine" data-fdi="63" onclick="toggleTooth('63')" title="63 — Canino Sup. Esq. Decíduo"><span class="fdi-num">63</span><small>Canino</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="64" onclick="toggleTooth('64')" title="64 — 1º Molar Sup. Esq. Decíduo"><span class="fdi-num">64</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="65" onclick="toggleTooth('65')" title="65 — 2º Molar Sup. Esq. Decíduo"><span class="fdi-num">65</span><small>Molar</small></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="odonto-occlusal-plane">
+                  <span>Plano Oclusal Infantil</span>
+                </div>
+
+                <!-- Arcada Inferior Decídua -->
+                <div class="odonto-arch-row arch-lower">
+                  <div class="quadrants-wrapper">
+                    <!-- Q8: Inferior Direito (85 ao 81) -->
+                    <div class="quadrant-box q8" title="Quadrante 8 — Inferior Direito Decíduo">
+                      <span class="q-badge">Q8 (Inf. Dir. Decíduo)</span>
+                      <div class="teeth-row" id="teeth-q8">
+                        <button type="button" class="tooth-btn molar" data-fdi="85" onclick="toggleTooth('85')" title="85 — 2º Molar Inf. Dir. Decíduo"><span class="fdi-num">85</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="84" onclick="toggleTooth('84')" title="84 — 1º Molar Inf. Dir. Decíduo"><span class="fdi-num">84</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn canine" data-fdi="83" onclick="toggleTooth('83')" title="83 — Canino Inf. Dir. Decíduo"><span class="fdi-num">83</span><small>Canino</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="82" onclick="toggleTooth('82')" title="82 — Incisivo Lat. Inf. Dir. Decíduo"><span class="fdi-num">82</span><small>Inc.L</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="81" onclick="toggleTooth('81')" title="81 — Incisivo Cent. Inf. Dir. Decíduo"><span class="fdi-num">81</span><small>Inc.C</small></button>
+                      </div>
+                    </div>
+                    <div class="midline-vertical"></div>
+                    <!-- Q7: Inferior Esquerdo (71 ao 75) -->
+                    <div class="quadrant-box q7" title="Quadrante 7 — Inferior Esquerdo Decíduo">
+                      <span class="q-badge">Q7 (Inf. Esq. Decíduo)</span>
+                      <div class="teeth-row" id="teeth-q7">
+                        <button type="button" class="tooth-btn incisor" data-fdi="71" onclick="toggleTooth('71')" title="71 — Incisivo Cent. Inf. Esq. Decíduo"><span class="fdi-num">71</span><small>Inc.C</small></button>
+                        <button type="button" class="tooth-btn incisor" data-fdi="72" onclick="toggleTooth('72')" title="72 — Incisivo Lat. Inf. Esq. Decíduo"><span class="fdi-num">72</span><small>Inc.L</small></button>
+                        <button type="button" class="tooth-btn canine" data-fdi="73" onclick="toggleTooth('73')" title="73 — Canino Inf. Esq. Decíduo"><span class="fdi-num">73</span><small>Canino</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="74" onclick="toggleTooth('74')" title="74 — 1º Molar Inf. Esq. Decíduo"><span class="fdi-num">74</span><small>Molar</small></button>
+                        <button type="button" class="tooth-btn molar" data-fdi="75" onclick="toggleTooth('75')" title="75 — 2º Molar Inf. Esq. Decíduo"><span class="fdi-num">75</span><small>Molar</small></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="arch-label">Arcada Inferior Decídua (Mandíbula Infantil)</div>
+                </div>
+              </div>
+
+              <div class="odonto-summary-bar">
+                <i class="ri-checkbox-circle-fill"></i>
+                <span id="odonto-summary-text">Nenhum elemento selecionado (clique nos dentes ou escolha um atalho acima).</span>
+              </div>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="procedure-region">Região / Elementos Dentários (Sincronizado automaticamente) <span class="req">*</span></label>
+              <input type="text" id="procedure-region" placeholder="Clique no odontograma acima ou digite aqui...">
+            </div>
+            <div class="form-group col-span-2">
+              <label for="procedure-diagnosis">Diagnóstico Clínico <span class="req">*</span></label>
+              <textarea id="procedure-diagnosis" rows="2" placeholder="Descreva o diagnóstico em linguagem acessível ao paciente..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div class="footer-hint"><i class="ri-information-line"></i> Campos com <span class="req">*</span> são obrigatórios</div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <button type="button" class="btn btn-outline" id="btn-auto-pilot" onclick="generateAutoPilotTCLE()" style="background:linear-gradient(135deg,rgba(10,132,255,0.12),rgba(191,90,242,0.16));border:1px solid rgba(191,90,242,0.45);color:var(--text-main);display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:8px 16px;border-radius:10px;" title="Gera o TCLE completo de 22 seções automaticamente em 1 clique com Donti IA TCLE">
+              <i class="ri-flashlight-fill" style="color:#bf5af2;font-size:16px;"></i> <span>⚡ Donti IA TCLE</span>
+            </button>
+            <button class="btn btn-primary" onclick="goToStep(2)">
+              Anamnese Jurídica <i class="ri-arrow-right-line"></i>
+            </button>
+          </div>
+        </div>
+      </div><!-- /step-1-card -->
+
+      <!-- ===== STEP 2 ===== -->
+      <div class="step-card" id="step-2-card">
+        <div class="card-header">
+          <div class="card-header-icon violet"><i class="ri-stethoscope-line"></i></div>
+          <div>
+            <h3>Anamnese & Fatores de Risco</h3>
+            <p>Marque as condições do paciente. Cada item gera cláusulas específicas no TCLE.</p>
+          </div>
+        </div>
+
+        <!-- Barra de Seleção Rápida por Especialidade (Apple Segmented Pills) -->
+        <div class="specialty-quick-bar">
+          <span class="specialty-quick-title"><i class="ri-flashlight-line"></i> Preenchimento Rápido por Especialidade:</span>
+          <div class="specialty-pills">
+            <button type="button" class="spec-pill" data-spec="endo" onclick="quickSelectSpecialty('endo')" title="Preenche Anamnese e Procedimento de Endodontia">
+              <i class="ri-pulse-line"></i> Endodontia (Canal)
+            </button>
+            <button type="button" class="spec-pill" data-spec="cirurgia" onclick="quickSelectSpecialty('cirurgia')" title="Cirurgia Oral Menor / Exodontia de Sisos">
+              <i class="ri-scissors-2-line"></i> Exodontia / Sisos
+            </button>
+            <button type="button" class="spec-pill" data-spec="implante" onclick="quickSelectSpecialty('implante')" title="Implantodontia e Levantamento de Seio Maxilar">
+              <i class="ri-hammer-line"></i> Implante / Sinus Lift
+            </button>
+            <button type="button" class="spec-pill" data-spec="hof" onclick="quickSelectSpecialty('hof')" title="Harmonização Orofacial (Toxina/Preenchedor)">
+              <i class="ri-sparkling-line"></i> Harmonização (HOF)
+            </button>
+            <button type="button" class="spec-pill" data-spec="protese" onclick="quickSelectSpecialty('protese')" title="Prótese / Facetas / Lentes de Contato">
+              <i class="ri-shield-star-line"></i> Prótese / Facetas
+            </button>
+            <button type="button" class="spec-pill" data-spec="orto" onclick="quickSelectSpecialty('orto')" title="Ortodontia e Alinhadores">
+              <i class="ri-compass-3-line"></i> Ortodontia
+            </button>
+            <button type="button" class="spec-pill" data-spec="perio" onclick="quickSelectSpecialty('perio')" title="Periodontia / Raspagens e Enxertos">
+              <i class="ri-microscope-line"></i> Periodontia
+            </button>
+            <button type="button" class="spec-pill" data-spec="clareamento" onclick="quickSelectSpecialty('clareamento')" title="Clareamento Dental em Consultório / Caseiro">
+              <i class="ri-sun-fill"></i> Clareamento Dental
+            </button>
+          </div>
+        </div>
+
+        <!-- A: Condições Sistêmicas -->
+        <div class="anamnese-block">
+          <h4 class="block-label"><i class="ri-heart-pulse-line"></i> A — Condições Sistêmicas Declaradas</h4>
+          <div class="check-grid cols-3">
+            <label class="check-card">
+              <input type="checkbox" id="cond-diabetes">
+              <div class="check-visual"><i class="ri-drop-line"></i></div>
+              <div class="check-body">
+                <strong>Diabetes Mellitus</strong>
+                <small>Cicatrização lenta, infecção grave, controle glicêmico (HbA1c) obrigatório</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-hiv">
+              <div class="check-visual"><i class="ri-shield-cross-line"></i></div>
+              <div class="check-body">
+                <strong>HIV / Imunossupressão</strong>
+                <small>Infecção oportunista, cicatrização comprometida, CD4/carga viral exigidos</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-hypertension">
+              <div class="check-visual"><i class="ri-heart-line"></i></div>
+              <div class="check-body">
+                <strong>Hipertensão Arterial</strong>
+                <small>Epinefrina com cautela, aferição pré-operatória obrigatória, risco de sangramento</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-cardiopathy">
+              <div class="check-visual"><i class="ri-lungs-line"></i></div>
+              <div class="check-body">
+                <strong>Cardiopatia / Endocardite</strong>
+                <small>Profilaxia antibiótica AHA obrigatória, laudo cardiológico exigido</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-pregnancy">
+              <div class="check-visual"><i class="ri-parent-line"></i></div>
+              <div class="check-body">
+                <strong>Gravidez / Amamentação</strong>
+                <small>Radiografia limitada, anestésico seguro, procedimentos no 2º trimestre</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-autoimmune">
+              <div class="check-visual"><i class="ri-virus-line"></i></div>
+              <div class="check-body">
+                <strong>Doença Autoimune / Lúpus / AR</strong>
+                <small>Imunossupressão sistêmica, cicatrização comprometida, laudo do reumatologista</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-anxiety">
+              <div class="check-visual amber"><i class="ri-mental-health-line"></i></div>
+              <div class="check-body">
+                <strong>Ansiedade / Odontofobia / Pânico</strong>
+                <small>Risco de síncope vasovagal, pausas na sessão, pré-medicação ansiolítica</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- B: Medicamentos de Risco -->
+        <div class="anamnese-block danger-block">
+          <h4 class="block-label danger-label"><i class="ri-medicine-bottle-line"></i> B — Medicamentos de Alto Risco <span class="critical-tag">⚠ ATENÇÃO ESPECIAL</span></h4>
+          <div class="alert-strip">
+            <i class="ri-error-warning-line"></i>
+            <span>A omissão destes medicamentos é falha grave no dever de informação (STJ REsp 1.540.580/DF). Geram cláusulas críticas individualizadas no TCLE.</span>
+          </div>
+          <div class="check-grid cols-2">
+            <label class="check-card check-danger">
+              <input type="checkbox" id="med-bisphosphonate">
+              <div class="check-visual danger"><i class="ri-capsule-line"></i></div>
+              <div class="check-body">
+                <strong>Bisfosfonatos / Anti-reabsortivos Ósseos</strong>
+                <small>Alendronato (Fosamax), Zoledronato (Zometa), Denosumabe — <em>MRONJ: Osteonecrose dos Maxilares</em></small>
+              </div>
+            </label>
+            <label class="check-card check-danger">
+              <input type="checkbox" id="med-anticoagulant">
+              <div class="check-visual danger"><i class="ri-drop-fill"></i></div>
+              <div class="check-body">
+                <strong>Anticoagulantes / Antiagregantes</strong>
+                <small>Warfarina, Xarelto, Apixabana, AAS, Clopidogrel — <em>Hemorragia incontrolável</em></small>
+              </div>
+            </label>
+            <label class="check-card check-danger">
+              <input type="checkbox" id="med-immunosuppressant">
+              <div class="check-visual danger"><i class="ri-test-tube-line"></i></div>
+              <div class="check-body">
+                <strong>Imunossupressores / Quimioterápicos</strong>
+                <small>Metotrexato, Azatioprina, Ciclosporina — <em>Mucosite, infecções graves</em></small>
+              </div>
+            </label>
+            <label class="check-card check-danger">
+              <input type="checkbox" id="med-corticoid">
+              <div class="check-visual danger"><i class="ri-capsule-fill"></i></div>
+              <div class="check-body">
+                <strong>Corticoides em Uso Contínuo (&gt;2 semanas)</strong>
+                <small>Prednisona, Dexametasona — <em>Crise addisoniana intraoperatória</em></small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- C: Fatores Comportamentais -->
+        <div class="anamnese-block">
+          <h4 class="block-label"><i class="ri-user-settings-line"></i> C — Fatores de Risco Comportamentais e Clínicos</h4>
+          <div class="check-grid cols-2">
+            <label class="check-card" id="card-smoking">
+              <input type="checkbox" id="cond-smoking">
+              <div class="check-visual amber"><i class="ri-no-smoking-line"></i></div>
+              <div class="check-body">
+                <strong>Tabagismo Ativo</strong>
+                <small>Risco 3–5× maior de falha cirúrgica e peri-implantite</small>
+              </div>
+            </label>
+            <label class="check-card" id="card-bruxism">
+              <input type="checkbox" id="cond-bruxism">
+              <div class="check-visual amber"><i class="ri-emotion-unhappy-line"></i></div>
+              <div class="check-body">
+                <strong>Bruxismo / Apertamento</strong>
+                <small>Fratura de cerâmicas, descimentação. Placa miorrelaxante obrigatória.</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-bone-loss">
+              <div class="check-visual cyan"><i class="ri-scan-line"></i></div>
+              <div class="check-body">
+                <strong>Perda Óssea / Reabsorção Prévia</strong>
+                <small>Maior risco de parestesia por proximidade anatômica (NAI / Seio Maxilar). Enxerto pode ser necessário.</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-allergy">
+              <div class="check-visual cyan"><i class="ri-alert-line"></i></div>
+              <div class="check-body">
+                <strong>Alergias Conhecidas (Anestésico / Metal / Látex)</strong>
+                <small>Protocolo alternativo de anestesia e materiais. Avaliação alergológica prévia recomendada.</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-unrealistic">
+              <div class="check-visual cyan"><i class="ri-eye-line"></i></div>
+              <div class="check-body">
+                <strong>Expectativa Estética Elevada</strong>
+                <small>Obrigação de meio (STJ). Resultado condicionado à biologia individual e assimetrias naturais.</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="cond-perio">
+              <div class="check-visual cyan"><i class="ri-microscope-line"></i></div>
+              <div class="check-body">
+                <strong>Periodontite / Doença Periodontal Ativa</strong>
+                <small>Contraindicação relativa a implantes. Tratamento periodontal prévio obrigatório (SBPqO/EFP).</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- D: Ditado Clínico -->
+        <div class="anamnese-block">
+          <h4 class="block-label"><i class="ri-mic-line"></i> D — Observações Clínicas Específicas (Ditado por IA)</h4>
+          <div class="ai-input-box">
+            <div class="ai-input-header">
+              <span>Descreva livremente as particularidades clínicas deste caso</span>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <button type="button" class="btn btn-sm btn-outline" id="btn-gemini-refine" onclick="refineDictationWithGemini()" title="Enriquecer e polir este relato em linguagem técnico-pericial com Donti IA TCLE" style="border-radius:20px;font-size:11.5px;padding:5px 12px;display:inline-flex;align-items:center;gap:6px;border-color:rgba(191,90,242,0.5);color:var(--text-main);background:rgba(191,90,242,0.08);">
+                  <i class="ri-sparkling-fill" style="color:#bf5af2;"></i> <span>Refinar com Donti IA TCLE</span>
+                </button>
+
+                <button class="btn-mic" id="btn-mic" onclick="toggleVoiceInput()">
+                  <i class="ri-mic-fill"></i><span id="mic-text">Ditar por Voz</span>
+                </button>
+              </div>
+            </div>
+            <textarea id="ai-dictation-text" rows="3" placeholder="Ex: Paciente tabagista ativa (15 cig/dia). CBCT evidencia trinca radicular vertical no elemento 36. Avisada sobre risco elevado de não osseointegração e necessidade provável de enxerto autógeno do mento..."></textarea>
+            <div class="tag-chips-row">
+              <span class="chips-label">Inserção rápida:</span>
+              <button type="button" class="chip" onclick="insertTag('Tabagista ativo — informado sobre risco 3–5× maior de falha cirúrgica e peri-implantite.')">+ Tabagismo</button>
+              <button type="button" class="chip" onclick="insertTag('Bruxismo severo — placa miorrelaxante prescrita como condição de garantia do trabalho protético.')">+ Bruxismo</button>
+              <button type="button" class="chip" onclick="insertTag('Uso de Bisfosfonato — laudo do médico prescribente solicitado; risco de MRONJ discutido e registrado.')">+ Bisfosfonato</button>
+              <button type="button" class="chip" onclick="insertTag('Anticoagulado(a) — INR verificado. Orientado a NUNCA suspender por conta própria.')">+ Anticoag.</button>
+              <button type="button" class="chip" onclick="insertTag('Necessidade de Tratamento de Canal (Endodontia) — riscos específicos de fratura de lima intracanal, extravasamento de hipoclorito de sódio/cimento obturador, perfuração e necessidade de restauração/coroa definitiva explicados e aceitos.');document.getElementById('proc-needs-canal').checked=true;">+ Precisa de Canal (Lima/Hipoclorito)</button>
+              <button type="button" class="chip" onclick="insertTag('Enxerto ósseo com biomaterial planejado — informado sobre risco de deiscência de sutura, infecção do biomaterial e reabsorção.');document.getElementById('proc-needs-graft').checked=true;">+ Enxerto Ósseo</button>
+              <button type="button" class="chip" onclick="insertTag('Relação de proximidade das raízes com o Canal Mandibular — informado sobre risco de parestesia temporária ou prolongada do Nervo Alveolar Inferior e Lingual.');document.getElementById('proc-needs-paresthesia').checked=true;">+ Risco Parestesia NAI</button>
+              <button type="button" class="chip" onclick="insertTag('Avaliar restauração definitiva conforme estrutura dental; planejar em até 30 dias ou prazo individual e orientar cuidados com o provisório.');document.getElementById('proc-needs-coroa').checked=true;">+ Blindagem Coronária (CDC 14)</button>
+              <button type="button" class="chip" onclick="insertTag('Procedimento de preenchimento facial com Ácido Hialurônico em zona de risco vascular — autorização expressa concedida para aplicação de Hialuronidase emergencial.');document.getElementById('proc-needs-hof-vascular').checked=true;">+ HOF / Emergência Vascular</button>
+              <button type="button" class="chip" onclick="insertTag('Expectativa estética elevada — discutir benefícios esperados, limites, alternativas e manutenção do tratamento.')">+ Expectativa</button>
+            </div>
+          </div>
+
+          <!-- PAINEL DE INTELIGÊNCIA CLÍNICA & ENTIDADES EXTRAÍDAS POR IA EM TEMPO REAL -->
+          <div id="ai-clinical-hud-box" style="margin-top:14px;background:linear-gradient(135deg,rgba(15,23,42,0.95),rgba(30,41,59,0.9));border:1px solid rgba(14,165,233,0.35);border-radius:10px;padding:14px 16px;box-shadow:0 4px 18px rgba(0,0,0,0.22);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="pulse-dot" style="width:9px;height:9px;border-radius:50%;background:#0ea5e9;box-shadow:0 0 10px #0ea5e9;display:inline-block;"></span>
+                <strong style="font-size:12.5px;color:var(--text-main);display:flex;align-items:center;gap:6px;">
+                  <i class="ri-brain-line" style="color:var(--cyan);font-size:15px;"></i> Motor de Inteligência Clínica &amp; Semântica por IA
+                </strong>
+              </div>
+              <span id="ai-entities-count-badge" style="font-size:11px;padding:3px 10px;border-radius:12px;background:rgba(14,165,233,0.15);color:var(--cyan);border:1px solid rgba(14,165,233,0.3);font-weight:700;">
+                0 entidades mapeadas
+              </span>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">
+              Cada palavra digitada no diagnóstico/ditado, dentes selecionados e caixas marcadas são detectados e conectados diretamente às seções do TCLE:
+            </div>
+            <div id="ai-detected-entities-bar" style="display:flex;flex-wrap:wrap;gap:6px;min-height:28px;align-items:center;">
+              <span style="font-size:11.5px;color:var(--text-muted);font-style:italic;">
+                Digite no diagnóstico, selecione dentes no odontograma ou marque condições para ativar a extração por IA...
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- E: Testemunhas -->
+        <div class="anamnese-block">
+          <h4 class="block-label"><i class="ri-group-line"></i> E — Testemunhas (Obrigatório em Cirurgias Complexas, HOF e Pacientes Vulneráveis)</h4>
+          <div class="form-grid cols-4">
+            <div class="form-group col-span-2">
+              <label for="witness-1-name">Nome da 1ª Testemunha</label>
+              <input type="text" id="witness-1-name" placeholder="Nome completo">
+            </div>
+            <div class="form-group col-span-2">
+              <label for="witness-1-cpf">CPF da 1ª Testemunha</label>
+              <input type="text" id="witness-1-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)">
+            </div>
+            <div class="form-group col-span-2">
+              <label for="witness-2-name">Nome da 2ª Testemunha</label>
+              <input type="text" id="witness-2-name" placeholder="Nome completo">
+            </div>
+            <div class="form-group col-span-2">
+              <label for="witness-2-cpf">CPF da 2ª Testemunha</label>
+              <input type="text" id="witness-2-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)">
+            </div>
+          </div>
+        </div>
+
+        <!-- F: Autorização de Imagens e Dados (Res. CFO-196/2019 e LGPD) -->
+        <div class="anamnese-block">
+          <h4 class="block-label"><i class="ri-camera-lens-line"></i> F — Autorização de Imagem e Dados Pessoais (Res. CFO-196/2019 &amp; LGPD)</h4>
+          <div class="alert-strip" style="background:rgba(59,130,246,0.08);border-color:var(--accent-blue);">
+            <i class="ri-information-line"></i>
+            <span>Conforme a <strong>Resolução CFO-196/2019</strong> e o Art. 20 do Código Civil, a cessão de uso de imagem é <strong>estritamente voluntária e independente</strong> do TCLE cirúrgico. A recusa do paciente em ceder imagens NUNCA condiciona ou impede o atendimento clínico.</span>
+          </div>
+          <div class="check-grid cols-3" style="margin-top:12px;">
+            <label class="check-card">
+              <input type="checkbox" id="img-scientific" onchange="if(this.checked) document.getElementById('img-none').checked=false;">
+              <div class="check-visual cyan"><i class="ri-book-read-line"></i></div>
+              <div class="check-body">
+                <strong>Uso Acadêmico / Científico</strong>
+                <small>Aulas, congressos e artigos científicos com preservação da identidade (anonimização facial conforme ABOL).</small>
+              </div>
+            </label>
+            <label class="check-card">
+              <input type="checkbox" id="img-social" onchange="if(this.checked) document.getElementById('img-none').checked=false;">
+              <div class="check-visual cyan"><i class="ri-instagram-line"></i></div>
+              <div class="check-body">
+                <strong>Redes Sociais / Divulgação Educativa</strong>
+                <small>Fotos de "Antes e Depois" nos canais digitais institucionais (sem promessa de resultado e sem sensacionalismo — Res. CFO 196/2019).</small>
+              </div>
+            </label>
+            <label class="check-card check-danger">
+              <input type="checkbox" id="img-none" onchange="if(this.checked){document.getElementById('img-scientific').checked=false;document.getElementById('img-social').checked=false;}">
+              <div class="check-visual danger"><i class="ri-eye-off-line"></i></div>
+              <div class="check-body">
+                <strong>NÃO Autoriza Imagem Pública</strong>
+                <small>Uso estritamente interno e privativo no prontuário odontológico (Art. 17 CEO / Tutela da Saúde LGPD).</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn btn-secondary" onclick="goToStep(1)"><i class="ri-arrow-left-line"></i> Voltar</button>
+          <button class="btn btn-accent" onclick="generateTCLEWithAI()" id="btn-generate-tcle">
+            <i class="ri-sparkling-fill"></i> Gerar com Donti IA TCLE
+          </button>
+
+        </div>
+      </div><!-- /step-2-card -->
+
+      <!-- ===== STEP 3 ===== -->
+      <div class="step-card" id="step-3-card">
+        <div class="card-header">
+          <div class="card-header-icon emerald"><i class="ri-file-text-line"></i></div>
+          <div>
+            <h3>Revisão do TCLE Gerado</h3>
+            <p>Revise o documento, confira o Score de Blindagem e prossiga para o PDF.</p>
+          </div>
+        </div>
+
+        <div class="ai-loading-state" id="ai-loading-overlay">
+          <div class="loading-spinner"></div>
+          <h4>Gerando TCLE individualizado…</h4>
+          <p id="ai-loading-text">Analisando anamnese e riscos…</p>
+        </div>
+
+        <!-- AVISO MÉDICO-LEGAL DE REVISÃO OBRIGATÓRIA PELO CIRURGIÃO-DENTISTA (CFO / STJ) -->
+        <div class="review-disclaimer-banner" id="review-disclaimer-step3" style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(217,119,6,0.04));border:1.5px solid rgba(245,158,11,0.35);border-radius:12px;padding:14px 18px;margin:16px 0;display:flex;align-items:flex-start;gap:14px;box-shadow:0 2px 10px rgba(245,158,11,0.06);">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;color:#d97706;font-size:22px;flex-shrink:0;">
+            <i class="ri-shield-check-fill"></i>
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+              <strong style="font-size:12.5px;color:#d97706;text-transform:uppercase;letter-spacing:0.04em;display:flex;align-items:center;gap:6px;">
+                <i class="ri-alert-fill"></i> Aviso Médico-Legal: Revisão e Validação Obrigatória pelo Cirurgião-Dentista
+              </strong>
+              <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(245,158,11,0.15);color:#d97706;font-weight:600;">
+                Res. CFO-118/2012 · STJ REsp 1.540.580/DF
+              </span>
+            </div>
+            <p style="font-size:12px;line-height:1.55;color:var(--text-main);margin:0;">
+              Este Termo de Consentimento Livre e Esclarecido (TCLE) foi gerado com auxílio de inteligência artificial clínica. 
+              <strong>A responsabilidade técnica, ética e jurídica pelo diagnóstico, indicação terapêutica e adequação ao caso concreto é privativa e indelegável do Cirurgião-Dentista assistente.</strong> 
+              O profissional <u>deve revisar minuciosamente todo o conteúdo</u> das 22 seções, conferir a compatibilidade anatômica e efetuar os ajustes necessários antes da coleta de assinaturas e entrega da via física ao paciente.
+            </p>
+          </div>
+        </div>
+
+        <!-- BANCO DE AUDITORIA & SCORE DE RISCO JURÍDICO POR IA -->
+        <div id="ai-risk-score-card" class="risk-score-card" style="display:none;">
+          <div class="score-main-header">
+            <div class="score-gauge-wrap">
+              <svg class="score-gauge-svg" viewBox="0 0 120 120">
+                <circle class="score-gauge-bg" cx="60" cy="60" r="52"></circle>
+                <circle id="score-gauge-bar" class="score-gauge-bar" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="65"></circle>
+              </svg>
+              <div class="score-number-box">
+                <span id="score-value-num">85</span>
+                <small>/100</small>
+              </div>
+            </div>
+            <div class="score-header-info">
+              <span id="score-status-badge" class="score-status-badge">🟢 RISCO BAIXO / ALTA BLINDAGEM</span>
+              <h3 id="score-status-title">Excelente — Blindagem Jurídica Elevada</h3>
+              <p id="score-status-desc">O TCLE atende rigorosamente aos parâmetros de informação autônoma estipulados pelo STJ e CFO.</p>
+            </div>
+            <div class="score-seal-wrap">
+              <img src="assets/apple_certified_seal.jpg" alt="Selo Oficial de Auditoria Jurídica" class="apple-certified-seal-img" title="Auditoria Jurídica & Pericial Certificada por IA">
+            </div>
+          </div>
+
+          <div class="score-details-grid">
+            <!-- Vulnerabilidades -->
+            <div class="score-box vulnerabilities-box">
+              <h4><i class="ri-error-warning-line"></i> Vulnerabilidades (<span id="vulnerabilities-count">0</span>)</h4>
+              <ul id="vulnerabilities-list"></ul>
+            </div>
+
+            <!-- Recomendações -->
+            <div class="score-box recommendations-box">
+              <h4><i class="ri-lightbulb-line"></i> Recomendações de Ajuste</h4>
+              <ul id="recommendations-list"></ul>
+            </div>
+
+            <!-- Salvaguardas Ativadas -->
+            <div class="score-box protections-box">
+              <h4><i class="ri-shield-check-line"></i> Cláusulas de Proteção Ativadas</h4>
+              <ul id="protections-list"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="generated-doc-container" style="display:none;">
+          <div class="doc-tabs-bar">
+            <button class="doc-tab active" onclick="switchDocView('full-legal', this)">
+              <i class="ri-scales-3-line"></i> Termo Jurídico Completo
+            </button>
+            <button class="doc-tab" onclick="switchDocView('patient-summary', this)">
+              <i class="ri-chat-smile-2-line"></i> Resumo ao Paciente
+            </button>
+            <button class="doc-tab" onclick="switchDocView('annexes', this)">
+              <i class="ri-attachment-2"></i> Anexos
+            </button>
+            <button class="doc-tab" onclick="switchDocView('postop-guides', this)" style="border-color:rgba(14,165,233,0.4);color:var(--cyan);">
+              <i class="ri-file-list-3-line"></i> Recomendações Pós-Op (Folhas Sep.)
+            </button>
+          </div>
+          <div id="view-full-legal" class="doc-view active">
+            <div class="paper-preview" id="legal-paper-content"></div>
+          </div>
+          <div id="view-patient-summary" class="doc-view">
+            <div class="paper-preview" id="accessible-summary-content"></div>
+          </div>
+          <div id="view-annexes" class="doc-view">
+            <div id="annexes-content"></div>
+          </div>
+          <div id="view-postop-guides" class="doc-view">
+            <div id="postop-guides-content"></div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn btn-secondary" onclick="goToStep(2)"><i class="ri-edit-line"></i> Rever Anamnese</button>
+          <button class="btn btn-success" onclick="goToStep(4)">Gerar PDF Oficial <i class="ri-printer-line"></i></button>
+        </div>
+      </div><!-- /step-3-card -->
+
+      <!-- ===== STEP 4 ===== -->
+      <div class="step-card" id="step-4-card">
+        <div class="card-header">
+          <div class="card-header-icon rose"><i class="ri-printer-line"></i></div>
+          <div>
+            <h3>Documento PDF Oficial — Pronto para Impressão e Arquivo</h3>
+            <p>Papel timbrado, rubricas em todas as páginas, Recibo de 2ª Via e Anexo LGPD separado.</p>
+          </div>
+        </div>
+
+        <!-- DISCLAIMER DE CERTIFICAÇÃO DE REVISÃO NO PDF -->
+        <div class="review-disclaimer-banner" id="review-disclaimer-step4" style="background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(14,165,233,0.05));border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+          <i class="ri-checkbox-circle-fill" style="color:var(--success);font-size:24px;flex-shrink:0;"></i>
+          <div style="font-size:12px;line-height:1.5;color:var(--text-main);flex:1;">
+            <strong>Certificação Profissional de Revisão Prévia (ABOL / CFO):</strong> 
+            Ao imprimir, exportar ou coletar a assinatura do paciente, o(a) Cirurgião(ã)-Dentista atesta que revisou minuciosamente todas as cláusulas do TCLE, confirmou a correspondência anatômica e exerceu o dever autônomo de esclarecimento prévio (STJ REsp 1.540.580/DF).
+          </div>
+        </div>
+
+        <div class="pdf-actions-bar">
+          <button class="btn btn-primary btn-lg" onclick="printOrSavePDF()">
+            <i class="ri-file-pdf-fill"></i> Imprimir / Salvar PDF
+          </button>
+          <button class="btn btn-whatsapp btn-lg" onclick="shareViaWhatsApp()" title="Enviar resumo de consentimento prévio para o paciente pelo WhatsApp (CDC Art. 6º, III e ABOL)">
+            <i class="ri-whatsapp-line"></i> Enviar p/ WhatsApp
+          </button>
+          <button class="btn btn-outline" onclick="printPostOpOnly()" title="Imprimir exclusivamente a(s) folha(s) de recomendações pós-operatórias em página separada para o paciente" style="border-color:rgba(14,165,233,0.5);color:var(--cyan);">
+            <i class="ri-file-list-3-line"></i> Imprimir Guia Pós-Op (Folha Sep.)
+          </button>
+          <button class="btn btn-whatsapp" onclick="sharePostOpWhatsApp()" title="Enviar Guia de Recomendações Pós-Operatórias direto no WhatsApp do paciente">
+            <i class="ri-chat-smile-2-line"></i> Pós-Op no WhatsApp
+          </button>
+          <button class="btn btn-outline" onclick="goToPrescriptionsTab('rx')" title="Emitir Receituário Odontológico pré-preenchido com medicamentos pós-operatórios" style="border-color:rgba(14,165,233,0.6);color:#0ea5e9;">
+            <i class="ri-capsule-line"></i> Receita Médica/Odonto
+          </button>
+          <button class="btn btn-outline" onclick="goToPrescriptionsTab('leave')" title="Emitir Atestado de Afastamento / Repouso com dados preenchidos deste paciente" style="border-color:rgba(52,199,89,0.6);color:#34c759;">
+            <i class="ri-file-user-line"></i> Atestado de Repouso
+          </button>
+          <button class="btn btn-outline" onclick="goToPrescriptionsTab('attendance')" title="Emitir Atestado de Comparecimento com horários e turno" style="border-color:rgba(255,159,10,0.6);color:#ff9f0a;">
+            <i class="ri-time-line"></i> Atestado Comparecimento
+          </button>
+          <button class="btn btn-accent btn-lg" onclick="openSignatureModal('patient')">
+            <i class="ri-edit-2-line"></i> Assinar na Tela (Paciente)
+          </button>
+          <button class="btn btn-secondary btn-lg" onclick="openSignatureModal('dentist')">
+            <i class="ri-ball-pen-line"></i> Assinatura do Dentista
+          </button>
+          <button class="btn btn-outline" onclick="copyAccessibleSummary()" title="Copiar resumo simplificado em linguagem leiga para o paciente">
+            <i class="ri-file-copy-2-line"></i> Copiar Resumo Acessível
+          </button>
+          <button class="btn btn-outline" onclick="copyFullDocumentText()" title="Copiar o texto jurídico integral completo do TCLE">
+            <i class="ri-file-text-line"></i> Copiar Texto Integral
+          </button>
+          <button class="btn btn-outline" onclick="saveToHistory()">
+            <i class="ri-save-line"></i> Salvar no Prontuário
+          </button>
+          <button class="btn btn-outline" onclick="exportPatientRecordJSON()" title="Exportar prontuário e consentimento completo em formato JSON criptográfico">
+            <i class="ri-download-2-line"></i> Exportar Ficha JSON
+          </button>
+          <label class="btn btn-outline" style="cursor:pointer;margin:0;" title="Importar prontuário JSON salvo para preenchimento instantâneo">
+            <i class="ri-upload-2-line"></i> Importar Ficha JSON
+            <input type="file" id="import-json-file" accept=".json" style="display:none;" onchange="importPatientRecordJSON(event)">
+          </label>
+          <button class="btn btn-outline" onclick="resetForm()">
+            <i class="ri-add-circle-line"></i> Novo Paciente
+          </button>
+          <div class="pdf-info-tag">
+            <i class="ri-shield-check-line"></i>
+            <span>Emissão: <strong id="doc-date-display">--/--/----</strong> · Nº <strong id="doc-id-display">DS-XXXX</strong></span>
+          </div>
+        </div>
+
+        <!-- Área Imprimível -->
+        <div class="pdf-frame" id="printable-pdf-area">
+          <div class="print-header">
+            <div class="clinic-logo-area">
+              <img src="assets/apple_dentalsafe_logo.jpg" alt="Logo Clínica" class="print-clinic-logo-img">
+              <div>
+                <h2 id="print-clinic-name">CLÍNICA ODONTOLÓGICA DRA. MARIANA &amp; DR. RAFAEL</h2>
+                <p id="print-clinic-details">CRO/SP 114.892 | Av. Paulista, 1500 - Conj. 82, São Paulo/SP | (11) 3289-0000</p>
+              </div>
+            </div>
+            <div class="print-header-right">
+              <div class="doc-stamp">
+                <span>TCLE Nº <strong id="doc-id-stamp">DS-XXXX</strong></span>
+                <small id="doc-date-stamp">--/--/----</small>
+              </div>
+              <img src="assets/apple_certified_seal.jpg" alt="Selo Oficial de Auditoria" class="print-seal-img" title="Certificação Pericial &amp; Jurídica">
+            </div>
+          </div>
+
+          <div class="compliance-ribbon">
+            Res. CFO 118/2012 (Arts. 9º e 17) · CDC Lei 8.078/90 (Arts. 6º, III e 14, §4º) · CC/2002 (Arts. 15, 186, 187, 422, 927 e 951) · LGPD Lei 13.709/18 · STJ REsp 1.540.580/DF
+          </div>
+
+          <h3 class="print-main-title">
+            TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO
+            <small>Odontológico — Individualizado — Documento para revisão profissional</small>
+          </h3>
+
+          <div id="print-body-content" class="print-body"></div>
+
+          <div class="rubric-notice">
+            <i class="ri-information-line"></i>
+            Documento emitido em 2 (duas) vias originais de igual teor, assinadas formalmente ao final. Uma via pertence ao(à) paciente; a outra via permanece arquivada no prontuário odontológico da clínica.
+          </div>
+
+          <div class="print-sigs">
+            <div class="sig-col" id="sig-patient-col">
+              <div class="sig-line-area" id="sig-patient-slot"></div>
+              <strong id="sig-patient-name">Nome do Paciente</strong>
+              <span>Paciente / Responsável Legal</span>
+              <small id="sig-patient-cpf">CPF: 000.000.000-00</small>
+              <small id="sig-patient-dob-display"></small>
+              <div class="digital-sig-stamp" id="patient-sig-stamp" style="display:none;"></div>
+            </div>
+            <div class="sig-col" id="sig-dentist-col">
+              <div class="sig-line-area" id="sig-dentist-slot"></div>
+              <strong id="sig-dentist-name">Configure o profissional</strong>
+              <span>Cirurgião-Dentista Responsável</span>
+              <small id="sig-dentist-cro">CRO não informado</small>
+              <div class="digital-sig-stamp" id="dentist-sig-stamp" style="display:none;"></div>
+            </div>
+          </div>
+
+          <div class="witness-block" id="print-witness-section" style="display:none;">
+            <div class="witness-label">TESTEMUNHAS:</div>
+            <div class="witness-row">
+              <div class="witness-col">
+                <div class="sig-line-w"></div>
+                <span id="witness-1-print">1ª Testemunha</span>
+              </div>
+              <div class="witness-col">
+                <div class="sig-line-w"></div>
+                <span id="witness-2-print">2ª Testemunha</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="receipt-block">
+            <strong>RECIBO DE ENTREGA DA 2ª VIA:</strong>
+            Declaro que recebi, nesta data, a 2ª (segunda) via original deste Termo de Consentimento, devidamente assinada pelo Cirurgião-Dentista responsável, conforme determina a ABOL e as boas práticas de Odontologia Legal.
+            <div class="receipt-sig-row">
+              <div class="receipt-line"></div>
+              <span id="receipt-patient-name">Assinatura / Impressão Digital do Paciente ou Responsável Legal · Data: ____/____/________</span>
+            </div>
+          </div>
+
+          <div class="print-footer-bar">
+            Documento gerado por DentalSafe AI v3.0 — Documento para revisão profissional · <span id="print-footer-date"></span> · SHA-256: <span id="doc-hash">TCLE-HASH-INTEGRITY</span>
+          </div>
+        </div><!-- /printable-pdf-area -->
+
+        <!-- Anexo A — página separada -->
+        <div class="pdf-frame annexe-frame" id="annexe-a-area">
+          <div class="print-header">
+            <div class="clinic-logo-area">
+              <i class="ri-hospital-fill"></i>
+              <div><h2 id="annex-clinic-name">CLÍNICA ODONTOLÓGICA</h2></div>
+            </div>
+            <div class="doc-stamp"><span>ANEXO A — Uso de Imagem / LGPD</span></div>
+          </div>
+          <h3 class="print-main-title" style="font-size:12px;">
+            ANEXO A — AUTORIZAÇÃO ESPECÍFICA DE USO DE IMAGEM E DADOS PESSOAIS
+            <small>Resolução CFO nº 196/2019 + LGPD (Lei 13.709/18) — Assinatura Isolada e Independente do TCLE Principal</small>
+          </h3>
+          <div id="annexe-a-content" class="print-body"></div>
+          <div class="print-sigs" style="margin-top:40px;">
+            <div class="sig-col">
+              <div class="sig-line-area"></div>
+              <strong id="annex-sig-patient">Paciente</strong>
+              <span>Assinatura Específica para o Anexo A</span>
+            </div>
+            <div class="sig-col">
+              <div class="sig-line-area"></div>
+              <strong id="annex-sig-dentist">Cirurgião-Dentista</strong>
+              <span>Responsável pela Clínica</span>
+            </div>
+          </div>
+        </div><!-- /annexe-a-area -->
+
+        <!-- Folhas Separadas de Recomendações Pós-Operatórias (Cada Procedimento em Sua Própria Folha) -->
+        <div id="print-postop-area"></div>
+
+      </div><!-- /step-4-card -->
+
+    </section>
+
+    <!-- ======= TAB GESTÃO DE PACIENTES (LGPD) ======= -->
+    <section id="patients-tab" class="tab-content">
+      <!-- Hero Banner Apple HIG -->
+      <div class="patients-hero-card">
+        <div class="patients-hero-content">
+          <div class="patients-hero-badge">
+            <i class="ri-shield-user-line"></i> Base de Titulares — LGPD Lei nº 13.709/18 (Art. 11, II, f &amp; Art. 18)
+          </div>
+          <h2>Gestão de Pacientes &amp; <span>Prontuários Clínicos</span></h2>
+          <p>Cadastro centralizado, histórico de termos assinados, receitas emitidas e gerenciamento pleno dos direitos do titular de dados (acesso, retificação, portabilidade e esquecimento/eliminação segura).</p>
+          <div class="patients-actions-bar">
+            <div class="patients-search-box">
+              <i class="ri-search-line"></i>
+              <input type="text" id="patients-search-input" placeholder="Buscar paciente por nome, CPF ou telefone..." oninput="filterPatientsList(this.value)">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="openNewPatientModal()">
+              <i class="ri-user-add-line"></i> Novo Paciente
+            </button>
+            <button type="button" class="btn btn-outline" onclick="exportAllPatientsDataLGPD()" title="Exportar portabilidade de todos os pacientes em JSON (Art. 18 LGPD)">
+              <i class="ri-download-2-line"></i> Portabilidade (JSON)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Métricas Rápidas -->
+      <div class="patients-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="ri-team-line"></i></div>
+          <div class="stat-info">
+            <span class="stat-val" id="stat-total-patients">0</span>
+            <span class="stat-label">Pacientes Ativos</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="color:var(--primary);"><i class="ri-file-shield-2-line"></i></div>
+          <div class="stat-info">
+            <span class="stat-val" id="stat-total-tcles">0</span>
+            <span class="stat-label">TCLEs Vinculados</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="color:var(--success);"><i class="ri-capsule-line"></i></div>
+          <div class="stat-info">
+            <span class="stat-val" id="stat-total-rxs">0</span>
+            <span class="stat-label">Receitas Emitidas</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="color:#bf5af2;"><i class="ri-shield-keyhole-line"></i></div>
+          <div class="stat-info">
+            <span class="stat-val">100%</span>
+            <span class="stat-label">Conformidade LGPD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista / Grid de Pacientes -->
+      <div id="patients-cards-container" class="patients-grid">
+        <!-- Renderizado dinamicamente via renderPatientsList() no app.js -->
+      </div>
+      
+      <!-- Estado Vazio (Empty State) -->
+      <div id="patients-empty-state" class="patients-empty" style="display:none;">
+        <i class="ri-user-search-line"></i>
+        <h3>Nenhum paciente cadastrado</h3>
+        <p>Cadastre seu primeiro paciente ou gere um TCLE para salvá-lo automaticamente nesta base segura.</p>
+        <button type="button" class="btn btn-primary" onclick="openNewPatientModal()">
+          <i class="ri-user-add-line"></i> Cadastrar Paciente Agora
+        </button>
+      </div>
+    </section>
+
+    <!-- ======= TAB HARMONIZAÇÃO OROFACIAL (HOF) ======= -->
+    <section id="hof-tab" class="tab-content">
+      <!-- Hero Banner Apple HIG -->
+      <div class="hof-hero-card">
+        <div class="hof-hero-content">
+          <div class="hof-hero-badge">
+            <i class="ri-sparkling-line"></i> Especialidade Odontológica — Res. CFO-198/2019
+          </div>
+          <h2>Harmonização Orofacial <span>(HOF Pro)</span></h2>
+          <p>Módulo de consentimento informado hiper-qualificado, mapeamento anatômico de zonas de risco vascular, protocolo de resgate em alta dose de hialuronidase (DeLorenzi) e adendos de cessão de imagem (CFO-196/2019) e expectativa estética (STJ).</p>
+          <div class="hof-compliance-bar">
+            <span class="hof-comp-item"><i class="ri-shield-check-line"></i> Res. CFO-198/2019 (Especialidade)</span>
+            <span class="hof-comp-item"><i class="ri-shield-cross-line"></i> Res. CFO-230/2020 (Limites Cirúrgicos)</span>
+            <span class="hof-comp-item"><i class="ri-camera-lens-line"></i> Res. CFO-196/2019 (Cessão de Imagem)</span>
+            <span class="hof-comp-item"><i class="ri-scales-3-line"></i> STJ REsp 1.395.254 (Blindagem)</span>
+            <span class="hof-comp-item danger"><i class="ri-alarm-warning-line"></i> Protocolo Resgate DeLorenzi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-navegação em Pílulas Segmentadas Apple -->
+      <div class="hof-segmented-nav">
+        <button type="button" class="hof-nav-pill active" data-subtab="hof-generator-sub" onclick="switchHofSubTab('hof-generator-sub')">
+          <i class="ri-magic-line"></i> 1. Gerador Especializado TCLE HOF
+        </button>
+        <button type="button" class="hof-nav-pill" data-subtab="hof-danger-zones-sub" onclick="switchHofSubTab('hof-danger-zones-sub')">
+          <i class="ri-skull-line"></i> 2. Zonas de Risco Facial (Danger Zones)
+        </button>
+        <button type="button" class="hof-nav-pill" data-subtab="hof-sos-sub" onclick="switchHofSubTab('hof-sos-sub')">
+          <i class="ri-first-aid-kit-line"></i> 3. SOS Resgate Vascular (Hialuronidase)
+        </button>
+        <button type="button" class="hof-nav-pill" data-subtab="hof-legal-sub" onclick="switchHofSubTab('hof-legal-sub')">
+          <i class="ri-book-open-line"></i> 4. Biblioteca Jurídica CFO &amp; STJ
+        </button>
+      </div>
+
+      <!-- SUB-TAB 1: GERADOR TCLE DE HOF -->
+      <div id="hof-generator-sub" class="hof-sub-content active">
+        <div class="hof-grid-layout">
+          <!-- Coluna 1: Formulário e Seleção -->
+          <div class="hof-form-column">
+            <!-- Card de Procedimentos HOF -->
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon violet"><i class="ri-sparkling-line"></i></div>
+                <div>
+                  <h3>A. Procedimentos Propostos em HOF</h3>
+                  <p>Marque os atos clínicos que serão executados na sessão facial.</p>
+                </div>
+              </div>
+              <div class="check-grid cols-2" style="margin-top:14px;">
+                <label class="check-card checked">
+                  <input type="checkbox" id="hof-proc-toxina" checked onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-drop-line"></i></div>
+                  <div class="check-body">
+                    <strong>Toxina Botulínica Tipo A</strong>
+                    <small>Fronte, glabela, periorbicular, sorriso gengival, masseter</small>
+                  </div>
+                </label>
+                <label class="check-card checked">
+                  <input type="checkbox" id="hof-proc-ah-labial" checked onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-heart-line"></i></div>
+                  <div class="check-body">
+                    <strong>Ácido Hialurônico Labial</strong>
+                    <small>Contorno, hidratação e volumização do vermelhão</small>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" id="hof-proc-ah-sulco" onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-contrast-line"></i></div>
+                  <div class="check-body">
+                    <strong>Preenchimento Sulco Nasogeniano</strong>
+                    <small>Fossa canina e piriforme (Artéria Angular alertada)</small>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" id="hof-proc-ah-estrutural" onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-shield-star-line"></i></div>
+                  <div class="check-body">
+                    <strong>Volumização Malar / Mento / Mandíbula</strong>
+                    <small>Alta viscoelasticidade supraperióstea estrutural</small>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" id="hof-proc-bioestimulador" onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-pulse-line"></i></div>
+                  <div class="check-body">
+                    <strong>Bioestimulador de Colágeno</strong>
+                    <small>Sculptra (PLLA) / Radiesse (CaHA) / Ellansé (PCL)</small>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" id="hof-proc-fios" onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-compass-3-line"></i></div>
+                  <div class="check-body">
+                    <strong>Fios de Sustentação PDO</strong>
+                    <small>Tração de terço médio/inferior e bioestímulo contínuo</small>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" id="hof-proc-lipoplastia" onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-scissors-2-line"></i></div>
+                  <div class="check-body">
+                    <strong>Lipoplastia Química (Papada)</strong>
+                    <small>Ácido Deoxicólico na gordura pré-platismal submentoniana</small>
+                  </div>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" id="hof-proc-olheiras" onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-eye-line"></i></div>
+                  <div class="check-body">
+                    <strong>Preenchimento de Olheiras / Calha</strong>
+                    <small>Sulco nasojugal profundo com microcânula (Efeito Tyndall)</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Card de Seleção Simples de Material -->
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon cyan"><i class="ri-drop-line"></i></div>
+                <div>
+                  <h3>B. Material / Produto Utilizado</h3>
+                  <p>Selecione de forma simples e rápida o material que será aplicado.</p>
+                </div>
+              </div>
+              <div class="form-grid cols-2" style="margin-top:12px;">
+                <div class="form-group col-span-1">
+                  <label for="hof-material-select"><i class="ri-list-check"></i> Material / Produto Principal</label>
+                  <select id="hof-material-select" onchange="onHofMaterialSelectChange(); updateHofTCLELivePreview();" style="font-weight:600;font-size:13px;">
+                    <option value="Ácido Hialurônico (Preenchimento Facial / Labial)" selected>Ácido Hialurônico (Preenchimento Facial / Labial)</option>
+                    <option value="Toxina Botulínica Tipo A (Botox / Dysport)">Toxina Botulínica Tipo A (Botox / Dysport)</option>
+                    <option value="Toxina Botulínica + Ácido Hialurônico (Protocolo Combinado)">Toxina Botulínica + Ácido Hialurônico (Combinado)</option>
+                    <option value="Bioestimulador de Colágeno (Sculptra / Radiesse / Elleva)">Bioestimulador de Colágeno (Sculptra / Radiesse / Elleva)</option>
+                    <option value="Fios de PDO (Sustentação e Estímulo de Colágeno)">Fios de PDO (Sustentação e Estímulo)</option>
+                    <option value="Esvaziador de Gordura Submentoniana (Lipolítico)">Esvaziador de Gordura Submentoniana</option>
+                    <option value="outro">Outro Material (Especificar ao lado)...</option>
+                  </select>
+                </div>
+                <div class="form-group col-span-1">
+                  <label for="hof-material-name"><i class="ri-edit-line"></i> Especificação / Marca do Material</label>
+                  <input type="text" id="hof-material-name" placeholder="Ex: Juvéderm, Restylane, Botox..." value="Ácido Hialurônico" oninput="updateHofTCLELivePreview()">
+                </div>
+                <div class="form-group col-span-2">
+                  <div class="tag-chips-row" style="margin-top:2px;">
+                    <span class="chips-label">Atalhos rápidos de material:</span>
+                    <button type="button" class="chip" onclick="quickSelectHofMaterial('Ácido Hialurônico')">Ácido Hialurônico</button>
+                    <button type="button" class="chip" onclick="quickSelectHofMaterial('Toxina Botulínica Tipo A')">Toxina Botulínica</button>
+                    <button type="button" class="chip" onclick="quickSelectHofMaterial('Toxina Botulínica + Ácido Hialurônico')">Toxina + Ácido Hialurônico</button>
+                    <button type="button" class="chip" onclick="quickSelectHofMaterial('Bioestimulador de Colágeno')">Bioestimulador</button>
+                    <button type="button" class="chip" onclick="quickSelectHofMaterial('Fios de Sustentação PDO')">Fios de PDO</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card de Adendos Jurídicos Especializados HOF -->
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon amber"><i class="ri-shield-keyhole-line"></i></div>
+                <div>
+                  <h3>C. Adendos Jurídicos Especiais de Harmonização</h3>
+                  <p>Cláusulas de blindagem em conformidade com CFO-196/2019 e precedentes do STJ.</p>
+                </div>
+              </div>
+              <div class="check-grid cols-1" style="margin-top:12px;">
+                <label class="check-card checked">
+                  <input type="checkbox" id="hof-opt-assimetria" checked onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-scales-line"></i></div>
+                  <div class="check-body">
+                    <strong>Cláusula de Assimetrias Naturais Pré-Existentes &amp; Expectativas Realistas</strong>
+                    <small>Declaração formal sob o Art. 14 do CDC e jurisprudência do STJ: a face humana possui assimetrias esqueléticas e tônus mastigatório distintos em cada hemiface; o procedimento busca harmonia funcional, sendo juridicamente vedada promessa de simetria geométrica milimétrica.</small>
+                  </div>
+                </label>
+                <label class="check-card checked">
+                  <input type="checkbox" id="hof-opt-resgate" checked onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-first-aid-kit-line"></i></div>
+                  <div class="check-body">
+                    <strong>Autorização Prévia e Inescusável de Hialuronidase de Resgate</strong>
+                    <small>Esclarecer risco vascular, possível uso de hialuronidase, reações alérgicas e necessidade de atendimento urgente. Registrar a decisão informada do paciente.</small>
+                  </div>
+                </label>
+                <label class="check-card checked">
+                  <input type="checkbox" id="hof-opt-imagem" checked onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-camera-lens-line"></i></div>
+                  <div class="check-body">
+                    <strong>Termo de Cessão de Uso de Imagem &amp; Fotos Padronizadas (Res. CFO-196/2019)</strong>
+                    <small>Autorização para registros fotográficos e em vídeo para prontuário clínico e divulgação científica/ética, constando a advertência obrigatória de que os resultados são individuais e não constituem garantia de resultado idêntico para outros pacientes.</small>
+                  </div>
+                </label>
+                <label class="check-card checked">
+                  <input type="checkbox" id="hof-opt-retorno" checked onchange="updateHofTCLELivePreview()">
+                  <div class="check-visual"><i class="ri-calendar-check-line"></i></div>
+                  <div class="check-body">
+                    <strong>Retorno e acompanhamento conforme o procedimento</strong>
+                    <small>Combine a data do retorno e oriente contato antecipado se houver sinais de alerta. A ausência não exclui automaticamente a responsabilidade profissional.</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Botões de Ação HOF -->
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;">
+              <button type="button" class="btn btn-primary btn-lg" onclick="generateHofTCLEModal()">
+                <i class="ri-file-pdf-fill"></i> Gerar TCLE Especializado de HOF
+              </button>
+              <button type="button" class="btn btn-secondary btn-lg" onclick="transferHofToMainGenerator()">
+                <i class="ri-arrow-right-up-line"></i> Carregar no Gerador Geral (22 Seções)
+              </button>
+              <button type="button" class="btn btn-outline" onclick="copyHofLegalText()">
+                <i class="ri-file-copy-2-line"></i> Copiar Texto Integral HOF
+              </button>
+            </div>
+          </div>
+
+          <!-- Coluna 2: Preview em Tempo Real do TCLE de HOF -->
+          <div class="hof-preview-column">
+            <div class="hof-preview-sticky">
+              <div class="hof-preview-header">
+                <div>
+                  <span class="pill-badge" style="background:#bf5af2;color:#fff;"><i class="ri-sparkling-line"></i> Minuta em Tempo Real</span>
+                  <h4 style="margin-top:4px;font-size:14px;color:var(--text-main);">Termo Especializado de HOF</h4>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline" onclick="copyHofLegalText()" title="Copiar minuta para área de transferência">
+                  <i class="ri-clipboard-line"></i> Copiar
+                </button>
+              </div>
+              <div id="hof-live-preview-box" class="hof-live-preview-box">
+                <!-- Preenchido dinamicamente via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /hof-generator-sub -->
+
+      <!-- SUB-TAB 2: ZONAS DE RISCO ANATÔMICO (DANGER ZONES) -->
+      <div id="hof-danger-zones-sub" class="hof-sub-content">
+        <div class="danger-zones-intro">
+          <div class="danger-zones-badge"><i class="ri-alarm-warning-line"></i> Anatomia Forense &amp; Segurança Vascular</div>
+          <h3>Mapa das 5 Zonas de Alto Risco Facial em HOF</h3>
+          <p>Áreas anatômicas críticas com vasos calibrosos ou anastomoses com a artéria oftálmica. Cada zona exige técnica preventiva estrita (aspiração, microcânula, microbolus) e gera cláusula forense inatacável.</p>
+        </div>
+        <div class="danger-zones-grid" id="danger-zones-container">
+          <!-- Preenchido dinamicamente via hof-db.js -->
+        </div>
+      </div><!-- /hof-danger-zones-sub -->
+
+      <!-- SUB-TAB 3: SOS RESGATE VASCULAR (HIALURONIDASE) -->
+      <div id="hof-sos-sub" class="hof-sub-content">
+        <div class="sos-banner">
+          <div class="sos-banner-icon"><i class="ri-first-aid-kit-line"></i></div>
+          <div>
+            <h3>Protocolo SOS de Resgate Vascular Imediato com Hialuronidase em Alta Dose</h3>
+            <p>Diretriz baseada no Consenso Internacional de DeLorenzi &amp; Carruthers. Conduta minuto a minuto para reversão de isquemia tecidual e prevenção de necrose cutânea ou amaurose.</p>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="copyHofEmergencyProtocol()">
+            <i class="ri-file-copy-line"></i> Copiar Protocolo SOS
+          </button>
+        </div>
+
+        <div class="sos-timeline" id="hof-sos-timeline-container">
+          <!-- Preenchido dinamicamente via hof-db.js -->
+        </div>
+      </div><!-- /hof-sos-sub -->
+
+      <!-- SUB-TAB 4: BIBLIOTECA JURÍDICA CFO & STJ -->
+      <div id="hof-legal-sub" class="hof-sub-content">
+        <div class="legal-library-intro">
+          <div class="danger-zones-badge" style="background:rgba(191,90,242,0.15);color:#bf5af2;border-color:rgba(191,90,242,0.3);">
+            <i class="ri-scales-3-line"></i> Fundamentação Ético-Jurídica em HOF
+          </div>
+          <h3>Arcabouço Normativo e Jurisprudencial de Harmonização Orofacial</h3>
+          <p>Resoluções completas do Conselho Federal de Odontologia, limites cirúrgicos da profissão, regras de publicidade em redes sociais e análise dos precedentes do STJ sobre responsabilidade civil.</p>
+        </div>
+        <div class="legal-framework-grid" id="hof-legal-framework-container">
+          <!-- Preenchido dinamicamente via hof-db.js -->
+        </div>
+      </div><!-- /hof-legal-sub -->
+
+    </section>
+
+    <!-- ======= TAB RECEITAS & ATESTADOS ODONTOLÓGICOS ======= -->
+    <section id="prescriptions-tab" class="tab-content">
+      <!-- Hero Banner Apple HIG -->
+      <div class="rx-hero-card">
+        <div class="rx-hero-content">
+          <div class="rx-hero-badge">
+            <i class="ri-capsule-line"></i> Farmacologia Odontológica &amp; Respaldo Legal — Lei Federal nº 5.081/1966
+          </div>
+          <h2>Receitas &amp; Atestados <span>Odontológicos</span></h2>
+          <p>Prescrições clínicas pré-configuradas com posologias consagradas (AINEs, Corticoides, Antibióticos, Analgésicos e Bochechos) e emissão de Atestados Odontológicos de Afastamento/Repouso e Comparecimento com amparo na Lei Federal 5.081/66, Resolução CFO-118/2012 e CLT Art. 473.</p>
+          <div class="rx-compliance-bar">
+            <span class="rx-comp-item"><i class="ri-shield-check-line"></i> Lei Federal nº 5.081/66 (Competência Legal do Dentista)</span>
+            <span class="rx-comp-item"><i class="ri-lock-line"></i> Res. CFO-118/2012 (Sigilo de CID Ético)</span>
+            <span class="rx-comp-item"><i class="ri-heart-pulse-line"></i> Diretrizes Farmacologia FOUSP / CFO</span>
+            <span class="rx-comp-item"><i class="ri-briefcase-line"></i> CLT Art. 473 (Abono de Faltas Legal)</span>
+            <span class="rx-comp-item"><i class="ri-scales-3-line"></i> Lei 14.063/20 (Assinatura Eletrônica)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra Sincronizada de Dados do Paciente -->
+      <div class="rx-patient-sync-bar">
+        <div class="rx-sync-inputs">
+          <div class="rx-field">
+            <label for="rx-patient-name"><i class="ri-user-line"></i> Paciente</label>
+            <input type="text" id="rx-patient-name" placeholder="Nome completo do paciente" oninput="onRxPatientDataChange()">
+          </div>
+          <div class="rx-field">
+            <label for="rx-patient-cpf"><i class="ri-id-card-line"></i> CPF</label>
+            <input type="text" id="rx-patient-cpf" placeholder="000.000.000-00" oninput="onRxPatientDataChange()">
+          </div>
+          <div class="rx-field">
+            <label for="rx-patient-rg"><i class="ri-fingerprint-line"></i> RG</label>
+            <input type="text" id="rx-patient-rg" placeholder="RG / Órgão expedidor" oninput="onRxPatientDataChange()">
+          </div>
+          <div class="rx-field">
+            <label for="rx-date"><i class="ri-calendar-line"></i> Data de Emissão</label>
+            <input type="text" id="rx-date" placeholder="DD/MM/AAAA" oninput="onRxPatientDataChange()">
+          </div>
+        </div>
+        <div class="rx-sync-actions">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="syncRxPatientWithForm()" title="Puxar automaticamente nome, CPF e RG preenchidos no formulário do TCLE">
+            <i class="ri-refresh-line"></i> Sincronizar Paciente do TCLE
+          </button>
+        </div>
+      </div>
+
+      <!-- Sub-navegação em Pílulas Segmentadas Apple -->
+      <div class="rx-segmented-nav">
+        <button type="button" class="rx-nav-pill active" data-subtab="rx-sub-prescription" onclick="switchRxSubTab('rx-sub-prescription')">
+          <i class="ri-medicine-bottle-line"></i> 1. Receituário Clínico (Farmacologia)
+        </button>
+        <button type="button" class="rx-nav-pill" data-subtab="rx-sub-leave" onclick="switchRxSubTab('rx-sub-leave')">
+          <i class="ri-file-shield-2-line"></i> 2. Atestado de Afastamento / Repouso
+        </button>
+        <button type="button" class="rx-nav-pill" data-subtab="rx-sub-attendance" onclick="switchRxSubTab('rx-sub-attendance')">
+          <i class="ri-time-line"></i> 3. Atestado de Comparecimento (Horas)
+        </button>
+      </div>
+
+      <!-- SUB-TAB 1: RECEITUÁRIO CLÍNICO -->
+      <div id="rx-sub-prescription" class="rx-sub-content active">
+        <div class="rx-grid-layout">
+          <!-- Coluna 1: Controles e Seleção Farmacológica -->
+          <div class="rx-form-column">
+            
+            <!-- Barra Dinâmica de Medicamentos Prescritos com botões X de exclusão rápida -->
+            <div class="step-card" id="rx-prescribed-chips-card" style="margin-bottom:16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+                <strong style="font-size:13px;color:var(--text-main);display:flex;align-items:center;gap:6px;">
+                  <i class="ri-checkbox-circle-fill" style="color:var(--success);"></i> Medicamentos Prescritos na Receita:
+                </strong>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span id="rx-chips-count" style="font-size:11.5px;color:var(--text-muted);font-weight:600;">0 selecionados</span>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="clearRxDrugs()" style="font-size:11px;padding:2px 8px;color:#ff453a;border-color:rgba(255,69,58,0.35);" title="Remover todos os fármacos da receita">
+                    <i class="ri-delete-bin-line"></i> Limpar Todos
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm" onclick="toggleCustomDrugForm()" style="font-size:11px;padding:2px 10px;" title="Adicionar medicamento personalizado à receita">
+                    <i class="ri-add-circle-line"></i> + Medicamento Avulso
+                  </button>
+                </div>
+              </div>
+
+              <!-- Formulário Recolhível para Adicionar Medicamento Avulso -->
+              <div id="rx-custom-drug-form" style="display:none;background:rgba(255,255,255,0.03);border:1px dashed rgba(14,165,233,0.4);border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <span style="font-size:12px;font-weight:700;color:#38bdf8;"><i class="ri-medicine-bottle-line"></i> Novo Medicamento Personalizado</span>
+                  <button type="button" onclick="toggleCustomDrugForm()" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;">✕</button>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+                  <div>
+                    <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px;">Nome do Medicamento *</label>
+                    <input type="text" id="rx-new-name" placeholder="Ex: Ciprofloxacino 500 mg" style="width:100%;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(0,0,0,0.2);color:var(--text-main);">
+                  </div>
+                  <div>
+                    <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px;">Categoria *</label>
+                    <select id="rx-new-category" style="width:100%;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(0,0,0,0.2);color:var(--text-main);">
+                      <option value="aines">AINE (Anti-inflamatório)</option>
+                      <option value="analgesicos">Analgésico</option>
+                      <option value="antibioticos">Antibiótico</option>
+                      <option value="topicos">Tópico / Bochecho / Pomada</option>
+                      <option value="corticoides">Corticoide</option>
+                    </select>
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+                  <div>
+                    <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px;">Apresentação / Quantidade</label>
+                    <input type="text" id="rx-new-presentation" placeholder="Ex: 1 caixa com 14 comprimidos" style="width:100%;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(0,0,0,0.2);color:var(--text-main);">
+<label for="rx-new-quantity">Quantidade a dispensar</label><input id="rx-new-quantity" type="text" placeholder="Ex.: 10 comprimidos">
+                  </div>
+                  <div>
+                    <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px;">Observação Clínica (Opcional)</label>
+                    <input type="text" id="rx-new-obs" placeholder="Ex: Tomar com água após refeição" style="width:100%;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(0,0,0,0.2);color:var(--text-main);">
+                  </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                  <label style="font-size:11px;color:var(--text-muted);display:block;margin-bottom:3px;">Posologia / Modo de Tomar *</label>
+                  <input type="text" id="rx-new-instructions" placeholder="Ex: Tomar 1 comprimido por via oral a cada 12 horas durante 7 dias seguidos." style="width:100%;font-size:12px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(0,0,0,0.2);color:var(--text-main);">
+                </div>
+                <div style="display:flex;justify-content:flex-end;gap:8px;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="toggleCustomDrugForm()" style="font-size:11.5px;padding:4px 10px;">Cancelar</button>
+                  <button type="button" class="btn btn-primary btn-sm" onclick="saveAndAddCustomDrug()" style="font-size:11.5px;padding:4px 14px;">
+                    <i class="ri-check-line"></i> Adicionar à Receita
+                  </button>
+                </div>
+              </div>
+
+              <div id="rx-prescribed-chips-wrap" class="rx-chips-wrapper">
+                <!-- Preenchido dinamicamente com botões X: Nimesulida 100mg [X], Amoxicilina 500mg [X], etc. -->
+              </div>
+            </div>
+
+            <!-- Card de Presets Farmacológicos Rápidos -->
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon emerald"><i class="ri-flashlight-line"></i></div>
+                <div>
+                  <h3>Presets Farmacológicos Rápidos (1 Clique)</h3>
+                  <p>Protocolos odontológicos clássicos e combinações pré-definidas.</p>
+                </div>
+              </div>
+              <div class="rx-presets-wrap" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;">
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('cirurgico-padrao')">
+                  <i class="ri-surgical-mask-line"></i> Cirúrgico Padrão
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('implante-enxerto')">
+                  <i class="ri-shield-star-line"></i> Implante &amp; Enxerto
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('cirurgia-preemptiva')">
+                  <i class="ri-flashlight-line"></i> Cirurgia com Analgesia Preemptiva (8mg)
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('profilaxia-aha')">
+                  <i class="ri-heart-pulse-line"></i> Profilaxia AHA (Amox 2g)
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('profilaxia-aha-alergico')">
+                  <i class="ri-shield-check-line"></i> Profilaxia AHA (Azitro 500mg)
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('infeccao-aguda')">
+                  <i class="ri-virus-line"></i> Infecção Aguda (Abscesso)
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('pericoronarite-anaerobio')">
+                  <i class="ri-capsule-line"></i> Pericoronarite / Anaeróbio
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('alergico-penicilina')">
+                  <i class="ri-alert-line"></i> Alérgico a Penicilina
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('aftas-estomatite')">
+                  <i class="ri-drop-line"></i> Aftas &amp; Úlceras Orais (Tópico)
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('candidiase-oral')">
+                  <i class="ri-medicine-bottle-line"></i> Candidíase Oral / Sapinho
+                </button>
+                <button type="button" class="btn btn-outline btn-sm rx-preset-btn" onclick="applyRxPreset('analgesia-leve')">
+                  <i class="ri-heart-line"></i> Analgesia Leve / Pós-Op
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="clearRxDrugs()" style="opacity:0.8;">
+                  <i class="ri-delete-bin-line"></i> Limpar
+                </button>
+              </div>
+            </div>
+
+            <!-- Card do Editor de Texto Livre da Prescrição (Edição por Texto) -->
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon cyan"><i class="ri-file-edit-line"></i></div>
+                <div>
+                  <h3>Editor de Texto da Receita (Edição Direta no Texto)</h3>
+                  <p>Edite tanto pelos botões quanto digitando diretamente aqui ou no papel timbrado ao lado.</p>
+                </div>
+              </div>
+              <div class="form-group" style="margin-top:12px;">
+                <textarea id="rx-full-text-editor" rows="6" placeholder="Texto da prescrição gerado automaticamente pelos botões ou editável livremente..." oninput="onRxFullTextCustomInput(this.value)" style="font-size:12.5px;line-height:1.6;"></textarea>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap;gap:8px;">
+                <small style="color:var(--text-muted);font-size:11.5px;"><i class="ri-refresh-line"></i> Sincronizado em tempo real com botões e papel timbrado.</small>
+                <button type="button" class="btn btn-outline btn-sm" onclick="resetRxTextToButtons()" style="font-size:11.5px;padding:3px 10px;">Voltar aos medicamentos</button>
+              </div>
+            </div>
+
+            <!-- Card de Medicamentos por Categoria (AINEs, Analgésicos, Antibióticos, Tópicos, Corticoides) -->
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon cyan"><i class="ri-capsule-line"></i></div>
+                <div>
+                  <h3>Medicamentos mais Comuns da Odontologia</h3>
+                  <p>Adicione ou remova fármacos com 1 clique nas categorias odontológicas pré-preenchidas.</p>
+                </div>
+              </div>
+
+              <!-- Pílulas de Navegação / Filtro Rápido por Categoria -->
+              <div class="rx-cat-filter-bar" id="rx-cat-filter-bar">
+                <button type="button" class="rx-cat-filter-btn active" data-cat="all" onclick="filterRxByCategory('all')">
+                  <i class="ri-apps-line"></i> Todos <span class="cat-count" id="rx-count-all">0</span>
+                </button>
+                <button type="button" class="rx-cat-filter-btn" data-cat="aines" onclick="filterRxByCategory('aines')">
+                  <i class="ri-capsule-line"></i> AINEs <span class="cat-count" id="rx-count-aines">0</span>
+                </button>
+                <button type="button" class="rx-cat-filter-btn" data-cat="analgesicos" onclick="filterRxByCategory('analgesicos')">
+                  <i class="ri-heart-pulse-line"></i> Analgésicos <span class="cat-count" id="rx-count-analgesicos">0</span>
+                </button>
+                <button type="button" class="rx-cat-filter-btn" data-cat="antibioticos" onclick="filterRxByCategory('antibioticos')">
+                  <i class="ri-shield-cross-line"></i> Antibióticos <span class="cat-count" id="rx-count-antibioticos">0</span>
+                </button>
+                <button type="button" class="rx-cat-filter-btn" data-cat="topicos" onclick="filterRxByCategory('topicos')">
+                  <i class="ri-drop-line"></i> Tópicos <span class="cat-count" id="rx-count-topicos">0</span>
+                </button>
+                <button type="button" class="rx-cat-filter-btn" data-cat="corticoides" onclick="filterRxByCategory('corticoides')">
+                  <i class="ri-pulse-line"></i> Corticoides <span class="cat-count" id="rx-count-corticoides">0</span>
+                </button>
+              </div>
+
+              <!-- Busca Rápida Instantânea de Medicamentos -->
+              <div class="rx-drug-search-box" style="margin-top:8px;position:relative;">
+                <i class="ri-search-line" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;"></i>
+                <input type="text" id="rx-drug-search-input" placeholder="🔍 Buscar por nome, classe, posologia ou marca (ex: amox, toragesic, clorexidina, daktarin, omcilon, celecoxibe)..." oninput="filterRxDrugsList(this.value)" style="width:100%;padding:8px 12px 8px 34px;font-size:12.5px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);">
+              </div>
+
+              <!-- Container Dinâmico Preenchido pelo app.js via prescriptions-db.js -->
+              <div id="rx-drugs-list-container" style="margin-top:14px;"></div>
+            </div>
+
+            <!-- Card de Orientações Adicionais Personalizáveis -->
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon gold"><i class="ri-pencil-line"></i></div>
+                <div>
+                  <h3>Orientações Específicas do Cirurgião (Opcional)</h3>
+                  <p>Instruções personalizadas adicionadas ao rodapé da receita.</p>
+                </div>
+              </div>
+              <div class="form-group" style="margin-top:12px;">
+                <textarea id="rx-custom-notes" rows="3" placeholder="Ex: Não ingerir bebidas alcoólicas durante o uso dos medicamentos; Manter repouso relativo nas primeiras 48h; Em caso de qualquer alteração alérgica, suspender e contatar o consultório imediatamente." oninput="updatePrescriptionLivePreview()"></textarea>
+              </div>
+            </div>
+
+          </div><!-- /rx-form-column -->
+
+          <!-- Coluna 2: Preview Ao Vivo Timbrado & Ações de Impressão/WhatsApp -->
+          <div class="rx-preview-column">
+            <div class="rx-preview-sticky">
+              <div class="rx-actions-header">
+                <div class="rx-badge-indicator">
+                  <span class="pulse emerald"></span>
+                  <span>Receituário Odontológico Timbrado</span>
+                </div>
+                <div class="rx-action-buttons">
+                  <button type="button" class="btn btn-primary btn-sm" onclick="printPrescription()" title="Imprimir Receituário em papel timbrado ou salvar em PDF">
+                    <i class="ri-printer-line"></i> Imprimir Receita
+                  </button>
+                  <button type="button" class="btn btn-whatsapp btn-sm" onclick="sharePrescriptionWhatsApp()" title="Enviar receita formatada para o WhatsApp do paciente">
+                    <i class="ri-whatsapp-line"></i> WhatsApp
+                  </button>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="copyPrescriptionText()" title="Copiar texto da receita">
+                    <i class="ri-file-copy-line"></i> Copiar
+                  </button>
+                </div>
+              </div>
+
+              <!-- Folha Timbrada do Receituário (Renderizada Dinamicamente) -->
+              <div id="rx-edit-mode" class="rx-mode-note" role="status"></div>
+<div id="rx-review-alerts" class="rx-mode-note" role="status" hidden></div>
+<button id="rx-restore-manual" type="button" class="btn btn-outline no-print" hidden onclick="restoreRxManualDraft()">Restaurar último texto livre</button>
+<div id="rx-prescription-preview-box" class="rx-live-preview-box">
+                <!-- Preenchido via updatePrescriptionLivePreview() -->
+              </div>
+            </div>
+          </div><!-- /rx-preview-column -->
+        </div><!-- /rx-grid-layout -->
+      </div><!-- /rx-sub-prescription -->
+
+      <!-- SUB-TAB 2: ATESTADO DE AFASTAMENTO / REPOUSO -->
+      <div id="rx-sub-leave" class="rx-sub-content">
+        <div class="rx-grid-layout">
+          <!-- Coluna de Controles do Atestado de Repouso -->
+          <div class="rx-form-column">
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon emerald"><i class="ri-file-shield-2-line"></i></div>
+                <div>
+                  <h3>Parâmetros do Atestado de Afastamento</h3>
+                  <p>Preenchimento automático conforme o Art. 6º, III da Lei 5.081/1966.</p>
+                </div>
+              </div>
+
+              <!-- Seletor Rápido de Dias -->
+              <div class="form-group" style="margin-top:16px;">
+                <label for="leave-reason-preset"><i class="ri-calendar-event-line"></i> Dias de Afastamento / Repouso</label>
+                <div class="rx-days-pills" style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+                  <button type="button" class="btn btn-sm btn-outline rx-day-btn active" onclick="setLeaveDays(1, this)">1 dia</button>
+                  <button type="button" class="btn btn-sm btn-outline rx-day-btn" onclick="setLeaveDays(2, this)">2 dias</button>
+                  <button type="button" class="btn btn-sm btn-outline rx-day-btn" onclick="setLeaveDays(3, this)">3 dias</button>
+                  <button type="button" class="btn btn-sm btn-outline rx-day-btn" onclick="setLeaveDays(5, this)">5 dias</button>
+                  <button type="button" class="btn btn-sm btn-outline rx-day-btn" onclick="setLeaveDays(7, this)">7 dias</button>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <input type="number" id="leave-days-input" value="1" min="1" max="30" style="width:90px;font-size:15px;font-weight:700;text-align:center;" oninput="onLeaveDaysCustomInput(this.value)">
+                  <span style="font-size:12.5px;color:var(--text-muted);">dia(s) de repouso e dispensa das atividades</span>
+                </div>
+              </div>
+
+              <!-- Justificativa do Afastamento -->
+              <div class="form-group" style="margin-top:14px;">
+                <label><i class="ri-stethoscope-line"></i> Justificativa do Procedimento Odontológico</label>
+                <select id="leave-reason-preset" onchange="onLeaveReasonPresetChange()" style="margin-bottom:8px;font-size:12.5px;">
+                  <option value="cirurgico" selected>Procedimento cirúrgico odontológico e repouso pós-operatório tecidual</option>
+                  <option value="siso-enxerto">Cirurgia oral com osteotomia e suturas (Sisos / Enxerto ósseo)</option>
+                  <option value="infeccao">Quadro infeccioso e doloroso agudo na cavidade oral em antibioticoterapia</option>
+                  <option value="urgencia">Atendimento de urgência odontológica e recuperação anestésica</option>
+                  <option value="endodontia">Intervenção endodôntica com instrumentação e controle sintomático</option>
+                  <option value="custom">Outro motivo (digitar livremente abaixo)...</option>
+                </select>
+                <textarea id="leave-reason-custom" rows="2" placeholder="Descreva a justificativa clínica..." oninput="onLeaveReasonCustomInput(this.value)">procedimento cirúrgico odontológico e repouso pós-operatório necessário para recuperação biológica tecidual</textarea>
+              </div>
+
+              <!-- Editor de Texto Oficial do Atestado (Edição por Texto) -->
+              <div class="form-group" style="margin-top:14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <label style="margin:0;"><i class="ri-file-text-line"></i> Texto do Atestado (Editável por botão ou no texto)</label>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="resetLeaveTextToButtons()" style="font-size:11px;padding:2px 8px;" title="Regenerar texto padrão com base nos botões de dias">
+                    <i class="ri-restart-line"></i> Sincronizar dos Botões
+                  </button>
+                </div>
+                <textarea id="leave-full-text-editor" rows="5" placeholder="Texto do atestado gerado automaticamente pelos botões ou editável livremente..." oninput="onLeaveFullTextCustomInput(this.value)" style="font-size:12.5px;line-height:1.6;"></textarea>
+                <small style="color:var(--text-muted);font-size:11px;display:block;margin-top:4px;">
+                  <i class="ri-cursor-line"></i> Dica: Você pode mudar os dias tanto clicando nos botões acima ([1 dia], [2 dias]...), quanto alterando este texto ou clicando diretamente no papel timbrado ao lado.
+                </small>
+              </div>
+
+              <!-- Código CID-10 e Sigilo Ético -->
+              <div class="form-group" style="margin-top:14px;">
+                <label for="leave-cid-select"><i class="ri-shield-keyhole-line"></i> Classificação Internacional de Doenças (CID-10)</label>
+                <select id="leave-cid-select" aria-describedby="leave-cid-selection leave-cid-help" onchange="updateMedicalLeaveLivePreview()">
+                  <option value="sem-cid" selected>Sem CID — preservar sigilo (padrão)</option>
+                  <option value="K01.1 — Dentes inclusos / impactados (Sisos)">K01.1 — Dentes inclusos / impactados (Sisos)</option>
+                  <option value="K04.0 — Pulpite aguda irreversível">K04.0 — Pulpite aguda irreversível</option>
+                  <option value="K05.3 — Periodontite crônica avançada">K05.3 — Periodontite crônica avançada</option>
+                  <option value="K08.1 — Perda de dentes devido a acidente / extração (Implantes)">K08.1 — Perda de dentes (Implantes / Enxertos)</option>
+                  <option value="K10.2 — Afecções inflamatórias dos maxilares">K10.2 — Afecções inflamatórias dos maxilares</option>
+                  <option value="K07.6 — Transtornos da ATM / Bruxismo severo">K07.6 — Transtornos da ATM / DTM</option>
+                  <option value="Z01.2 — Exame odontológico de rotina e prevenção">Z01.2 — Exame odontológico de rotina</option>
+                </select>
+                <p id="leave-cid-selection" class="cid-selection" role="status" aria-live="polite">Sem CID — diagnóstico não incluído pelo seletor.</p>
+                <div id="leave-cid-help" class="cid-help"><strong>Sigilo do diagnóstico</strong><br>Inclua o CID somente com autorização expressa do paciente, registrada no prontuário, ressalvadas as hipóteses legais. Confira o código com o diagnóstico clínico. Se escolher “Sem CID”, revise também o motivo e o texto livre para evitar divulgação involuntária. O abono depende das regras aplicáveis ao caso.</div>
+              </div>
+
+            </div>
+          </div><!-- /rx-form-column -->
+
+          <!-- Coluna de Preview do Atestado de Repouso -->
+          <div class="rx-preview-column">
+            <div class="rx-preview-sticky">
+              <div class="rx-actions-header">
+                <div class="rx-badge-indicator">
+                  <span class="pulse emerald"></span>
+                  <span>Atestado Odontológico Timbrado (Lei 5.081/66)</span>
+                </div>
+                <div class="rx-action-buttons">
+                  <button type="button" class="btn btn-primary btn-sm" onclick="printMedicalLeave()" title="Imprimir Atestado de Afastamento ou salvar em PDF">
+                    <i class="ri-printer-line"></i> Imprimir Atestado
+                  </button>
+                  <button type="button" class="btn btn-whatsapp btn-sm" onclick="shareMedicalLeaveWhatsApp()" title="Enviar atestado para o WhatsApp do paciente">
+                    <i class="ri-whatsapp-line"></i> WhatsApp
+                  </button>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="copyMedicalLeaveText()" title="Copiar texto do atestado">
+                    <i class="ri-file-copy-line"></i> Copiar
+                  </button>
+                </div>
+              </div>
+
+              <!-- Folha do Atestado de Afastamento -->
+              <div id="leave-preview-box" class="rx-live-preview-box">
+                <!-- Preenchido via updateMedicalLeaveLivePreview() -->
+              </div>
+            </div>
+          </div><!-- /rx-preview-column -->
+        </div><!-- /rx-grid-layout -->
+      </div><!-- /rx-sub-leave -->
+
+      <!-- SUB-TAB 3: ATESTADO DE COMPARECIMENTO -->
+      <div id="rx-sub-attendance" class="rx-sub-content">
+        <div class="rx-grid-layout">
+          <!-- Coluna de Controles do Comparecimento -->
+          <div class="rx-form-column">
+            <div class="step-card" style="margin-bottom:20px;">
+              <div class="card-header">
+                <div class="card-header-icon violet"><i class="ri-time-line"></i></div>
+                <div>
+                  <h3>Parâmetros da Declaração de Comparecimento</h3>
+                  <p>Comprovação de horário de permanência na clínica para abono laboral/escolar.</p>
+                </div>
+              </div>
+
+              <!-- Atalhos Rápidos de Turno -->
+              <div class="form-group" style="margin-top:16px;">
+                <label for="att-start-time"><i class="ri-sun-line"></i> Turno / Atalhos Rápidos de Horário</label>
+                <div class="rx-shift-pills" style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+                  <button type="button" class="btn btn-sm btn-outline rx-shift-btn" onclick="setAttendanceShift('morning', this)">Matutino (08h às 12h)</button>
+                  <button type="button" class="btn btn-sm btn-outline rx-shift-btn active" onclick="setAttendanceShift('afternoon', this)">Vespertino (14h às 17h)</button>
+                  <button type="button" class="btn btn-sm btn-outline rx-shift-btn" onclick="setAttendanceShift('night', this)">Noturno (18h às 21h)</button>
+                  <button type="button" class="btn btn-sm btn-outline rx-shift-btn" onclick="setAttendanceShift('allday', this)">Dia Todo (Integral)</button>
+                </div>
+              </div>
+
+              <!-- Horário de Início e Término -->
+              <div class="form-grid cols-2" style="margin-top:10px;">
+                <div class="form-group col-span-1">
+                  <label><i class="ri-time-line"></i> Horário Inicial</label>
+                  <input type="time" id="att-start-time" value="14:00" oninput="updateAttendanceLivePreview()" style="font-weight:600;">
+                </div>
+                <div class="form-group col-span-1">
+                  <label for="att-end-time"><i class="ri-time-line"></i> Horário Final</label>
+                  <input type="time" id="att-end-time" value="17:00" oninput="updateAttendanceLivePreview()" style="font-weight:600;">
+                </div>
+              </div>
+
+              <!-- Motivo do Comparecimento -->
+              <div class="form-group" style="margin-top:14px;">
+                <label for="att-reason"><i class="ri-file-list-line"></i> Motivo do Atendimento Odontológico</label>
+                <input type="text" id="att-reason" value="consulta e realização de procedimento odontológico especializado" oninput="onAttReasonCustomInput(this.value)">
+              </div>
+
+              <!-- Editor de Texto Oficial da Declaração de Comparecimento -->
+              <div class="form-group" style="margin-top:14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <label style="margin:0;"><i class="ri-file-text-line"></i> Texto da Declaração (Editável por botão ou no texto)</label>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="resetAttTextToButtons()" style="font-size:11px;padding:2px 8px;" title="Regenerar texto padrão">
+                    <i class="ri-restart-line"></i> Sincronizar dos Botões
+                  </button>
+                </div>
+                <textarea id="att-full-text-editor" rows="4" placeholder="Texto da declaração de comparecimento..." oninput="onAttFullTextCustomInput(this.value)" style="font-size:12.5px;line-height:1.6;"></textarea>
+                <small style="color:var(--text-muted);font-size:11px;display:block;margin-top:4px;">
+                  <i class="ri-cursor-line"></i> Dica: Alterar os horários atualiza o texto, e você também pode digitar livremente aqui ou na folha ao lado.
+                </small>
+              </div>
+
+              <div style="background:rgba(48,209,88,0.06);border:1px solid rgba(48,209,88,0.2);border-radius:8px;padding:10px 14px;margin-top:14px;font-size:11.5px;color:var(--text-muted);line-height:1.5;">
+                <strong style="color:var(--success);display:block;margin-bottom:2px;"><i class="ri-checkbox-circle-line"></i> Efeito Jurídico de Abono (CLT Art. 473):</strong>
+                A declaração de comparecimento comprova o período exato em que o paciente permaneceu sob atendimento odontológico, sendo documento idôneo para abono parcial ou integral de horas perante o empregador ou colégio.
+              </div>
+
+            </div>
+          </div><!-- /rx-form-column -->
+
+          <!-- Coluna de Preview do Comparecimento -->
+          <div class="rx-preview-column">
+            <div class="rx-preview-sticky">
+              <div class="rx-actions-header">
+                <div class="rx-badge-indicator">
+                  <span class="pulse emerald"></span>
+                  <span>Declaração de Comparecimento Timbrada</span>
+                </div>
+                <div class="rx-action-buttons">
+                  <button type="button" class="btn btn-primary btn-sm" onclick="printAttendanceCertificate()" title="Imprimir Atestado de Comparecimento ou salvar em PDF">
+                    <i class="ri-printer-line"></i> Imprimir Comparecimento
+                  </button>
+                  <button type="button" class="btn btn-whatsapp btn-sm" onclick="shareAttendanceWhatsApp()" title="Enviar para o WhatsApp do paciente">
+                    <i class="ri-whatsapp-line"></i> WhatsApp
+                  </button>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="copyAttendanceText()" title="Copiar texto">
+                    <i class="ri-file-copy-line"></i> Copiar
+                  </button>
+                </div>
+              </div>
+
+              <!-- Folha do Atestado de Comparecimento -->
+              <div id="att-preview-box" class="rx-live-preview-box">
+                <!-- Preenchido via updateAttendanceLivePreview() -->
+              </div>
+            </div>
+          </div><!-- /rx-preview-column -->
+        </div><!-- /rx-grid-layout -->
+      </div><!-- /rx-sub-attendance -->
+
+    </section>
+
+    <!-- ======= TAB HISTÓRICO ======= -->
+    <section id="history-tab" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2>Prontuários Jurídicos Armazenados</h2>
+          <p>Acervo rastreável com identificação de riscos individuais por paciente e procedimento.</p>
+        </div>
+        <div class="search-box">
+          <i class="ri-search-line"></i>
+          <input type="text" id="history-search" placeholder="Nome, CPF ou procedimento…" oninput="filterHistory()">
+        </div>
+      </div>
+      <div id="history-list-container" class="history-list"></div>
+    </section>
+
+    <!-- ======= TAB INTERCORRÊNCIAS: O QUE FAZER ======= -->
+    <section id="intercurrences-tab" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2><i class="ri-first-aid-kit-line" style="color:#ef4444;"></i> Biblioteca de Intercorrências &amp; Condutas ("O Que Fazer")</h2>
+          <p>Protocolos imediatos transoperatórios, conduta ética com o paciente, prescrições de urgência e blindagem pericial.</p>
+        </div>
+        <div class="search-box">
+          <i class="ri-search-line"></i>
+          <input type="text" id="inter-search-input" placeholder="Pesquisar complicação (lima, parestesia, necrose, sinus lift, hipoclorito...)" oninput="filterIntercurrences(this.value)">
+        </div>
+      </div>
+
+      <!-- Filtros por Especialidade -->
+      <div class="inter-filter-pills" id="inter-specialty-pills">
+        <button type="button" class="inter-pill active" onclick="setIntercurrenceSpecialty('Todas', this)">Todas (27)</button>
+        <button type="button" class="inter-pill" onclick="setIntercurrenceSpecialty('Cirurgia &amp; Sisos', this)">Cirurgia &amp; Sisos (8)</button>
+        <button type="button" class="inter-pill" onclick="setIntercurrenceSpecialty('Harmonização HOF', this)">Harmonização HOF (6)</button>
+        <button type="button" class="inter-pill" onclick="setIntercurrenceSpecialty('Endodontia', this)">Endodontia (3)</button>
+        <button type="button" class="inter-pill" onclick="setIntercurrenceSpecialty('Implantodontia', this)">Implantodontia (3)</button>
+        <button type="button" class="inter-pill" onclick="setIntercurrenceSpecialty('Periodontia', this)">Periodontia (2)</button>
+        <button type="button" class="inter-pill" onclick="setIntercurrenceSpecialty('Odontologia do Sono', this)">Odontologia do Sono (1)</button>
+        <button type="button" class="inter-pill" onclick="setIntercurrenceSpecialty('Prótese &amp; Dentística', this)">Prótese &amp; Dentística (1)</button>
+        <button type="button" class="inter-pill" onclick="setIntercurrenceSpecialty('Emergências Sistêmicas', this)">Emergências Sistêmicas (3)</button>
+      </div>
+
+      <!-- Grid de Cards de Intercorrências -->
+      <div id="intercurrences-grid" class="inter-grid">
+        <!-- Renderizado dinamicamente via renderIntercurrencesLibrary() no app.js -->
+      </div>
+    </section>
+
+    <!-- ======= TAB CONFIGURAÇÕES ======= -->
+    <section id="settings-tab" class="tab-content">
+        <!-- Banner de setup de nova clínica -->
+        <div id="setup-clinic-banner" class="setup-banner" style="display:none;">
+          <i class="ri-information-line"></i>
+          <div>
+            <strong>Clínica não cadastrada</strong>
+            <span>Preencha os dados abaixo e clique em <em>Criar Clínica no Supabase</em> para vincular sua conta.</span>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3><i class="ri-building-line"></i> Dados Institucionais — Papel Timbrado do PDF</h3>
+        <div class="form-grid cols-4">
+          <div class="form-group col-span-4">
+            <label for="cfg-clinic-name">Razão Social / Nome da Clínica</label>
+            <input type="text" id="cfg-clinic-name" value="">
+          </div>
+          <div class="form-group col-span-2">
+            <label for="cfg-dentist-name">Nome do Dentista Responsável</label>
+            <input type="text" id="cfg-dentist-name" value="">
+          </div>
+          <div class="form-group col-span-2">
+            <label for="cfg-cro">Inscrição CRO / Especialidade</label>
+            <input type="text" id="cfg-cro" value="">
+          </div>
+          <div class="form-group col-span-2">
+            <label for="cfg-phone">Telefone / WhatsApp</label>
+            <input type="text" id="cfg-phone" value="">
+          </div>
+          <div class="form-group col-span-2">
+            <label for="cfg-email">E-mail Institucional</label>
+            <input type="email" id="cfg-email" value="">
+          </div>
+          <div class="form-group col-span-4">
+            <label for="cfg-address">Endereço Completo da Clínica</label>
+            <input type="text" id="cfg-address" value="">
+          </div>
+        </div>
+          <div class="card-footer">
+            <button class="btn btn-outline" id="btn-create-clinic" onclick="DS.createClinic()" style="display:none;">
+              <i class="ri-building-4-line"></i> Criar Clínica no Supabase
+            </button>
+            <button class="btn btn-primary" onclick="saveClinicSettings()"><i class="ri-save-line"></i> Salvar Configurações</button>
+        </div>
+      </div>
+
+      <!-- Card: Motor de IA Generativa Google Gemini -->
+      <div class="settings-card" style="margin-top:24px;border:1px solid rgba(191,90,242,0.3);box-shadow:0 4px 20px rgba(191,90,242,0.06);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#0a84ff,#bf5af2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;box-shadow:0 4px 14px rgba(191,90,242,0.3);">
+              <i class="ri-google-fill"></i>
+            </div>
+            <div>
+              <h3 style="margin:0;font-size:15px;color:var(--text-main);font-weight:700;">Google Gemini AI — Motor Generativo de Texto TCLE</h3>
+              <p style="margin:3px 0 0 0;font-size:12px;color:var(--text-muted);">Enriquecimento clínico com os modelos oficiais do Google Gemini (2.0 Flash / 1.5 Flash / 1.5 Pro)</p>
+            </div>
+          </div>
+          <span id="gemini-status-tag" class="pill-badge" style="background:rgba(255,255,255,0.06);color:var(--text-muted);font-size:11.5px;padding:5px 12px;border-radius:16px;border:1px solid var(--border-color);">
+            <i class="ri-checkbox-blank-circle-line"></i> Não configurado
+          </span>
+        </div>
+
+        <div class="form-grid cols-4">
+          <div class="form-group col-span-3">
+            <label for="cfg-gemini-model">Chave de API do Google Gemini (API Key) <span class="req">*</span></label>
+            <div style="position:relative;">
+              <input type="password" id="cfg-gemini-api-key" placeholder="Cole sua chave AIzaSy..." oninput="updateGeminiConfigFromUI()" style="padding-right:42px;">
+              <button type="button" onclick="toggleGeminiKeyVisibility()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;font-size:16px;">
+                <i class="ri-eye-line" id="gemini-key-eye"></i>
+              </button>
+            </div>
+            <small style="color:var(--text-muted);font-size:11.5px;display:block;margin-top:5px;">
+              Obtenha sua chave gratuita e ilimitada em <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--primary);text-decoration:none;font-weight:600;"><i class="ri-external-link-line"></i> Google AI Studio (aistudio.google.com)</a>
+            </small>
+          </div>
+
+          <div class="form-group col-span-1">
+            <label>Modelo do Gemini</label>
+            <select id="cfg-gemini-model" onchange="updateGeminiConfigFromUI()">
+              <option value="gemini-3.8-flash" selected>Gemini 3.8 Flash (Nova Geração / Ultra-rápido)</option>
+              <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+              <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+              <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+            </select>
+          </div>
+
+          <div class="form-group col-span-4">
+            <label class="checkbox-label" style="display:flex;align-items:center;gap:12px;cursor:pointer;background:rgba(10,132,255,0.05);padding:12px 16px;border-radius:10px;border:1px solid rgba(10,132,255,0.18);">
+              <input type="checkbox" id="cfg-gemini-enabled" onchange="updateGeminiConfigFromUI()" style="width:18px;height:18px;accent-color:var(--primary);">
+              <div>
+                <strong style="color:var(--text-main);font-size:12.5px;display:block;">Enviar diagnóstico e observações ao Google Gemini para auxiliar a redação</strong>
+                <span style="color:var(--text-muted);font-size:11.5px;line-height:1.4;display:block;margin-top:2px;">O Gemini aprimora a justificativa clínica em tom pericial e constrói o Resumo Acessível ao Paciente (CDC Art. 6º, III). Se a chave não estiver configurada ou estiver offline, o motor determinístico local assume automaticamente com 100% de compatibilidade.</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:10px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+          <div id="gemini-test-feedback" style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px;">
+            <i class="ri-shield-check-line" style="color:var(--success);"></i> Comunicação SSL direta do seu navegador com a API do Google (Zero intermediários / LGPD)
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="testGeminiConnection()">
+              <i class="ri-radar-line"></i> Testar Conexão Donti IA
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="saveGeminiSettings()">
+              <i class="ri-save-line"></i> Salvar Configurações Donti IA
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= TAB VENDAS KIWIFY (SAAS) ======= -->
+    <section id="kiwify-tab" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2>Monetização SaaS & Integração Kiwify</h2>
+          <p>Configure vendas automáticas, provisionamento de usuários e controle de assinaturas via Kiwify.</p>
+        </div>
+        <div class="saas-status-badge">
+          <span class="pulse emerald"></span>
+          <span>Webhook Engine Ativo</span>
+        </div>
+      </div>
+
+      <!-- Grid de Configuração Kiwify -->
+      <div class="kiwify-grid">
+        <!-- Card 1: Como Funciona -->
+        <div class="kiwify-card">
+          <div class="kiwify-card-header">
+            <div class="kiwify-icon emerald"><i class="ri-rocket-line"></i></div>
+            <div>
+              <h3>Funil 100% Automatizado de Vendas</h3>
+              <p>O cliente compra na Kiwify e recebe acesso imediato ao DentalSafe AI.</p>
+            </div>
+          </div>
+          <div class="kiwify-steps-list">
+            <div class="k-step-item">
+              <span class="k-num">1</span>
+              <div>
+                <strong>Dentista compra no Checkout Kiwify</strong>
+                <p>Pagamento via PIX, Cartão de Crédito ou Boleto aprovado instantaneamente.</p>
+              </div>
+            </div>
+            <div class="k-step-item">
+              <span class="k-num">2</span>
+              <div>
+                <strong>Kiwify dispara Webhook (order_approved)</strong>
+                <p>Envia nome, e-mail, telefone e ID da transação para o seu sistema.</p>
+              </div>
+            </div>
+            <div class="k-step-item">
+              <span class="k-num">3</span>
+              <div>
+                <strong>Criação Automática no Supabase Auth</strong>
+                <p>O sistema gera o usuário e envia o e-mail de definição de senha automaticamente.</p>
+              </div>
+            </div>
+            <div class="k-step-item">
+              <span class="k-num">4</span>
+              <div>
+                <strong>Bloqueio Automático em Cancelamento/Estorno</strong>
+                <p>Em caso de reembolso ou cancelamento, o webhook revoga o acesso na hora.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Configuração de Webhook -->
+        <div class="kiwify-card">
+          <div class="kiwify-card-header">
+            <div class="kiwify-icon violet"><i class="ri-link-m"></i></div>
+            <div>
+              <h3>Configuração do Webhook Kiwify</h3>
+              <p>Copie esta URL e cole no painel da Kiwify em <em>Apps &gt; Webhooks</em>.</p>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:14px;">
+            <label for="new-section-title">URL do Webhook (Endpoint de Produção)</label>
+            <div class="copy-input-wrap">
+              <input type="text" id="kiwify-webhook-url" readonly value="https://seu-app.vercel.app/api/webhooks/kiwify">
+              <button class="btn btn-outline" onclick="copyWebhookUrl()"><i class="ri-file-copy-line"></i> Copiar</button>
+            </div>
+            <small style="color:var(--text-muted);display:block;margin-top:6px;">Quando fizer o deploy na Vercel, substitua <code>seu-app.vercel.app</code> pelo seu domínio real.</small>
+          </div>
+
+          <div class="form-group" style="margin-top:14px;">
+            <label>Eventos Recomendados para Ativar na Kiwify:</label>
+            <div class="tag-chips-row" style="margin-top:6px;">
+              <span class="chip" style="background:rgba(16,185,129,0.15);color:#10b981;border-color:rgba(16,185,129,0.3);">✓ Compra aprovada (order_approved)</span>
+              <span class="chip" style="background:rgba(239,68,68,0.15);color:#ef4444;border-color:rgba(239,68,68,0.3);">✓ Reembolso (refunded)</span>
+              <span class="chip" style="background:rgba(245,158,11,0.15);color:#f59e0b;border-color:rgba(245,158,11,0.3);">✓ Assinatura cancelada</span>
+              <span class="chip" style="background:rgba(239,68,68,0.15);color:#ef4444;border-color:rgba(239,68,68,0.3);">✓ Chargeback</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Simulador de Webhook -->
+        <div class="kiwify-card col-span-2">
+          <div class="kiwify-card-header">
+            <div class="kiwify-icon cyan"><i class="ri-terminal-box-line"></i></div>
+            <div>
+              <h3>Simulador Interativo de Webhooks Kiwify</h3>
+              <p>Teste como o aplicativo reage aos eventos da Kiwify em tempo real sem gastar R$ 1 real.</p>
+            </div>
+          </div>
+
+          <div class="sim-actions-row">
+            <button class="btn btn-success" onclick="simulateKiwifyWebhook('order_approved')">
+              <i class="ri-check-double-line"></i> Simular Venda Aprovada (order_approved)
+            </button>
+            <button class="btn btn-warning" onclick="simulateKiwifyWebhook('subscription_canceled')">
+              <i class="ri-pause-circle-line"></i> Simular Cancelamento
+            </button>
+            <button class="btn btn-danger" onclick="simulateKiwifyWebhook('refunded')">
+              <i class="ri-refund-line"></i> Simular Reembolso
+            </button>
+          </div>
+
+          <div class="payload-preview-box">
+            <div class="payload-header">
+              <span><i class="ri-code-s-slash-line"></i> Payload JSON Recebido da Kiwify:</span>
+              <span id="webhook-sim-status" class="status-pill">Aguardando simulação…</span>
+            </div>
+            <pre id="webhook-payload-display">Clique em um dos botões acima para disparar uma simulação de webhook.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== MODAL DE ASSINATURA DIGITAL TOUCH ===================== -->
+<div id="signature-modal" class="signature-modal-overlay" style="display:none;">
+  <div class="signature-card">
+    <div class="signature-header">
+      <div class="sig-title-box">
+        <i class="ri-pen-nib-line"></i>
+        <div>
+          <h3 id="sig-modal-title">Assinatura Digital na Tela</h3>
+          <p id="sig-modal-subtitle">Desenhe sua assinatura com o dedo (celular/tablet) ou mouse</p>
+        </div>
+      </div>
+      <button class="btn-close-modal" onclick="closeSignatureModal()"><i class="ri-close-line"></i></button>
+    </div>
+
+    <div class="signature-canvas-container">
+      <canvas id="signature-canvas" width="600" height="220"></canvas>
+      <div class="sig-canvas-placeholder" id="sig-placeholder">
+        <i class="ri-pencil-ruler-2-line"></i>
+        <span>Assine no espaço acima com o dedo ou caneta stylus</span>
+      </div>
+      <div class="sig-baseline"></div>
+    </div>
+
+    <div class="sig-compliance-badge">
+      <i class="ri-shield-keyhole-line"></i>
+      <span>Assinatura Eletrônica Válida conforme Lei nº 14.063/2020 e MP 2.200-2/2001 (Art. 10, §2º)</span>
+    </div>
+
+    <div class="signature-footer">
+      <button class="btn btn-secondary" onclick="clearSignatureCanvas()"><i class="ri-eraser-line"></i> Limpar</button>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-outline" onclick="closeSignatureModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="confirmSignature()"><i class="ri-check-line"></i> Confirmar Assinatura</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Visualização do TCLE Institucional Completo -->
+<div id="inst-modal-overlay" class="inst-modal-overlay" style="display:none;" onclick="if(event.target===this)closeInstModal()">
+  <div class="inst-modal-container">
+    <div class="inst-modal-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span id="inst-modal-category" class="inst-category-badge universidade">Universidade</span>
+          <span id="inst-modal-specialty" class="inst-specialty-pill">Especialidade</span>
+        </div>
+        <h3 id="inst-modal-title" style="margin:0;font-size:17px;color:var(--text-main);font-weight:700;">Título do TCLE</h3>
+        <small id="inst-modal-institution" style="color:var(--cyan);font-weight:600;"></small>
+      </div>
+      <button type="button" class="btn-close-modal" onclick="closeInstModal()">&times;</button>
+    </div>
+    <div class="inst-modal-body">
+      <div>
+        <strong style="color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Fundamentação Legal &amp; Pericial:</strong>
+        <p id="inst-modal-grounding" style="font-size:12.5px;color:var(--text-sub);margin:4px 0 0 0;line-height:1.5;"></p>
+      </div>
+      <div>
+        <strong style="color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Texto Completo do TCLE:</strong>
+        <div id="inst-modal-text" class="inst-modal-text-box"></div>
+      </div>
+      <div>
+        <strong style="color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Citação Bibliográfica / Fonte Oficial:</strong>
+        <p id="inst-modal-citation" style="font-size:12px;color:var(--text-muted);margin:4px 0 0 0;font-style:italic;"></p>
+      </div>
+    </div>
+    <div class="inst-modal-footer">
+      <button class="btn btn-outline" onclick="closeInstModal()">Fechar</button>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-secondary" id="btn-copy-inst-modal" onclick="copyInstModalText()"><i class="ri-file-copy-line"></i> Copiar Texto Completo</button>
+        <button class="btn btn-primary" id="btn-apply-inst-modal" onclick="applyInstModalModel()"><i class="ri-flashlight-line"></i> Aplicar no Gerador</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL DE BASE JURÍDICA (BACKGROUND) ===================== -->
+<div id="legal-background-modal" class="inst-modal-overlay" style="display:none;">
+  <div class="inst-modal-container" style="max-width:980px;">
+    <div class="inst-modal-header">
+      <div>
+        <h3 style="margin:0;font-size:18px;color:var(--text-main);display:flex;align-items:center;gap:8px;">
+          <i class="ri-scales-3-line" style="color:var(--primary);"></i> Base Jurídica, Normas &amp; Repositório Institucional (Background)
+        </h3>
+        <p style="margin:4px 0 0 0;font-size:12px;color:var(--text-muted);">
+          Banco de dados que opera nos bastidores fundamentando automaticamente o TCLE e as condutas clínicas.
+        </p>
+      </div>
+      <button class="inst-modal-close" onclick="closeLegalBackgroundModal()">&times;</button>
+    </div>
+    <div class="inst-modal-body" style="max-height:75vh;overflow-y:auto;padding:20px;">
+      
+      <div class="section-header" style="margin-bottom:14px;">
+        <h4 style="font-size:14px;color:var(--text-main);margin:0;"><i class="ri-government-line"></i> Marco Regulatório &amp; Jurisprudência de Referência</h4>
+      </div>
+      <div class="library-grid" style="margin-bottom:28px;">
+        <div class="lib-card">
+          <div class="lib-icon-wrap"><i class="ri-government-line"></i></div>
+          <h4>Res. CFO 118/2012 — Código de Ética</h4>
+          <p>Art. 9º, VI: dever de esclarecer riscos, custos e alternativas. Art. 11, IV e X: infração ética iniciar procedimento sem consentimento.</p>
+          <span class="lib-tag">CFO</span>
+        </div>
+        <div class="lib-card">
+          <div class="lib-icon-wrap"><i class="ri-scale-3-line"></i></div>
+          <h4>CDC — Lei 8.078/90</h4>
+          <p>Art. 6º, III: informação clara sobre riscos. Art. 14, §4º: responsabilidade subjetiva do profissional liberal.</p>
+          <span class="lib-tag">LEI</span>
+        </div>
+        <div class="lib-card">
+          <div class="lib-icon-wrap"><i class="ri-bank-line"></i></div>
+          <h4>STJ — Jurisprudência Consolidada</h4>
+          <p>REsp 1.540.580/DF: dever de informação é autônomo. REsp 1.871.939/SP: TCLE genérico é nulo perante a Justiça.</p>
+          <span class="lib-tag">STJ</span>
+        </div>
+        <div class="lib-card">
+          <div class="lib-icon-wrap"><i class="ri-shield-check-line"></i></div>
+          <h4>LGPD — Lei 13.709/18</h4>
+          <p>Dados de saúde = dados sensíveis (Art. 5º, II). Tutela da saúde como base legal para prontuários clínicos (Art. 11, II, f).</p>
+          <span class="lib-tag">LGPD</span>
+        </div>
+        <div class="lib-card">
+          <div class="lib-icon-wrap"><i class="ri-camera-line"></i></div>
+          <h4>Res. CFO 196/2019 — Imagens</h4>
+          <p>Consentimento específico e isolado obrigatório para divulgação de casos clínicos em canais digitais.</p>
+          <span class="lib-tag">CFO</span>
+        </div>
+        <div class="lib-card">
+          <div class="lib-icon-wrap"><i class="ri-article-line"></i></div>
+          <h4>ABOL — Odontologia Legal</h4>
+          <p>Personalização por paciente e procedimento, 2 testemunhas e entrega comprovada de 2 vias originais.</p>
+          <span class="lib-tag">ABOL</span>
+        </div>
+      </div>
+
+      <!-- Repositório Institucional de Modelos -->
+      <div class="section-header" style="margin-bottom:14px;">
+        <div>
+          <h4 style="font-size:14px;color:var(--text-main);margin:0;"><i class="ri-bank-line"></i> 16 Modelos Institucionais (Universidades, CFO/CRO e ABOL)</h4>
+          <p style="color:var(--text-muted);font-size:12px;margin:2px 0 0 0;">Sincronizados com a tabela tcle_institutional_repository no Supabase.</p>
+        </div>
+      </div>
+
+      <!-- Barra de Busca Rápida -->
+      <div style="margin-bottom:16px;position:relative;">
+        <i class="ri-search-line" style="position:absolute;left:14px;top:10px;color:var(--text-muted);font-size:14px;"></i>
+        <input type="text" id="inst-search-input" placeholder="Buscar por universidade (USP, UNICAMP...), especialidade ou termo..." 
+               oninput="searchInstitutional(this.value)"
+               style="width:100%;padding:8px 14px 8px 38px;border:1px solid var(--border-color);border-radius:8px;background:var(--bg-card);color:var(--text-main);font-size:13px;">
+      </div>
+
+      <!-- Filtros por Categoria -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <button class="btn btn-sm btn-secondary" onclick="filterInstitutionalCategory('Todos', this)" style="border-radius:20px;font-size:11.5px;padding:4px 12px;">Todos (16)</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterInstitutionalCategory('Universidade', this)" style="border-radius:20px;font-size:11.5px;padding:4px 12px;">Universidades (7)</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterInstitutionalCategory('CFO/CRO', this)" style="border-radius:20px;font-size:11.5px;padding:4px 12px;">CFO &amp; CRO (5)</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterInstitutionalCategory('Artigo Científico / ABOL', this)" style="border-radius:20px;font-size:11.5px;padding:4px 12px;">Artigos &amp; ABOL (4)</button>
+      </div>
+
+      <!-- Grid de Cards Institucionais -->
+      <div id="institutional-tcle-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:16px;">
+        <!-- Preenchido dinamicamente pelo renderInstitutionalLibrary() no app.js -->
+      </div>
+
+    </div>
+    <div class="inst-modal-footer">
+      <button class="btn btn-secondary" onclick="closeLegalBackgroundModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL: ACRESCENTAR NOVA CLÁUSULA / SEÇÃO ===================== -->
+<div id="add-section-modal" class="signature-modal-overlay" style="display:none;" onclick="if(event.target===this)closeAddSectionModal()">
+  <div class="signature-card" style="max-width:680px;">
+    <div class="signature-header">
+      <div class="sig-title-box">
+        <i class="ri-add-circle-line" style="color:var(--cyan);"></i>
+        <div>
+          <h3 style="margin:0;font-size:16px;">Acrescentar Nova Cláusula / Seção ao TCLE</h3>
+          <p style="margin:2px 0 0 0;font-size:12px;color:var(--text-muted);">Personalize o termo inserindo cláusulas específicas exigidas pelo caso clínico.</p>
+        </div>
+      </div>
+      <button type="button" class="btn-close-modal" onclick="closeAddSectionModal()"><i class="ri-close-line"></i></button>
+    </div>
+
+    <div style="padding:10px 0;">
+      <!-- Presets rápidos de 1 clique -->
+      <label style="font-size:12px;font-weight:700;color:var(--text-main);margin-bottom:6px;display:block;">
+        <i class="ri-flashlight-line" style="color:var(--gold);"></i> Presets Rápidos de Cláusulas Clínicas (1 Clique):
+      </label>
+      <div class="custom-clause-presets">
+        <button type="button" class="clause-preset-btn" onclick="applyCustomClausePreset('sedacao')">💉 Sedação Consciente / Óxido</button>
+        <button type="button" class="clause-preset-btn" onclick="applyCustomClausePreset('garantia')">🛡️ Garantia Condicionada (CDC)</button>
+        <button type="button" class="clause-preset-btn" onclick="applyCustomClausePreset('tomografia')">📷 Tomografia Cone Beam</button>
+        <button type="button" class="clause-preset-btn" onclick="applyCustomClausePreset('retratamento')">🔬 Retratamento / Repetições</button>
+        <button type="button" class="clause-preset-btn" onclick="applyCustomClausePreset('abandono')">⛔ Notificação de Desistência</button>
+        <button type="button" class="clause-preset-btn" onclick="applyCustomClausePreset('limpar')">📝 Cláusula em Branco</button>
+      </div>
+
+      <div class="form-group" style="margin-top:10px;">
+        <label style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;"><i class="ri-heading"></i> Título da Nova Seção / Cláusula:</label>
+        <input type="text" id="new-section-title" placeholder="Ex: SEÇÃO PERSONALIZADA — PROTOCOLO DE SEDAÇÃO E CUIDADOS ANESTÉSICOS" style="font-size:13px;font-weight:600;width:100%;">
+      </div>
+
+      <div class="form-group" style="margin-top:12px;">
+        <label style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;"><i class="ri-file-text-line"></i> Conteúdo da Cláusula / Texto Legal:</label>
+        <textarea id="new-section-content" rows="6" placeholder="Digite aqui o texto que será adicionado à folha timbrada do TCLE..." style="font-size:12.5px;line-height:1.6;width:100%;"></textarea>
+      </div>
+
+      <div class="form-group" style="margin-top:12px;">
+        <label style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;"><i class="ri-layout-top-line"></i> Posição de Inserção no TCLE:</label>
+        <select id="new-section-position" style="font-size:12.5px;width:100%;">
+          <option value="end" selected>Ao Final do Documento (Antes da Declaração Final / Assinatura)</option>
+          <option value="after-diag">Após Seção 3 — Diagnóstico Clínico e Fisiopatologia</option>
+          <option value="after-proc">Após Seção 5 — Etapas Clínicas Passo a Passo</option>
+          <option value="after-risks">Após Seção 11 — Riscos Específicos e Complicações</option>
+          <option value="after-postop">Após Seção 14 — Cuidados Pós-Operatórios</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="signature-footer" style="justify-content:space-between;">
+      <button type="button" class="btn btn-outline" onclick="closeAddSectionModal()">Cancelar</button>
+      <button type="button" class="btn btn-primary" onclick="confirmAddCustomSection()"><i class="ri-check-line"></i> Inserir Cláusula no TCLE</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL: GERENCIADOR DE SEÇÕES DO TCLE ===================== -->
+<div id="manage-sections-modal" class="signature-modal-overlay" style="display:none;" onclick="if(event.target===this)closeManageSectionsModal()">
+  <div class="signature-card" style="max-width:760px;">
+    <div class="signature-header">
+      <div class="sig-title-box">
+        <i class="ri-settings-4-line" style="color:var(--cyan);"></i>
+        <div>
+          <h3 style="margin:0;font-size:16px;">Gerenciador de Seções do TCLE</h3>
+          <p style="margin:2px 0 0 0;font-size:12px;color:var(--text-muted);">Ative ou desative as seções do documento com 1 clique. O TCLE é recalculado instantaneamente.</p>
+        </div>
+      </div>
+      <button type="button" class="btn-close-modal" onclick="closeManageSectionsModal()"><i class="ri-close-line"></i></button>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:8px;">
+      <span style="font-size:12.5px;color:var(--text-muted);">Seções ativas no documento: <strong id="modal-sec-count-badge" style="color:var(--success);">22 de 22</strong></span>
+      <div style="display:flex;gap:6px;">
+        <button type="button" class="btn btn-outline btn-sm" onclick="setAllSectionsVisibility(true)" style="font-size:11px;padding:3px 10px;">
+          <i class="ri-checkbox-line"></i> Marcar Todas
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="setAllSectionsVisibility(false)" style="font-size:11px;padding:3px 10px;">
+          <i class="ri-checkbox-blank-line"></i> Desmarcar Todas
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="restoreAllTcleSections()" style="font-size:11px;padding:3px 10px;">
+          <i class="ri-restart-line"></i> Restaurar Padrão
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de Busca Rápida de Seções -->
+    <div style="margin-top:10px;position:relative;">
+      <i class="ri-search-line" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px;"></i>
+      <input type="text" id="tcle-sec-filter-input" placeholder="🔍 Filtrar seções do TCLE por nome ou tema (ex: risco, anestesia, foro, imagem, implante)..." oninput="filterManageSectionsList(this.value)" style="width:100%;padding:8px 12px 8px 34px;font-size:12.5px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);">
+    </div>
+
+    <!-- Container Dinâmico com os Switches de Todas as Seções -->
+    <div id="tcle-sections-manage-list" class="tcle-modal-grid">
+      <!-- Preenchido dinamicamente via renderManageSectionsList() no app.js -->
+    </div>
+
+    <div class="signature-footer" style="justify-content:flex-end;">
+      <button type="button" class="btn btn-primary" onclick="closeManageSectionsModal()"><i class="ri-check-line"></i> Concluir Ajustes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MODAL DE CADASTRO / EDIÇÃO DE PACIENTE (LGPD) ===================== -->
+<div id="patient-modal" class="signature-modal-overlay" style="display:none;">
+  <div class="signature-card" style="max-width:620px;width:95%;">
+    <div class="signature-header">
+      <div class="sig-title-box">
+        <i class="ri-user-heart-line" style="color:var(--success, #34c759);"></i>
+        <div>
+          <h3 id="patient-modal-title">Ficha Cadastral do Paciente</h3>
+          <p id="patient-modal-subtitle">Dados protegidos sob as bases legais da LGPD (Art. 11, II, f)</p>
+        </div>
+      </div>
+      <button type="button" class="btn-close-modal" onclick="closePatientModal()"><i class="ri-close-line"></i></button>
+    </div>
+
+    <div style="padding:16px 22px;display:flex;flex-direction:column;gap:13px;max-height:75vh;overflow-y:auto;">
+      <input type="hidden" id="modal-patient-id">
+      
+      <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:12px;">
+        <div class="form-group">
+          <label for="modal-patient-name" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;">Nome Completo do Paciente *</label>
+          <input type="text" id="modal-patient-name" placeholder="Ex: Maria Clara Souza" style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);font-size:13px;" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-patient-cpf" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;">CPF *</label>
+          <input type="text" id="modal-patient-cpf" placeholder="000.000.000-00" style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);font-size:13px;" required>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group">
+          <label for="modal-patient-phone" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;">Telefone / WhatsApp</label>
+          <input type="text" id="modal-patient-phone" placeholder="(11) 99999-9999" style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);font-size:13px;">
+        </div>
+        <div class="form-group">
+          <label for="modal-patient-rg" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;">RG / Órgão Expedidor</label>
+          <input type="text" id="modal-patient-rg" placeholder="Ex: 12.345.678-9 SSP/SP" style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);font-size:13px;">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group">
+          <label for="modal-patient-birth" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;">Data de Nascimento</label>
+          <input type="date" id="modal-patient-birth" style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);font-size:13px;">
+        </div>
+        <div class="form-group">
+          <label for="modal-patient-email" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;">E-mail</label>
+          <input type="email" id="modal-patient-email" placeholder="paciente@exemplo.com" style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);font-size:13px;">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="modal-patient-address" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;">Endereço Residencial</label>
+        <input type="text" id="modal-patient-address" placeholder="Rua, número, bairro, cidade - UF" style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);font-size:13px;">
+      </div>
+
+      <div class="form-group">
+        <label for="modal-patient-allergies" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;color:#ff453a;"><i class="ri-alarm-warning-line"></i> Alergias Farmacológicas &amp; Alertas Sistêmicos</label>
+        <input type="text" id="modal-patient-allergies" placeholder="Ex: Alergia a Penicilinas, Hipertenso, Diabético tipo 2, Uso de AAS..." style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,69,58,0.06);border:1px solid rgba(255,69,58,0.3);color:var(--text-main);font-size:13px;">
+      </div>
+
+      <div class="form-group">
+        <label for="modal-patient-notes" style="font-size:12px;font-weight:600;margin-bottom:4px;display:block;">Observações Clínicas &amp; Histórico</label>
+        <textarea id="modal-patient-notes" rows="2" placeholder="Queixa principal, expectativas, histórico de tratamentos odontológicos prévios..." style="width:100%;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text-main);font-size:13px;resize:vertical;"></textarea>
+      </div>
+
+      <div style="font-size:11.5px;color:var(--text-muted);background:rgba(52,199,89,0.08);border:1px solid rgba(52,199,89,0.25);padding:10px 12px;border-radius:8px;display:flex;align-items:center;gap:8px;">
+        <i class="ri-shield-check-line" style="color:var(--success, #34c759);font-size:16px;flex-shrink:0;"></i>
+        <span><strong>Segurança LGPD:</strong> Os dados deste titular ficam salvos sob criptografia local e são utilizados unicamente para a assistência odontológica e emissão de documentos clínicos (Art. 11, II, f).</span>
+      </div>
+    </div>
+
+    <div class="signature-footer" style="padding:14px 22px;display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--border);">
+      <button type="button" class="btn btn-secondary" onclick="closePatientModal()">Cancelar</button>
+      <button type="button" class="btn btn-primary" onclick="savePatientFromModal()"><i class="ri-save-line"></i> Salvar Dados do Paciente</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LGPD GOVERNANCE BANNER ===================== -->
+<div id="lgpd-consent-banner" class="lgpd-banner" style="display:none;">
+  <div class="lgpd-banner-content">
+    <div class="lgpd-banner-icon"><i class="ri-shield-check-fill"></i></div>
+    <div class="lgpd-banner-text">
+      <strong>Proteção de Dados &amp; Sigilo Clínico (LGPD — Lei nº 13.709/18)</strong>
+      <p>Os dados de saúde informados nesta plataforma destinam-se exclusivamente à <em>Tutela da Saúde</em> (Art. 11, II, f) e geração de termos periciais (Art. 7º, II), em estrita conformidade com o sigilo odontológico (Res. CFO-118/2012). Zero comercialização ou compartilhamento externo.</p>
+    </div>
+    <div class="lgpd-banner-actions">
+      <button type="button" class="btn btn-sm btn-primary" onclick="acceptLgpdBanner()">
+        <i class="ri-check-line"></i> Compreendi e Aceito
+      </button>
+      <button type="button" class="btn btn-sm btn-secondary" onclick="openLegalBackgroundModal()">
+        <i class="ri-shield-keyhole-line"></i> Bases Legais
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="safety.js"></script>
+<script src="procedure-db.js"></script>
+<script src="institutional-db.js"></script>
+<script src="intercurrences-db.js"></script>
+<script src="hof-db.js"></script>
+<script src="clinical-ai-engine.js"></script>
+<script src="postop-guidelines-db.js"></script>
+<script src="prescriptions-db.js"></script>
+<script src="supabase.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
