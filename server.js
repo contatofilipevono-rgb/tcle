@@ -3,7 +3,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 // Apenas recursos públicos: backups, SQL, servidor e prontuários ficam inacessíveis.
-const publicFiles = new Set(['index.html','style.css','app.js','safety.js','procedure-db.js','clinical-ai-engine.js','prescriptions-db.js','postop-guidelines-db.js','institutional-db.js','institutional_db.json','intercurrences-db.js','hof-db.js','supabase.js','assets/apple_dentalsafe_logo.jpg','assets/apple_certified_seal.jpg','express.html','express.css','express.js','express/index.html','express/style.css','express/app.js']);
+const publicFiles = new Set(['index.html','style.css','app.js','safety.js','procedure-db.js','clinical-ai-engine.js','prescriptions-db.js','postop-guidelines-db.js','institutional-db.js','institutional_db.json','intercurrences-db.js','hof-db.js','supabase.js','assets/apple_dentalsafe_logo.jpg','assets/apple_certified_seal.jpg','express.html','express.css','express.js','express/index.html','express/style.css','express/app.js','express/procedure-db.js']);
 const mime = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.jpg':'image/jpeg'};
 function createServer() {
   return http.createServer((req,res) => {

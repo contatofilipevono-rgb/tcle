@@ -103,12 +103,16 @@ function createMockEl(id) {
   'cond-none', 'review-content-box', 'official-tcle-paper',
   'post-modal-atestado', 'chk-cid-opt', 'atestado-sheet-render',
   'post-modal-prescription', 'prescription-sheet-render',
-  'touch-signature-canvas'
+  'touch-signature-canvas',
+  'cfo-procedure-modal', 'search-cfo-input', 'cfo-specialty-filters', 'cfo-procedures-list',
+  'cfo-selected-notice', 'cfo-selected-title', 'cfo-selected-details',
+  'search-extended-conditions', 'active-extended-tags', 'extended-conditions-list'
 ].forEach(id => {
   elementsMap[id] = createMockEl(id);
 });
 
 const sandbox = {
+  createMockEl,
   console,
   setTimeout,
   clearTimeout,
@@ -178,7 +182,21 @@ vm.runInContext(`
     throw new Error('Preset de sisos falhou');
   }
 
-  // 4. Tela 2: Procedimento e Revisão
+  // 4. Catálogo de Procedimentos CFO / VRPO e Condições Sistêmicas
+  if (typeof CFO_PROCEDURES_CATALOG === 'undefined' || CFO_PROCEDURES_CATALOG.length < 30) {
+    throw new Error('CFO_PROCEDURES_CATALOG deve conter o acervo do CFO');
+  }
+  selectCfoProcedure('cfo-frenectomia');
+  if (state.procedure.id !== 'cfo-frenectomia' || !state.procedure.title.includes('Frenectomia')) {
+    throw new Error('Seleção de procedimento CFO falhou');
+  }
+
+  // Adição de condições críticas originais e estendidas com busca
+  toggleCondition(createMockEl('cond-bisf'), 'bisfosfonatos');
+  toggleCondition(createMockEl('cond-anti'), 'anticoagulantes');
+  toggleExtendedCondition('alergia_dipirona');
+  toggleExtendedCondition('radioterapia_cabeca_pescoco');
+
   submitProcedureScreen();
   if (state.activeScreen !== 'screen-review') throw new Error('Deveria transicionar para tela de revisão');
 
@@ -186,13 +204,53 @@ vm.runInContext(`
   if (!reviewHtml.includes('Dra. Valéria Vono') || !reviewHtml.includes('João Paulo da Silva')) {
     throw new Error('Resumo de revisão não contém dados conferidos');
   }
+  if (!reviewHtml.includes('Frenectomia') || !reviewHtml.includes('Bisfosfonatos')) {
+    throw new Error('Resumo não contém procedimento CFO ou alertas sistêmicos');
+  }
 
-  // 5. Geração do TCLE Oficial
+  // 5. Geração do TCLE Oficial com Complexidade Forense Integral
   submitGenerateTcle();
   if (state.activeScreen !== 'screen-tcle') throw new Error('Deveria transicionar para tela do TCLE');
   const tcleHtml = document.getElementById('official-tcle-paper').innerHTML;
+
   if (!tcleHtml.includes('Dra. Valéria Vono') || !tcleHtml.includes('987.654.321-99')) {
-    throw new Error('TCLE não contém dados periciais');
+    throw new Error('TCLE não contém dados periciais das partes');
+  }
+  if (!tcleHtml.includes('OBRIGAÇÃO DE MEIO') || !tcleHtml.includes('STJ — REsp 1.058.927/MT')) {
+    throw new Error('TCLE deve conter cláusula de Obrigação de Meio do STJ');
+  }
+  if (!tcleHtml.includes('Fisiopatologia e Justificativa Biológica')) {
+    throw new Error('TCLE deve conter Fisiopatologia Biológica da afecção');
+  }
+  if (!tcleHtml.includes('Etapas Técnicas do Procedimento Passo a Passo')) {
+    throw new Error('TCLE deve conter Etapas Técnicas Passo a Passo');
+  }
+  if (!tcleHtml.includes('Sensações Fisiológicas Previstas sob Anestesia Local')) {
+    throw new Error('TCLE deve conter Sensações Fisiológicas táteis');
+  }
+  if (!tcleHtml.includes('Riscos Inerentes e Previsíveis da Intervenção')) {
+    throw new Error('TCLE deve conter Riscos Inerentes detalhados');
+  }
+  if (!tcleHtml.includes('BISFOSFONATOS') || !tcleHtml.includes('MRONJ')) {
+    throw new Error('TCLE deve conter cláusula crítica de Bisfosfonatos e MRONJ');
+  }
+  if (!tcleHtml.includes('ANTICOAGULANTES') || !tcleHtml.includes('HEMORRAGIA')) {
+    throw new Error('TCLE deve conter cláusula crítica de Anticoagulantes e Hemorragia');
+  }
+  if (!tcleHtml.includes('DIPIRONA')) {
+    throw new Error('TCLE deve conter cláusula de Alergia a Dipirona da lista com busca');
+  }
+  if (!tcleHtml.includes('OSTEORRADIONECROSE')) {
+    throw new Error('TCLE deve conter cláusula de Radioterapia / Osteorradionecrose da lista com busca');
+  }
+  if (!tcleHtml.includes('CDC ART. 14, § 3º, II') || !tcleHtml.includes('Guia Exaustivo de Cuidados Pós-Operatórios')) {
+    throw new Error('TCLE deve conter Deveres de Cooperação e Guia Pós-Operatório');
+  }
+  if (!tcleHtml.includes('LGPD') || !tcleHtml.includes('Lei 13.709/2018')) {
+    throw new Error('TCLE deve conter salvaguarda de LGPD e guarda de prontuário por 20 anos');
+  }
+  if (!tcleHtml.includes('Testemunha 1') || !tcleHtml.includes('Testemunha 2')) {
+    throw new Error('TCLE deve conter blocos de assinatura para 2 testemunhas');
   }
 
   // 6. Modal Sequencial: Atestado

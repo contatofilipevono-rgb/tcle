@@ -176,8 +176,14 @@
 
           <div class="proc-card" data-proc="protese" onclick="selectProcedureCard('protese')">
             <span class="card-icon">🛡️</span>
-            <span class="card-title">Prótese & Facetas</span>
-            <span class="card-desc">Próteses fixas sobre dente/implante e facetas em cerâmica.</span>
+            <span class="card-title">Prótese & Coroas</span>
+            <span class="card-desc">Próteses fixas sobre dente/implante, zircônia e E-Max.</span>
+          </div>
+
+          <div class="proc-card" data-proc="facetas" onclick="selectProcedureCard('facetas')">
+            <span class="card-icon">💎</span>
+            <span class="card-title">Facetas & Lentes</span>
+            <span class="card-desc">Laminados cerâmicos e facetas em resina composta.</span>
           </div>
 
           <div class="proc-card" data-proc="periodontia" onclick="selectProcedureCard('periodontia')">
@@ -186,16 +192,59 @@
             <span class="card-desc">Raspagem, alisamento radicular e controle gengival.</span>
           </div>
 
+          <div class="proc-card" data-proc="restauracao" onclick="selectProcedureCard('restauracao')">
+            <span class="card-icon">🩹</span>
+            <span class="card-title">Restauração Estética</span>
+            <span class="card-desc">Restauração direta em resina composta nanoparticulada.</span>
+          </div>
+
           <div class="proc-card" data-proc="clareamento" onclick="selectProcedureCard('clareamento')">
             <span class="card-icon">⚪</span>
             <span class="card-title">Clareamento Dental</span>
             <span class="card-desc">Clareamento supervisionado em consultório ou caseiro.</span>
           </div>
 
-          <div class="proc-card" data-proc="restauracao" onclick="selectProcedureCard('restauracao')">
-            <span class="card-icon">💎</span>
-            <span class="card-title">Restauração Estética</span>
-            <span class="card-desc">Restauração direta em resina composta nanoparticulada.</span>
+          <div class="proc-card" data-proc="ortodontia" onclick="selectProcedureCard('ortodontia')">
+            <span class="card-icon">📐</span>
+            <span class="card-title">Ortodontia</span>
+            <span class="card-desc">Aparelhos fixos estéticos, autoligados e alinhadores.</span>
+          </div>
+
+          <div class="proc-card" data-proc="odontopediatria" onclick="selectProcedureCard('odontopediatria')">
+            <span class="card-icon">👶</span>
+            <span class="card-title">Odontopediatria</span>
+            <span class="card-desc">Atendimento infantil, dentes decíduos e prevenção.</span>
+          </div>
+
+          <div class="proc-card" data-proc="dtm" onclick="selectProcedureCard('dtm')">
+            <span class="card-icon">💆</span>
+            <span class="card-title">DTM & Dor Facial</span>
+            <span class="card-desc">Placa miorrelaxante e viscossuplementação da ATM.</span>
+          </div>
+
+          <div class="proc-card" data-proc="cirurgia_oral" onclick="selectProcedureCard('cirurgia_oral')">
+            <span class="card-icon">🔬</span>
+            <span class="card-title">Cirurgia Oral Menor</span>
+            <span class="card-desc">Frenectomia, apicectomia, biópsia e enucleação cística.</span>
+          </div>
+
+          <div class="proc-card proc-card-cfo" data-proc="cfo_catalog" onclick="openCfoModal()">
+            <span class="card-icon">📂</span>
+            <span class="card-title">Outros Procedimentos</span>
+            <span class="card-desc">Tabela CFO / VRPO / TUSS com busca por especialidade.</span>
+          </div>
+        </div>
+
+        <div id="cfo-selected-notice" style="display:none; margin-bottom: 20px; padding: 12px 16px; background: rgba(0,113,227,0.08); border: 1.5px solid var(--apple-blue); border-radius: 12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <span style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--apple-blue);">Procedimento CFO Selecionado:</span>
+              <div id="cfo-selected-title" style="font-size:14px; font-weight:700; color:var(--text-main); margin-top:2px;">—</div>
+              <div id="cfo-selected-details" style="font-size:12px; color:var(--text-muted); margin-top:2px;">—</div>
+            </div>
+            <button type="button" class="btn-pill-subtle" onclick="openCfoModal()" style="font-size:12px; padding:6px 12px;">
+              <span>Alterar Procedimento CFO</span>
+            </button>
           </div>
         </div>
 
@@ -241,32 +290,80 @@
           </div>
         </div>
 
-        <!-- Condições de Saúde (Chips 1-clique) -->
-        <div style="font-size:13px; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin: 18px 0 8px;">
-          Condições e Alergias do Paciente (1 Clique)
+        <!-- Condições de Saúde (Todas as 17 do App Original + Busca Estendida) -->
+        <div style="font-size:13px; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin: 20px 0 6px;">
+          Condições Sistêmicas & Alertas Clínicos (1 Clique)
         </div>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
+          Marque as condições do paciente para inclusão automática de cláusulas forenses protetivas no TCLE.
+        </p>
 
         <div class="conditions-chips-grid">
           <div class="condition-pill healthy active" id="cond-none" onclick="toggleCondition(this, 'nenhuma')">
-            <span>🛡️ Nenhuma comorbidade grave declarada</span>
+            <span>🛡️ Nenhuma comorbidade grave</span>
           </div>
-          <div class="condition-pill" onclick="toggleCondition(this, 'penicilina')">
-            <span>⚠️ Alergia a Penicilinas / Amoxicilina</span>
-          </div>
-          <div class="condition-pill" onclick="toggleCondition(this, 'hipertensao')">
+          <div class="condition-pill warning" onclick="toggleCondition(this, 'hipertensao')">
             <span>🩸 Hipertensão Arterial</span>
           </div>
-          <div class="condition-pill" onclick="toggleCondition(this, 'diabetes')">
+          <div class="condition-pill warning" onclick="toggleCondition(this, 'diabetes')">
             <span>🍬 Diabetes Mellitus</span>
           </div>
-          <div class="condition-pill" onclick="toggleCondition(this, 'cardiopatia')">
-            <span>❤️ Cardiopatia / Uso de Anticoagulante</span>
+          <div class="condition-pill danger" onclick="toggleCondition(this, 'cardiopatia')">
+            <span>❤️ Cardiopatia / Endocardite</span>
           </div>
-          <div class="condition-pill" onclick="toggleCondition(this, 'fumante')">
-            <span>🚬 Fumante</span>
+          <div class="condition-pill danger" onclick="toggleCondition(this, 'bisfosfonatos')">
+            <span>🚨 Bisfosfonatos (MRONJ)</span>
           </div>
-          <div class="condition-pill" onclick="toggleCondition(this, 'gestante')">
+          <div class="condition-pill danger" onclick="toggleCondition(this, 'anticoagulantes')">
+            <span>🚨 Anticoagulantes (Hemorragia)</span>
+          </div>
+          <div class="condition-pill danger" onclick="toggleCondition(this, 'corticoides')">
+            <span>🚨 Corticoides Contínuos (Addison)</span>
+          </div>
+          <div class="condition-pill danger" onclick="toggleCondition(this, 'imunossupressores')">
+            <span>🚨 Imunossupressores / Quimio</span>
+          </div>
+          <div class="condition-pill warning" onclick="toggleCondition(this, 'hiv')">
+            <span>🛡️ HIV / Imunodeficiência</span>
+          </div>
+          <div class="condition-pill warning" onclick="toggleCondition(this, 'autoimune')">
+            <span>🧬 Doença Autoimune / Lúpus</span>
+          </div>
+          <div class="condition-pill warning" onclick="toggleCondition(this, 'gestante')">
             <span>🤰 Gestante ou Lactante</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'ansiedade')">
+            <span>😰 Ansiedade / Odontofobia</span>
+          </div>
+          <div class="condition-pill warning" onclick="toggleCondition(this, 'fumante')">
+            <span>🚬 Tabagismo Ativo</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'bruxismo')">
+            <span>🦷 Bruxismo / Apertamento</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'perda_ossea')">
+            <span>🦴 Perda Óssea / Limitação</span>
+          </div>
+          <div class="condition-pill danger" onclick="toggleCondition(this, 'alergia_geral')">
+            <span>⚠️ Alergias (Penicilina/Anest/Látex)</span>
+          </div>
+          <div class="condition-pill warning" onclick="toggleCondition(this, 'periodontite')">
+            <span>🩺 Periodontite Ativa</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'expectativa_irreal')">
+            <span>🎯 Limites Estéticos / Expectativa</span>
+          </div>
+        </div>
+
+        <!-- Seção de Busca Estendida de Condições -->
+        <div class="extended-conditions-box">
+          <div class="extended-conditions-box-title">
+            <span>🔍 Outras Condições de Saúde, Alergias e Fármacos</span>
+          </div>
+          <input type="text" id="search-extended-conditions" class="apple-input" placeholder="🔍 Digite para buscar outras condições (ex: asma, renal, dipirona, epilepsia, radioterapia, marcapasso...)" oninput="filterExtendedConditions(this.value)">
+          <div id="active-extended-tags" class="active-conditions-tags" style="margin-top:10px;"></div>
+          <div id="extended-conditions-list" class="extended-conditions-list">
+            <!-- Renderizado dinamicamente pelo express/app.js -->
           </div>
         </div>
 
@@ -471,6 +568,26 @@
 
   </main>
 
+  <!-- Modal CFO / Outros Procedimentos Odontológicos -->
+  <div id="cfo-procedure-modal" class="cfo-modal-overlay" onclick="if(event.target === this) closeCfoModal()">
+    <div class="cfo-modal-box">
+      <div class="cfo-modal-header">
+        <h3>📂 Catálogo de Procedimentos Odontológicos (CFO / VRPO / TUSS)</h3>
+        <button type="button" class="btn-close-modal" onclick="closeCfoModal()" title="Fechar">✕</button>
+      </div>
+      <div class="cfo-search-toolbar">
+        <input type="text" id="search-cfo-input" class="apple-input" placeholder="🔍 Digite o nome do procedimento ou código CID (ex: frenectomia, apicectomia, seio maxilar, alinhador...)" oninput="filterCfoProcedures(this.value)">
+        <div class="cfo-specialties-chips" id="cfo-specialty-filters">
+          <!-- Renderizado dinamicamente via JS -->
+        </div>
+      </div>
+      <div class="cfo-modal-body" id="cfo-procedures-list">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="procedure-db.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

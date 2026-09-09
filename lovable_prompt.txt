@@ -1,0 +1,45 @@
+Build a production-grade, Apple Human Interface Design (HIG) Dental Clinical & Forensic Platform named "DentalSafe TCLE AI" for dentists, implantologists, and facial aesthetics (HOF) professionals.
+
+### Tech Stack & Architecture:
+- Framework: Vite + React 18 + TypeScript + Tailwind CSS + Lucide React + Radix/Shadcn UI
+- Storage: LocalStorage by default (Zero-build client-side resilience) + Supabase client integration
+- Design System: Apple Cupertino/Pro dark & light mode, frosted glass (backdrop-blur), SF Pro typography, refined gradients, tactile pill badges.
+
+### Core Modules & Dedicated Tabs:
+
+1. TAB "PACIENTES" (LGPD Patient Management):
+   - Comprehensive CRUD for dental patients: Full Name, CPF (with validation mask), RG, Phone/WhatsApp (with click-to-chat link), Date of Birth (automatic age calculation), Email, Address, Drug Allergies/Alerts (red pill badge), Clinical Notes.
+   - Quick Actions:
+     * "Iniciar TCLE": Pre-fills generator form with patient data and navigates to TCLE generator.
+     * "Nova Receita": Pre-fills prescription with patient data and navigates to Rx module.
+     * "Dossiê LGPD (JSON)": Exports complete portability record under LGPD Art. 18.
+     * "Anonimizar LGPD": Irreversibly replaces personal identifiable info (PII) with hash token while preserving clinical data for legal defense (LGPD Art. 16, I).
+   - Search bar filtering by name, CPF, or phone in real-time.
+   - Quick stats cards: Total Patients, Linked TCLEs, Issued Prescriptions, LGPD Compliance (100%).
+
+2. TAB "GERADOR DE TCLE" (4-Step Forensic Consent Wizard):
+   - Step 1: Patient Data & Legal Status (Adult, Minor with Guardian, PCD).
+   - Step 2: Dental Procedure (21 procedures: Implants, Sisos, Endo, Bone Graft, Sinus Lift, HOF, Clear Aligners, etc.) + Interactive Odontogram with 32 teeth selection.
+   - Step 3: Anesthesia Safety Selector (Articaine, Mepivacaine, Lidocaine with adrenaline contraindications check) + Comorbidities (Diabetes, Bisphosphonates/BRONJ, Anticoagulants).
+   - Step 4: Live Dual Document Preview (Forensic Legal Text + Accessible Lay Summary in plain Portuguese) + Interactive Signature Canvas for patient and dentist + PDF Print with SHA-256 forensic hash stamp.
+
+3. TAB "RECEITAS & ATESTADOS" (Pharmacological Rx & Certificates):
+   - 41 Dental Drugs Catalog categorized into: AINEs (Ibuprofeno, Nimesulida, Cetorolaco, etc.), Analgésicos (Dipirona, Paracetamol, Tramadol), Antibióticos (Amoxicilina, Clavulanato, Azitromicina, Clindamicina), Tópicos (Clorexidina 0,12%, Omcilon-A, Nistatina) e Corticoides (Dexametasona, Betametasona).
+   - Quick Clinical Presets: Oral Surgery / Sisos, Implant & Graft, Acute Pulpitis, AHA Endocarditis Prophylaxis, Penicillin-Allergic.
+   - Dual-mode editing: Add/Remove drug chips OR edit directly in free-form paper sheet with instant sync.
+   - Medical Leave (Atestado de Repouso com cálculo de dias por extenso) and Attendance Certificate (Declaração de Comparecimento com horários e Art. 473 CLT).
+   - Export to WhatsApp and Timbrada Print layout.
+
+4. TAB "HARMONIZAÇÃO OROFACIAL (HOF PRO)":
+   - 5 Facial Danger Zones (Glabella, Alar base, Lips, Temporal, Mandibular) with anatomical artery mappings and forensic risk clauses.
+   - DeLorenzi SOS Vascular Occlusion Rescue Protocol (minute-by-minute high dose hyaluronidase guide).
+   - Image rights addendum compliant with Resolução CFO-196/2019.
+
+5. TAB "INTERCORRÊNCIAS CLÍNICAS (SOS)":
+   - 27 Emergency Protocols (Paresthesia, Broken needle, Alveolitis, Sinus perforation, Anaphylaxis, etc.).
+
+6. TOP BAR ERGONOMICS:
+   - Light/Dark theme toggle.
+   - "Modo Consultório LGPD": Blurs all sensitive patient data on screen (CPF, phone, diagnosis) to prevent shoulder surfing in clinic.
+
+Seed with realistic dental mock data so the app runs fully interactive on the first render.

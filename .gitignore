@@ -40,3 +40,6 @@ work/
 # Supabase Local
 .branches/
 supabase/.temp/
+
+# GitHub Actions (requer scope workflow)
+.github/
