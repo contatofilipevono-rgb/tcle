@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DentalSafe Express — TCLE Odontológico em Poucos Cliques</title>
+  <meta name="description" content="Versão simplificada, intuitiva e prática do DentalSafe com visual Apple clean, odontograma lúdico e atestado/receita rápidos.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Bar Apple Style -->
+  <header class="express-header print-hide">
+    <div class="brand-wrapper">
+      <div class="brand-icon">🦷</div>
+      <div class="brand-text">
+        <h1>DentalSafe <span class="badge-express">Express</span></h1>
+        <p>Consentimento Clínico Ágil • Design Apple Clean</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <a href="../index.html" class="btn-pill-subtle" title="Retornar à bancada completa do DentalSafe">
+        <span>⚙️ Versão Completa Pro</span>
+      </a>
+      <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" title="Alternar Modo Claro / Escuro">
+        🌓
+      </button>
+    </div>
+  </header>
+
+  <main class="express-container">
+
+    <!-- Stepper Guiado Apple -->
+    <nav class="stepper-nav print-hide" aria-label="Progresso do Atendimento">
+      <div class="step-indicator active" data-step="1">
+        <span class="step-bubble">1</span>
+        <span>Profissional & Paciente</span>
+      </div>
+      <div class="step-indicator" data-step="2">
+        <span class="step-bubble">2</span>
+        <span>Procedimento & Dentes</span>
+      </div>
+      <div class="step-indicator" data-step="3">
+        <span class="step-bubble">3</span>
+        <span>Revisar & Gerar</span>
+      </div>
+    </nav>
+
+    <!-- ====================================================================
+         TELA 1A: DADOS DO PROFISSIONAL
+         ==================================================================== -->
+    <section class="wizard-screen active-screen" id="screen-dentist">
+      <div class="apple-card">
+        <div class="apple-card-header">
+          <h2>👨‍⚕️ 1. Identificação do Cirurgião-Dentista</h2>
+          <p>Informe seus dados profissionais. Eles serão utilizados para assinar e emitir os documentos clínicos.</p>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="field-dentist-name">Nome do Cirurgião-Dentista *</label>
+            <input type="text" id="field-dentist-name" class="apple-input" placeholder="Ex: Dr. Filipe Vono" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="field-dentist-cro">CRO e UF *</label>
+            <input type="text" id="field-dentist-cro" class="apple-input" placeholder="Ex: CRO-SP 123456">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="field-clinic-name">Clínica / Consultório (Opcional)</label>
+            <input type="text" id="field-clinic-name" class="apple-input" placeholder="Ex: Clínica Odontológica DentalSafe">
+          </div>
+          <div class="form-group">
+            <label for="field-clinic-phone">Telefone / WhatsApp da Clínica</label>
+            <input type="tel" id="field-clinic-phone" class="apple-input" placeholder="(00) 00000-0000">
+          </div>
+        </div>
+
+        <label class="apple-toggle-row">
+          <input type="checkbox" id="chk-save-dentist" checked>
+          <span>Lembrar meus dados para não precisar digitar nos próximos atendimentos</span>
+        </label>
+
+        <div class="guided-nav-actions">
+          <div></div>
+          <button type="button" class="btn-apple-next" onclick="submitDentistScreen()">
+            <span>Próximo: Dados do Paciente</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TELA 1B: DADOS DO PACIENTE
+         ==================================================================== -->
+    <section class="wizard-screen" id="screen-patient">
+      <div class="apple-card">
+        <div class="apple-card-header">
+          <h2>👤 2. Dados do Paciente</h2>
+          <p>Preencha os dados do paciente para formalização e validade pericial do consentimento.</p>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="field-patient-name">Nome Completo do Paciente *</label>
+            <input type="text" id="field-patient-name" class="apple-input" placeholder="Ex: Maria Aparecida da Silva">
+          </div>
+          <div class="form-group">
+            <label for="field-patient-cpf">CPF do Paciente *</label>
+            <input type="text" id="field-patient-cpf" class="apple-input" placeholder="000.000.000-00" maxlength="14">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="field-patient-birth">Data de Nascimento (Opcional)</label>
+            <input type="date" id="field-patient-birth" class="apple-input">
+          </div>
+          <div class="form-group">
+            <label for="field-patient-phone">Celular / WhatsApp (Opcional)</label>
+            <input type="tel" id="field-patient-phone" class="apple-input" placeholder="(00) 00000-0000">
+          </div>
+        </div>
+
+        <div class="guided-nav-actions">
+          <button type="button" class="btn-apple-back" onclick="showScreen('screen-dentist')">
+            <span>← Voltar aos Dados do Dentista</span>
+          </button>
+          <button type="button" class="btn-apple-next" onclick="submitPatientScreen()">
+            <span>Próximo: Procedimento & Dentes</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TELA 2: PROCEDIMENTO & ODONTOGRAMA LÚDICO & CONDIÇÕES
+         ==================================================================== -->
+    <section class="wizard-screen" id="screen-procedure">
+      <div class="apple-card">
+        <div class="apple-card-header">
+          <h2>🦷 3. Procedimento & Odontograma Lúdico</h2>
+          <p>Selecione o procedimento, os elementos dentais no odontograma e eventuais condições do paciente.</p>
+        </div>
+
+        <!-- Grade de Procedimentos -->
+        <div class="proc-cards-grid">
+          <div class="proc-card selected" data-proc="implante" onclick="selectProcedureCard('implante')">
+            <span class="card-icon">🦷</span>
+            <span class="card-title">Implante & Enxerto</span>
+            <span class="card-desc">Instalação de implante osseointegrável e regeneração óssea.</span>
+          </div>
+
+          <div class="proc-card" data-proc="extracao" onclick="selectProcedureCard('extracao')">
+            <span class="card-icon">🔨</span>
+            <span class="card-title">Exodontia / Sisos</span>
+            <span class="card-desc">Cirurgia de terceiros molares inclusos ou raízes residuais.</span>
+          </div>
+
+          <div class="proc-card" data-proc="canal" onclick="selectProcedureCard('canal')">
+            <span class="card-icon">⚡</span>
+            <span class="card-title">Canal (Endodontia)</span>
+            <span class="card-desc">Biopulpectomia, instrumentação e obturação biocerâmica.</span>
+          </div>
+
+          <div class="proc-card" data-proc="hof" onclick="selectProcedureCard('hof')">
+            <span class="card-icon">✨</span>
+            <span class="card-title">Harmonização (HOF)</span>
+            <span class="card-desc">Toxina botulínica, preenchedores e bioestimuladores faciais.</span>
+          </div>
+
+          <div class="proc-card" data-proc="protese" onclick="selectProcedureCard('protese')">
+            <span class="card-icon">🛡️</span>
+            <span class="card-title">Prótese & Facetas</span>
+            <span class="card-desc">Próteses fixas sobre dente/implante e facetas em cerâmica.</span>
+          </div>
+
+          <div class="proc-card" data-proc="periodontia" onclick="selectProcedureCard('periodontia')">
+            <span class="card-icon">🩺</span>
+            <span class="card-title">Periodontia</span>
+            <span class="card-desc">Raspagem, alisamento radicular e controle gengival.</span>
+          </div>
+
+          <div class="proc-card" data-proc="clareamento" onclick="selectProcedureCard('clareamento')">
+            <span class="card-icon">⚪</span>
+            <span class="card-title">Clareamento Dental</span>
+            <span class="card-desc">Clareamento supervisionado em consultório ou caseiro.</span>
+          </div>
+
+          <div class="proc-card" data-proc="restauracao" onclick="selectProcedureCard('restauracao')">
+            <span class="card-icon">💎</span>
+            <span class="card-title">Restauração Estética</span>
+            <span class="card-desc">Restauração direta em resina composta nanoparticulada.</span>
+          </div>
+        </div>
+
+        <div id="custom-proc-input-wrap" style="display:none; margin-bottom: 20px;">
+          <label for="field-custom-proc" style="font-size:12px; font-weight:700; color:var(--text-sub);">PROCEDIMENTO PERSONALIZADO:</label>
+          <input type="text" id="field-custom-proc" class="apple-input" placeholder="Ex: Frenectomia lingual / Plastia gengival estética">
+        </div>
+
+        <!-- Odontograma Lúdico Interativo -->
+        <div style="font-size:13px; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin-bottom:8px;">
+          Odontograma Interativo Lúdico
+        </div>
+
+        <div class="ludic-board-box">
+          <div class="odonto-bar-header">
+            <div class="segmented-pill-control">
+              <button type="button" class="segmented-btn active" id="btn-dent-perm" onclick="setDentitionMode('permanente')">
+                Permanente (Adulto)
+              </button>
+              <button type="button" class="segmented-btn" id="btn-dent-dec" onclick="setDentitionMode('deciduo')">
+                Decíduo (Dente de Leite)
+              </button>
+            </div>
+
+            <div class="preset-pills-row">
+              <button type="button" class="preset-chip" onclick="selectSingleTooth('11')">Dente 11</button>
+              <button type="button" class="preset-chip" onclick="presetSisos()">Todos os Sisos</button>
+              <button type="button" class="preset-chip" onclick="presetArch('sup')">Arcada Superior</button>
+              <button type="button" class="preset-chip" onclick="presetArch('inf')">Arcada Inferior</button>
+              <button type="button" class="preset-chip clear" onclick="clearTeethSelection()">Limpar</button>
+            </div>
+          </div>
+
+          <div class="odonto-canvas-layout" id="ludic-teeth-board">
+            <!-- Renderizado dinamicamente pelo express/app.js -->
+          </div>
+
+          <div class="odonto-selection-summary">
+            <div><strong>Dentes Selecionados:</strong> (<span id="teeth-count-badge">0</span>)</div>
+            <div class="teeth-tags-wrapper" id="selected-teeth-tags">
+              <span style="color:var(--text-muted); font-size:12px;">Nenhum elemento selecionado.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Condições de Saúde (Chips 1-clique) -->
+        <div style="font-size:13px; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin: 18px 0 8px;">
+          Condições e Alergias do Paciente (1 Clique)
+        </div>
+
+        <div class="conditions-chips-grid">
+          <div class="condition-pill healthy active" id="cond-none" onclick="toggleCondition(this, 'nenhuma')">
+            <span>🛡️ Nenhuma comorbidade grave declarada</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'penicilina')">
+            <span>⚠️ Alergia a Penicilinas / Amoxicilina</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'hipertensao')">
+            <span>🩸 Hipertensão Arterial</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'diabetes')">
+            <span>🍬 Diabetes Mellitus</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'cardiopatia')">
+            <span>❤️ Cardiopatia / Uso de Anticoagulante</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'fumante')">
+            <span>🚬 Fumante</span>
+          </div>
+          <div class="condition-pill" onclick="toggleCondition(this, 'gestante')">
+            <span>🤰 Gestante ou Lactante</span>
+          </div>
+        </div>
+
+        <div class="guided-nav-actions">
+          <button type="button" class="btn-apple-back" onclick="showScreen('screen-patient')">
+            <span>← Voltar aos Dados do Paciente</span>
+          </button>
+          <button type="button" class="btn-apple-next" onclick="submitProcedureScreen()">
+            <span>Próximo: Revisar Resumo</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TELA 3: REVISAR RESUMO ANTES DE GERAR
+         ==================================================================== -->
+    <section class="wizard-screen" id="screen-review">
+      <div class="apple-card">
+        <div class="apple-card-header">
+          <h2>📋 4. Revisão e Conferência</h2>
+          <p>Confira os dados antes da emissão definitiva do documento jurídico e pericial.</p>
+        </div>
+
+        <div class="review-summary-card" id="review-content-box">
+          <!-- Renderizado dinamicamente pelo express/app.js -->
+        </div>
+
+        <div class="guided-nav-actions">
+          <button type="button" class="btn-apple-back" onclick="showScreen('screen-procedure')">
+            <span>← Voltar e Corrigir</span>
+          </button>
+          <button type="button" class="btn-apple-next" onclick="submitGenerateTcle()">
+            <span>✨ Gerar TCLE Oficial</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TELA 4: TCLE OFICIAL GERADO & AÇÕES SEQUENCIAIS
+         ==================================================================== -->
+    <section class="wizard-screen" id="screen-tcle">
+      
+      <!-- Ações Rápidas -->
+      <div class="apple-card print-hide" style="padding: 16px 24px; margin-bottom: 18px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
+        <div>
+          <strong style="font-size:16px; color:var(--text-main);">✅ TCLE Pronto com Plena Validade Jurídica</strong>
+          <p style="font-size:12px; color:var(--text-muted); margin:0;">Você pode editar qualquer parágrafo clicando diretamente no texto.</p>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button type="button" class="btn-apple-next" onclick="printTcleDocument()" style="padding:10px 20px; font-size:13.5px;">
+            <span>🖨️ Imprimir / PDF</span>
+          </button>
+          <button type="button" class="btn-pill-subtle" onclick="sendWhatsAppNotice()">
+            <span>📲 WhatsApp</span>
+          </button>
+          <button type="button" class="btn-pill-subtle" onclick="copyTcleTextToClipboard()">
+            <span>📋 Copiar</span>
+          </button>
+          <button type="button" class="btn-pill-subtle" onclick="startNewService()">
+            <span>🔄 Novo Atendimento</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Folha A4 Oficial Timbrada do TCLE -->
+      <div class="tcle-paper-document" id="official-tcle-paper">
+        <!-- Renderizado dinamicamente pelo express/app.js -->
+      </div>
+
+      <!-- Assinatura na Tela Touch / Mouse -->
+      <div class="apple-card print-hide">
+        <div class="apple-card-header" style="margin-bottom:12px;">
+          <h2>✍️ Assinatura Digital na Tela</h2>
+          <p>O paciente pode assinar com o dedo (em tablets e celulares) ou com o cursor do mouse.</p>
+        </div>
+        <div class="touch-signature-box">
+          <canvas id="touch-signature-canvas"></canvas>
+          <button type="button" class="btn-clear-sig" onclick="clearTouchSignature()">Limpar</button>
+        </div>
+      </div>
+
+      <!-- Continuação do Fluxo: Apresentar opções uma de cada vez -->
+      <div class="apple-card print-hide" style="text-align:center; padding: 24px;">
+        <h3 style="font-size:17px; font-weight:700; margin-bottom:6px;">Atendimento Concluído no TCLE</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Deseja emitir os documentos pós-operatórios para o paciente?</p>
+        <button type="button" class="btn-apple-next" onclick="openAtestadoModule()" style="padding:12px 28px;">
+          <span>Continuar: Deseja Gerar Atestado? →</span>
+        </button>
+      </div>
+
+      <!-- ================================================================
+           MODAL / CARD 1: "DESEJA GERAR UM ATESTADO?"
+           ================================================================ -->
+      <div class="post-step-modal print-hide" id="post-modal-atestado" style="display:none;">
+        <div class="post-step-header">
+          <div class="post-step-icon">🩺</div>
+          <div>
+            <h3>Deseja gerar um atestado?</h3>
+            <p style="font-size:12.5px; color:var(--text-muted);">Informe a quantidade de dias de afastamento para convalescença.</p>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:12px; font-weight:700; color:var(--text-sub); text-transform:uppercase;">Quantidade de Dias de Afastamento:</label>
+          <div class="days-chips-row">
+            <button type="button" class="day-btn" data-days="1" onclick="setDaysAtestado(1)">1 dia</button>
+            <button type="button" class="day-btn active" data-days="2" onclick="setDaysAtestado(2)">2 dias</button>
+            <button type="button" class="day-btn" data-days="3" onclick="setDaysAtestado(3)">3 dias</button>
+            <button type="button" class="day-btn" data-days="5" onclick="setDaysAtestado(5)">5 dias</button>
+            <button type="button" class="day-btn" data-days="7" onclick="setDaysAtestado(7)">7 dias</button>
+            <button type="button" class="day-btn" data-days="14" onclick="setDaysAtestado(14)">14 dias</button>
+          </div>
+
+          <div style="margin: 12px 0;">
+            <label style="display:inline-flex; align-items:center; gap:8px; font-size:12.5px; cursor:pointer; color:var(--text-sub);">
+              <input type="checkbox" id="chk-cid-opt" onchange="toggleCidAtestado(this)">
+              <span>Incluir código CID correspondente (Autorizado expressamente pelo paciente - Resolução CFO 105/2010)</span>
+            </label>
+          </div>
+
+          <!-- Pré-visualização do Atestado -->
+          <div id="atestado-sheet-render" style="margin-top:14px;"></div>
+
+          <div style="margin-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <button type="button" class="btn-apple-back" onclick="skipAtestadoModule()">
+              <span>Pular para Receita →</span>
+            </button>
+            <div style="display:flex; gap:10px;">
+              <button type="button" class="btn-apple-next" onclick="printAtestadoOnly()" style="padding:10px 20px; font-size:13.5px;">
+                <span>🖨️ Imprimir Atestado</span>
+              </button>
+              <button type="button" class="btn-apple-next" onclick="openPrescriptionModule()" style="padding:10px 20px; font-size:13.5px; background:linear-gradient(135deg,#34c759,#248a3d);">
+                <span>Próximo: Deseja Receita? →</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           MODAL / CARD 2: "DESEJA GERAR UMA RECEITA?"
+           ================================================================ -->
+      <div class="post-step-modal print-hide" id="post-modal-prescription" style="display:none;">
+        <div class="post-step-header">
+          <div class="post-step-icon">💊</div>
+          <div>
+            <h3>Deseja gerar uma receita?</h3>
+            <p style="font-size:12.5px; color:var(--text-muted);">Selecione o protocolo clínico por botões com posologia e dosagem adequadas.</p>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:12px; font-weight:700; color:var(--text-sub); text-transform:uppercase;">Protocolos Odontológicos Pré-Configurados:</label>
+          <div class="rx-cards-row">
+            <div class="rx-card-option active" data-rx="cirurgico" onclick="selectRxPresetOption('cirurgico')">
+              <strong>🦷 Cirúrgico / Sisos / Implantes</strong>
+              <span>Amoxicilina 500mg + Ibuprofeno 600mg + Dipirona 1g</span>
+            </div>
+            <div class="rx-card-option" data-rx="alergico" onclick="selectRxPresetOption('alergico')">
+              <strong>🛡️ Alérgico a Penicilina</strong>
+              <span>Azitromicina 500mg + Paracetamol 750mg</span>
+            </div>
+            <div class="rx-card-option" data-rx="canal" onclick="selectRxPresetOption('canal')">
+              <strong>⚡ Canal / Dor Aguda</strong>
+              <span>Toragesic SL 10mg + Dipirona 1g</span>
+            </div>
+            <div class="rx-card-option" data-rx="leve" onclick="selectRxPresetOption('leve')">
+              <strong>🌿 Analgesia Simples / Leve</strong>
+              <span>Dipirona Sódica 500mg</span>
+            </div>
+            <div class="rx-card-option" data-rx="hof" onclick="selectRxPresetOption('hof')">
+              <strong>✨ Harmonização (HOF)</strong>
+              <span>Paracetamol 750mg + Arnica Montana Tópico</span>
+            </div>
+          </div>
+
+          <!-- Pré-visualização da Receita -->
+          <div id="prescription-sheet-render" style="margin-top:14px;"></div>
+
+          <div style="margin-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <button type="button" class="btn-apple-back" onclick="document.getElementById('post-modal-prescription').style.display='none'">
+              <span>Fechar</span>
+            </button>
+            <div style="display:flex; gap:10px;">
+              <button type="button" class="btn-apple-next" onclick="printPrescriptionOnly()" style="padding:10px 20px; font-size:13.5px;">
+                <span>🖨️ Imprimir Receita</span>
+              </button>
+              <button type="button" class="btn-apple-next" onclick="alert('Atendimento concluído com sucesso! Documentos prontos e arquivados.'); window.scrollTo({top:0, behavior:'smooth'});" style="padding:10px 22px; font-size:13.5px; background:linear-gradient(135deg,#34c759,#248a3d);">
+                <span>✨ Concluir Atendimento</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

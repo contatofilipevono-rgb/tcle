@@ -3,7 +3,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 // Apenas recursos públicos: backups, SQL, servidor e prontuários ficam inacessíveis.
-const publicFiles = new Set(['index.html','style.css','app.js','safety.js','procedure-db.js','clinical-ai-engine.js','prescriptions-db.js','postop-guidelines-db.js','institutional-db.js','institutional_db.json','intercurrences-db.js','hof-db.js','supabase.js','assets/apple_dentalsafe_logo.jpg','assets/apple_certified_seal.jpg','express.html','express.css','express.js']);
+const publicFiles = new Set(['index.html','style.css','app.js','safety.js','procedure-db.js','clinical-ai-engine.js','prescriptions-db.js','postop-guidelines-db.js','institutional-db.js','institutional_db.json','intercurrences-db.js','hof-db.js','supabase.js','assets/apple_dentalsafe_logo.jpg','assets/apple_certified_seal.jpg','express.html','express.css','express.js','express/index.html','express/style.css','express/app.js']);
 const mime = {'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.jpg':'image/jpeg'};
 function createServer() {
   return http.createServer((req,res) => {
@@ -21,7 +21,7 @@ function createServer() {
     if (pathname === '/api/webhooks/kiwify') return reply(501,'Webhook de pagamentos não configurado neste servidor local.');
     if (!['GET','HEAD'].includes(req.method)) { res.setHeader('Allow','GET, HEAD'); return reply(405,'Método não permitido.'); }
     if (pathname === '/health') { res.writeHead(200,{'Content-Type':'application/json'}); return res.end(req.method === 'HEAD' ? undefined : JSON.stringify({app:'dentalsafe-tcle-ai',status:'ok'})); }
-    const name = pathname === '/' ? 'index.html' : pathname.slice(1);
+    const name = pathname === '/' ? 'index.html' : (pathname === '/express' || pathname === '/express/' ? 'express/index.html' : pathname.slice(1));
     if (!publicFiles.has(name)) return reply(404,'Recurso não encontrado.');
     fs.readFile(path.join(__dirname,name),(err,data) => {
       if (err) return reply(err.code === 'ENOENT' ? 404 : 500,'Não foi possível carregar o recurso.');

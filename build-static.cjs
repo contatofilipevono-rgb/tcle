@@ -6,7 +6,7 @@ const root = __dirname;
 const output = path.resolve(root, 'dist');
 if (path.dirname(output) !== path.resolve(root) || path.basename(output) !== 'dist') throw new Error('Saída fora do projeto.');
 // Mirror the local server's explicit public allowlist; never publish the source directory.
-const publicFiles = ['index.html','style.css','app.js','safety.js','procedure-db.js','clinical-ai-engine.js','prescriptions-db.js','postop-guidelines-db.js','institutional-db.js','institutional_db.json','intercurrences-db.js','hof-db.js','supabase.js','assets/apple_dentalsafe_logo.jpg','assets/apple_certified_seal.jpg','express.html','express.css','express.js'];
+const publicFiles = ['index.html','style.css','app.js','safety.js','procedure-db.js','clinical-ai-engine.js','prescriptions-db.js','postop-guidelines-db.js','institutional-db.js','institutional_db.json','intercurrences-db.js','hof-db.js','supabase.js','assets/apple_dentalsafe_logo.jpg','assets/apple_certified_seal.jpg','express.html','express.css','express.js','express/index.html','express/style.css','express/app.js'];
 for (const file of publicFiles) {
   const input = fs.readFileSync(path.join(root, file));
   if (file.endsWith('.js')) new vm.Script(input.toString('utf8'), {filename:file});
