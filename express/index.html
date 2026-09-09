@@ -104,6 +104,15 @@
           <p>Preencha os dados do paciente para formalização e validade pericial do consentimento.</p>
         </div>
 
+        <!-- Barra Rápida de Pacientes Salvos (1 Clique) -->
+        <div id="saved-patients-quick-bar" style="display:none; margin-bottom: 22px; padding: 14px 18px; background: rgba(0, 113, 227, 0.05); border: 1.5px solid var(--apple-blue-border); border-radius: var(--radius-btn);">
+          <div style="font-size: 11.5px; font-weight: 750; color: var(--apple-blue); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <span>📂 Pacientes Cadastrados (1 Clique para carregar):</span>
+            <span id="saved-patients-count" style="font-size:10.5px; opacity:0.85;"></span>
+          </div>
+          <div id="saved-patients-chips-list" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+        </div>
+
         <div class="form-grid-2">
           <div class="form-group">
             <label for="field-patient-name">Nome Completo do Paciente *</label>
@@ -125,6 +134,12 @@
             <input type="tel" id="field-patient-phone" class="apple-input" placeholder="(00) 00000-0000">
           </div>
         </div>
+
+        <!-- Opção para Salvar Dados do Paciente -->
+        <label class="apple-toggle-row">
+          <input type="checkbox" id="chk-save-patient" checked>
+          <span>Salvar dados do paciente no cadastro da clínica para próximos atendimentos</span>
+        </label>
 
         <div class="guided-nav-actions">
           <button type="button" class="btn-apple-back" onclick="showScreen('screen-dentist')">
@@ -450,28 +465,89 @@
         </div>
       </div>
 
-      <!-- Continuação do Fluxo: Apresentar opções uma de cada vez -->
-      <div class="apple-card print-hide" style="text-align:center; padding: 24px;">
-        <h3 style="font-size:17px; font-weight:700; margin-bottom:6px;">Atendimento Concluído no TCLE</h3>
-        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Deseja emitir os documentos pós-operatórios para o paciente?</p>
-        <button type="button" class="btn-apple-next" onclick="openAtestadoModule()" style="padding:12px 28px;">
-          <span>Continuar: Deseja Gerar Atestado? →</span>
-        </button>
+      <!-- ================================================================
+           HUB DE AÇÕES PÓS-TCLE (Botões Simples Apple)
+           ================================================================ -->
+      <div class="apple-card print-hide post-tcle-hub" id="post-tcle-actions-hub">
+        <div style="text-align:center; margin-bottom:24px;">
+          <span style="font-size:11px; font-weight:800; text-transform:uppercase; background:linear-gradient(135deg,#34c759,#30b0c7); color:#fff; padding:3px 12px; border-radius:var(--radius-pill); letter-spacing:0.6px; display:inline-block; margin-bottom:10px;">
+            ✨ TCLE Emitido com Sucesso
+          </span>
+          <h3 style="font-size:20px; font-weight:750; color:var(--text-main); letter-spacing:-0.02em;">
+            Deseja emitir outros documentos para este paciente?
+          </h3>
+          <p style="font-size:13.5px; color:var(--text-muted); margin-top:4px;">
+            Escolha uma das opções em botões simples ou finalize o atendimento:
+          </p>
+        </div>
+
+        <div class="post-tcle-buttons-grid">
+          <!-- Botão 1: Atestado de Afastamento (Repouso) -->
+          <button type="button" class="post-hub-btn" onclick="openAtestadoModule('afastamento')">
+            <span class="hub-btn-icon">🩺</span>
+            <div class="hub-btn-text">
+              <strong>Atestado de Afastamento</strong>
+              <span>Repouso clínico e convalescença (X dias)</span>
+            </div>
+            <span class="hub-btn-arrow">→</span>
+          </button>
+
+          <!-- Botão 2: Atestado de Comparecimento (Horário da Consulta) -->
+          <button type="button" class="post-hub-btn" onclick="openAtestadoModule('comparecimento')">
+            <span class="hub-btn-icon">🕒</span>
+            <div class="hub-btn-text">
+              <strong>Atestado de Comparecimento</strong>
+              <span>Declaração de presença e horário</span>
+            </div>
+            <span class="hub-btn-arrow">→</span>
+          </button>
+
+          <!-- Botão 3: Receituário com dados do paciente (compatível com procedimento) -->
+          <button type="button" class="post-hub-btn" onclick="openPrescriptionAuto()">
+            <span class="hub-btn-icon">💊</span>
+            <div class="hub-btn-text">
+              <strong>Receita Odontológica</strong>
+              <span id="hub-rx-suggest-label">Prescrição compatível com o procedimento</span>
+            </div>
+            <span class="hub-btn-arrow">→</span>
+          </button>
+
+          <!-- Botão 4: Finalizar Atendimento -->
+          <button type="button" class="post-hub-btn finalize-btn" onclick="finishAndConcludeService()">
+            <span class="hub-btn-icon">✅</span>
+            <div class="hub-btn-text">
+              <strong>Finalizar Atendimento</strong>
+              <span>Concluir e arquivar no prontuário</span>
+            </div>
+            <span class="hub-btn-arrow">✓</span>
+          </button>
+        </div>
       </div>
 
       <!-- ================================================================
-           MODAL / CARD 1: "DESEJA GERAR UM ATESTADO?"
+           MODAL / CARD 1: ATESTADO (AFASTAMENTO OU COMPARECIMENTO)
            ================================================================ -->
       <div class="post-step-modal print-hide" id="post-modal-atestado" style="display:none;">
         <div class="post-step-header">
-          <div class="post-step-icon">🩺</div>
+          <div class="post-step-icon" id="atestado-icon-badge">🩺</div>
           <div>
-            <h3>Deseja gerar um atestado?</h3>
-            <p style="font-size:12.5px; color:var(--text-muted);">Informe a quantidade de dias de afastamento para convalescença.</p>
+            <h3 id="atestado-modal-title">Atestado Odontológico</h3>
+            <p style="font-size:12.5px; color:var(--text-muted);" id="atestado-modal-subtitle">Selecione o tipo de atestado e personalize as informações.</p>
           </div>
         </div>
 
-        <div>
+        <!-- Alternância em Botões Simples: Afastamento vs Comparecimento -->
+        <div class="segmented-pill-control" style="max-width: 440px; margin-bottom: 18px;">
+          <button type="button" class="segmented-btn active" id="btn-atestado-afastamento" onclick="switchAtestadoType('afastamento')">
+            🩺 Afastamento (Repouso)
+          </button>
+          <button type="button" class="segmented-btn" id="btn-atestado-comparecimento" onclick="switchAtestadoType('comparecimento')">
+            🕒 Comparecimento (Horário)
+          </button>
+        </div>
+
+        <!-- Controles de Afastamento (Dias) -->
+        <div id="atestado-afastamento-controls">
           <label style="font-size:12px; font-weight:700; color:var(--text-sub); text-transform:uppercase;">Quantidade de Dias de Afastamento:</label>
           <div class="days-chips-row">
             <button type="button" class="day-btn" data-days="1" onclick="setDaysAtestado(1)">1 dia</button>
@@ -481,49 +557,76 @@
             <button type="button" class="day-btn" data-days="7" onclick="setDaysAtestado(7)">7 dias</button>
             <button type="button" class="day-btn" data-days="14" onclick="setDaysAtestado(14)">14 dias</button>
           </div>
+        </div>
 
-          <div style="margin: 12px 0;">
-            <label style="display:inline-flex; align-items:center; gap:8px; font-size:12.5px; cursor:pointer; color:var(--text-sub);">
-              <input type="checkbox" id="chk-cid-opt" onchange="toggleCidAtestado(this)">
-              <span>Incluir código CID correspondente (Autorizado expressamente pelo paciente - Resolução CFO 105/2010)</span>
-            </label>
-          </div>
-
-          <!-- Pré-visualização do Atestado -->
-          <div id="atestado-sheet-render" style="margin-top:14px;"></div>
-
-          <div style="margin-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-            <button type="button" class="btn-apple-back" onclick="skipAtestadoModule()">
-              <span>Pular para Receita →</span>
-            </button>
-            <div style="display:flex; gap:10px;">
-              <button type="button" class="btn-apple-next" onclick="printAtestadoOnly()" style="padding:10px 20px; font-size:13.5px;">
-                <span>🖨️ Imprimir Atestado</span>
-              </button>
-              <button type="button" class="btn-apple-next" onclick="openPrescriptionModule()" style="padding:10px 20px; font-size:13.5px; background:linear-gradient(135deg,#34c759,#248a3d);">
-                <span>Próximo: Deseja Receita? →</span>
-              </button>
+        <!-- Controles de Comparecimento (Horários) -->
+        <div id="atestado-comparecimento-controls" style="display:none; margin-bottom: 16px;">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="field-comp-start">Horário de Início da Consulta:</label>
+              <input type="time" id="field-comp-start" class="apple-input" value="09:00" onchange="updateComparecimentoTimes()">
             </div>
+            <div class="form-group">
+              <label for="field-comp-end">Horário de Término da Consulta:</label>
+              <input type="time" id="field-comp-end" class="apple-input" value="10:30" onchange="updateComparecimentoTimes()">
+            </div>
+          </div>
+        </div>
+
+        <div style="margin: 12px 0;">
+          <label style="display:inline-flex; align-items:center; gap:8px; font-size:12.5px; cursor:pointer; color:var(--text-sub);">
+            <input type="checkbox" id="chk-cid-opt" onchange="toggleCidAtestado(this)">
+            <span>Incluir código CID correspondente (Autorizado expressamente pelo paciente - Resolução CFO 105/2010)</span>
+          </label>
+        </div>
+
+        <!-- Pré-visualização do Atestado -->
+        <div id="atestado-sheet-render" style="margin-top:14px;"></div>
+
+        <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <button type="button" class="btn-apple-back" onclick="closeAtestadoModal()">
+            <span>← Fechar</span>
+          </button>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="button" class="btn-apple-next" onclick="printAtestadoOnly()" style="padding:11px 22px; font-size:13.5px;">
+              <span>🖨️ Imprimir Atestado</span>
+            </button>
+            <button type="button" class="btn-apple-next" onclick="openPrescriptionAuto()" style="padding:11px 22px; font-size:13.5px; background:linear-gradient(135deg,#34c759,#248a3d);">
+              <span>Próximo: Deseja Receita? →</span>
+            </button>
+            <button type="button" class="btn-pill-subtle" onclick="finishAndConcludeService()" style="padding:11px 18px;">
+              <span>Finalizar</span>
+            </button>
           </div>
         </div>
       </div>
 
       <!-- ================================================================
-           MODAL / CARD 2: "DESEJA GERAR UMA RECEITA?"
+           MODAL / CARD 2: RECEITUÁRIO COM DADOS DO PACIENTE & PROTOCOLO COMPATÍVEL
            ================================================================ -->
       <div class="post-step-modal print-hide" id="post-modal-prescription" style="display:none;">
         <div class="post-step-header">
           <div class="post-step-icon">💊</div>
           <div>
-            <h3>Deseja gerar uma receita?</h3>
-            <p style="font-size:12.5px; color:var(--text-muted);">Selecione o protocolo clínico por botões com posologia e dosagem adequadas.</p>
+            <h3>Receituário Odontológico</h3>
+            <p style="font-size:12.5px; color:var(--text-muted);" id="rx-header-subtitle">
+              Prescrição gerada automaticamente com os dados do paciente e posologia compatível com o procedimento.
+            </p>
+          </div>
+        </div>
+
+        <!-- Banner com Aviso de Compatibilidade Automática -->
+        <div id="rx-auto-compatibility-banner" style="margin-bottom:16px; padding:12px 16px; background:rgba(0,113,227,0.08); border:1px solid var(--apple-blue); border-radius:12px; display:flex; align-items:center; gap:10px;">
+          <span style="font-size:20px;">💡</span>
+          <div style="font-size:12.5px; color:var(--text-main);">
+            <strong>Prescrição selecionada automaticamente:</strong> <span id="rx-compat-reason">Compatível com o procedimento</span>. Você também pode alterar para qualquer outro protocolo abaixo:
           </div>
         </div>
 
         <div>
-          <label style="font-size:12px; font-weight:700; color:var(--text-sub); text-transform:uppercase;">Protocolos Odontológicos Pré-Configurados:</label>
+          <label style="font-size:12px; font-weight:700; color:var(--text-sub); text-transform:uppercase;">Protocolos Odontológicos Disponíveis:</label>
           <div class="rx-cards-row">
-            <div class="rx-card-option active" data-rx="cirurgico" onclick="selectRxPresetOption('cirurgico')">
+            <div class="rx-card-option" data-rx="cirurgico" onclick="selectRxPresetOption('cirurgico')">
               <strong>🦷 Cirúrgico / Sisos / Implantes</strong>
               <span>Amoxicilina 500mg + Ibuprofeno 600mg + Dipirona 1g</span>
             </div>
@@ -545,18 +648,18 @@
             </div>
           </div>
 
-          <!-- Pré-visualização da Receita -->
+          <!-- Pré-visualização da Receita Timbrada -->
           <div id="prescription-sheet-render" style="margin-top:14px;"></div>
 
-          <div style="margin-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-            <button type="button" class="btn-apple-back" onclick="document.getElementById('post-modal-prescription').style.display='none'">
-              <span>Fechar</span>
+          <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <button type="button" class="btn-apple-back" onclick="closePrescriptionModal()">
+              <span>← Fechar</span>
             </button>
-            <div style="display:flex; gap:10px;">
-              <button type="button" class="btn-apple-next" onclick="printPrescriptionOnly()" style="padding:10px 20px; font-size:13.5px;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button type="button" class="btn-apple-next" onclick="printPrescriptionOnly()" style="padding:11px 22px; font-size:13.5px;">
                 <span>🖨️ Imprimir Receita</span>
               </button>
-              <button type="button" class="btn-apple-next" onclick="alert('Atendimento concluído com sucesso! Documentos prontos e arquivados.'); window.scrollTo({top:0, behavior:'smooth'});" style="padding:10px 22px; font-size:13.5px; background:linear-gradient(135deg,#34c759,#248a3d);">
+              <button type="button" class="btn-apple-next" onclick="finishAndConcludeService()" style="padding:11px 24px; font-size:13.5px; background:linear-gradient(135deg,#34c759,#248a3d);">
                 <span>✨ Concluir Atendimento</span>
               </button>
             </div>

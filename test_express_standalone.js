@@ -106,7 +106,11 @@ function createMockEl(id) {
   'touch-signature-canvas',
   'cfo-procedure-modal', 'search-cfo-input', 'cfo-specialty-filters', 'cfo-procedures-list',
   'cfo-selected-notice', 'cfo-selected-title', 'cfo-selected-details',
-  'search-extended-conditions', 'active-extended-tags', 'extended-conditions-list'
+  'search-extended-conditions', 'active-extended-tags', 'extended-conditions-list',
+  'saved-patients-quick-bar', 'saved-patients-chips-list', 'saved-patients-count', 'chk-save-patient',
+  'btn-atestado-afastamento', 'btn-atestado-comparecimento', 'atestado-afastamento-controls', 'atestado-comparecimento-controls',
+  'field-comp-start', 'field-comp-end', 'atestado-icon-badge', 'atestado-modal-title', 'atestado-modal-subtitle',
+  'rx-auto-compatibility-banner', 'rx-compat-reason', 'hub-rx-suggest-label', 'post-tcle-actions-hub'
 ].forEach(id => {
   elementsMap[id] = createMockEl(id);
 });
@@ -133,6 +137,7 @@ const sandbox = {
     vibrate: () => true,
     clipboard: { writeText: () => Promise.resolve() }
   },
+  requestAnimationFrame: (cb) => { if (cb) cb(); },
   window: {
     devicePixelRatio: 1,
     addEventListener: () => {},
@@ -143,6 +148,11 @@ const sandbox = {
   document: {
     addEventListener: () => {},
     getElementById(id) { return elementsMap[id] || null; },
+    createElement(tag) {
+      const el = createMockEl(tag);
+      el.remove = () => {};
+      return el;
+    },
     querySelectorAll(selector) {
       if (selector === '.wizard-screen') return [elementsMap['screen-dentist'], elementsMap['screen-patient'], elementsMap['screen-procedure'], elementsMap['screen-review'], elementsMap['screen-tcle']];
       if (selector === '.step-indicator') return [createMockEl('ind1'), createMockEl('ind2'), createMockEl('ind3')];
@@ -150,10 +160,14 @@ const sandbox = {
       if (selector === '.day-btn') return [createMockEl('db1')];
       if (selector === '.rx-card-option') return [createMockEl('rx1')];
       if (selector === '.condition-pill') return [createMockEl('cp1')];
+      if (selector === '.saved-patient-chip') return [createMockEl('spc1')];
       return [];
     },
     querySelector() { return null; },
-    body: createMockEl('body')
+    body: {
+      ...createMockEl('body'),
+      appendChild(el) { return el; }
+    }
   }
 };
 
@@ -268,6 +282,79 @@ vm.runInContext(`
   if (!rxHtml.includes('Azitromicina') || !rxHtml.includes('Paracetamol')) {
     throw new Error('Receituário para alérgico não gerou Azitromicina');
   }
+
+  // 8. Atestado de Comparecimento (Horários e Procedimento)
+  switchAtestadoType('comparecimento');
+  state.certificate.startTime = '14:00';
+  state.certificate.endTime = '15:30';
+  renderAtestadoSheet();
+  const compHtml = document.getElementById('atestado-sheet-render').innerHTML;
+  if (!compHtml.includes('Declaração Odontológica de Comparecimento') || !compHtml.includes('14:00') || !compHtml.includes('15:30')) {
+    throw new Error('Atestado de comparecimento não gerou declaração com horários');
+  }
+  if (!compHtml.includes('Frenectomia')) {
+    throw new Error('Atestado de comparecimento deve citar o procedimento realizado');
+  }
+
+  // 9. Prescrição Automática Compatível com Procedimento e Alergias
+  // Teste com alergia a penicilina
+  state.healthConditions.add('alergia_penicilina');
+  let presetAuto = getCompatiblePrescriptionPreset();
+  if (presetAuto.presetKey !== 'alergico') {
+    throw new Error('Deveria sugerir protocolo alérgico para paciente com alergia a penicilina');
+  }
+  state.healthConditions.delete('alergia_penicilina');
+
+  // Teste com cirurgia / implante
+  state.procedure.id = 'implante';
+  state.procedure.title = 'Implante Dentário';
+  state.procedure.specialty = 'Implantodontia';
+  presetAuto = getCompatiblePrescriptionPreset();
+  if (presetAuto.presetKey !== 'cirurgico') {
+    throw new Error('Deveria sugerir protocolo cirúrgico para implante');
+  }
+
+  // Teste com canal / endodontia
+  state.procedure.id = 'canal';
+  state.procedure.title = 'Tratamento de Canal Radicular';
+  state.procedure.specialty = 'Endodontia';
+  presetAuto = getCompatiblePrescriptionPreset();
+  if (presetAuto.presetKey !== 'canal') {
+    throw new Error('Deveria sugerir protocolo de canal para endodontia');
+  }
+
+  // Teste com procedimento conservador leve
+  state.procedure.id = 'restauracao';
+  state.procedure.title = 'Restauração em Resina Composta';
+  state.procedure.specialty = 'Dentística';
+  presetAuto = getCompatiblePrescriptionPreset();
+  if (presetAuto.presetKey !== 'leve') {
+    throw new Error('Deveria sugerir protocolo leve para restauração');
+  }
+
+  // 10. Persistência de Pacientes (Salvar, Listar, Selecionar)
+  savePatientToStorage({
+    name: 'Carlos Eduardo Oliveira',
+    cpf: '111.222.333-44',
+    birthDate: '1985-05-20',
+    phone: '(11) 98765-4321'
+  });
+  const savedList = getSavedPatients();
+  if (savedList.length === 0 || savedList[0].name !== 'Carlos Eduardo Oliveira') {
+    throw new Error('Falha ao salvar paciente no armazenamento');
+  }
+  loadSavedPatientsList();
+  const chipsHtml = document.getElementById('saved-patients-chips-list').innerHTML;
+  if (!chipsHtml.includes('Carlos Eduardo Oliveira') || !chipsHtml.includes('111.222.333-44')) {
+    throw new Error('Chips de pacientes cadastrados não foram renderizados');
+  }
+  selectSavedPatient(0);
+  if (document.getElementById('field-patient-name').value !== 'Carlos Eduardo Oliveira') {
+    throw new Error('Falha ao carregar dados do paciente salvo com 1 clique');
+  }
+
+  // 11. Finalização do Atendimento
+  finishAndConcludeService();
 `, sandbox);
 
 console.log('  ✓ Transição de telas (Dentista -> Paciente -> Procedimento -> Revisão -> TCLE) validada.');
@@ -275,7 +362,10 @@ console.log('  ✓ Odontograma Lúdico e seleção de dentes validados com suces
 console.log('  ✓ Tela de Revisão Prévia e conferência validada.');
 console.log('  ✓ Geração do TCLE Oficial com suporte a edição inline validada.');
 console.log('  ✓ Modal sequencial de Atestado Odontológico (X dias) validado.');
-console.log('  ✓ Modal sequencial de Receituário 1-clique (com dosagens ajustadas) validado.');
+console.log('  ✓ Atestado de Comparecimento (com horários de início e término) validado.');
+console.log('  ✓ Protocolo de Prescrição Inteligente com Compatibilidade Automática validado.');
+console.log('  ✓ Cadastro e Seleção Rápida de Pacientes em 1 clique validado.');
+console.log('  ✓ Finalização e Conclusão de Atendimento validada.');
 
 console.log('\n============================================================');
 console.log('🎉 TODOS OS TESTES DO EXPRESS STANDALONE PASSARAM COM SUCESSO!');

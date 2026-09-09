@@ -38,7 +38,10 @@ const state = {
   healthConditions: new Set(),
   certificate: {
     enabled: false,
+    type: 'afastamento', // 'afastamento' | 'comparecimento'
     days: 2,
+    startTime: '09:00',
+    endTime: '10:30',
     cidCode: 'K08.1',
     includeCid: false
   },
@@ -447,6 +450,7 @@ const RX_PRESETS = {
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   loadSavedDentistInfo();
+  loadSavedPatientsList();
   setupMasks();
   renderLudicOdontogram();
   setupTouchSignature();
@@ -556,6 +560,108 @@ function submitDentistScreen() {
 }
 
 // ==========================================================================
+// Gerenciamento de Pacientes Salvos (1 Clique para Carregar)
+// ==========================================================================
+function getSavedPatients() {
+  try {
+    const raw = localStorage.getItem('dentalsafe_express_patients');
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function savePatientToStorage(patient) {
+  if (!patient || !patient.name || !patient.cpf) return;
+  try {
+    let list = getSavedPatients();
+    list = list.filter(p => p.cpf !== patient.cpf && p.name.toLowerCase() !== patient.name.toLowerCase());
+    list.unshift({
+      name: patient.name,
+      cpf: patient.cpf,
+      birthDate: patient.birthDate || '',
+      phone: patient.phone || '',
+      address: patient.address || ''
+    });
+    if (list.length > 15) list = list.slice(0, 15);
+    localStorage.setItem('dentalsafe_express_patients', JSON.stringify(list));
+    loadSavedPatientsList();
+  } catch (e) {
+    console.warn('Erro ao salvar paciente:', e);
+  }
+}
+
+function deleteSavedPatient(index, event) {
+  if (event) event.stopPropagation();
+  try {
+    let list = getSavedPatients();
+    if (index >= 0 && index < list.length) {
+      list.splice(index, 1);
+      localStorage.setItem('dentalsafe_express_patients', JSON.stringify(list));
+      loadSavedPatientsList();
+    }
+  } catch (e) {}
+}
+
+function selectSavedPatient(index) {
+  const list = getSavedPatients();
+  const p = list[index];
+  if (!p) return;
+
+  const nameEl = document.getElementById('field-patient-name');
+  const cpfEl = document.getElementById('field-patient-cpf');
+  const birthEl = document.getElementById('field-patient-birth');
+  const phoneEl = document.getElementById('field-patient-phone');
+
+  if (nameEl) nameEl.value = p.name || '';
+  if (cpfEl) cpfEl.value = p.cpf || '';
+  if (phoneEl) phoneEl.value = p.phone || '';
+
+  if (birthEl && p.birthDate) {
+    if (p.birthDate.includes('/')) {
+      const parts = p.birthDate.split('/');
+      if (parts.length === 3) {
+        birthEl.value = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+      }
+    } else {
+      birthEl.value = p.birthDate;
+    }
+  }
+
+  document.querySelectorAll('.saved-patient-chip').forEach((chip, i) => {
+    chip.classList.toggle('active', i === index);
+  });
+}
+
+function loadSavedPatientsList() {
+  const container = document.getElementById('saved-patients-quick-bar');
+  const listEl = document.getElementById('saved-patients-chips-list');
+  const countEl = document.getElementById('saved-patients-count');
+  if (!container || !listEl) return;
+
+  const list = getSavedPatients();
+  if (!list || list.length === 0) {
+    container.style.display = 'none';
+    listEl.innerHTML = '';
+    return;
+  }
+
+  container.style.display = 'block';
+  if (countEl) {
+    countEl.textContent = `(${list.length} salvo${list.length > 1 ? 's' : ''})`;
+  }
+
+  listEl.innerHTML = list.map((p, idx) => `
+    <div class="saved-patient-chip" onclick="selectSavedPatient(${idx})" title="Clique para preencher: ${escapeHtml(p.name)} (${escapeHtml(p.cpf)})">
+      <span class="chip-avatar">👤</span>
+      <span class="chip-name">${escapeHtml(p.name)}</span>
+      <span class="chip-cpf">${escapeHtml(p.cpf)}</span>
+      <button type="button" class="delete-patient-btn" onclick="deleteSavedPatient(${idx}, event)" title="Excluir paciente">✕</button>
+    </div>
+  `).join('');
+}
+
+// ==========================================================================
 // Tela 1B: Dados do Paciente
 // ==========================================================================
 function submitPatientScreen() {
@@ -589,6 +695,11 @@ function submitPatientScreen() {
     phone: phone || '',
     address: 'Consultório Odontológico'
   };
+
+  const shouldSave = document.getElementById('chk-save-patient')?.checked;
+  if (shouldSave) {
+    savePatientToStorage(state.patient);
+  }
 
   showScreen('screen-procedure');
 }
@@ -1084,6 +1195,13 @@ function renderReviewSummary() {
 
 function submitGenerateTcle() {
   generateOfficialDocument();
+  try {
+    const compat = getCompatiblePrescriptionPreset();
+    const hubLabel = document.getElementById('hub-rx-suggest-label');
+    if (hubLabel) {
+      hubLabel.textContent = `Sugerido: ${compat.reason}`;
+    }
+  } catch (e) {}
   showScreen('screen-tcle');
 }
 
@@ -1404,17 +1522,66 @@ function generateOfficialDocument() {
 }
 
 // ==========================================================================
-// Módulo Sequencial 1: "Deseja Gerar Atestado?"
+// Módulo Sequencial 1: Atestado (Afastamento ou Comparecimento)
 // ==========================================================================
-function openAtestadoModule() {
-  document.getElementById('post-modal-atestado').style.display = 'block';
-  setDaysAtestado(state.certificate.days);
-  document.getElementById('post-modal-atestado').scrollIntoView({ behavior: 'smooth' });
+function openAtestadoModule(type = 'afastamento') {
+  const modal = document.getElementById('post-modal-atestado');
+  if (!modal) return;
+  modal.style.display = 'block';
+  switchAtestadoType(type);
+  modal.scrollIntoView({ behavior: 'smooth' });
+}
+
+function closeAtestadoModal() {
+  const modal = document.getElementById('post-modal-atestado');
+  if (modal) modal.style.display = 'none';
 }
 
 function skipAtestadoModule() {
-  document.getElementById('post-modal-atestado').style.display = 'none';
-  openPrescriptionModule();
+  closeAtestadoModal();
+  openPrescriptionAuto();
+}
+
+function switchAtestadoType(type) {
+  state.certificate.type = type;
+
+  const btnAfast = document.getElementById('btn-atestado-afastamento');
+  const btnComp = document.getElementById('btn-atestado-comparecimento');
+  const ctrlAfast = document.getElementById('atestado-afastamento-controls');
+  const ctrlComp = document.getElementById('atestado-comparecimento-controls');
+  const iconEl = document.getElementById('atestado-icon-badge');
+  const titleEl = document.getElementById('atestado-modal-title');
+  const subEl = document.getElementById('atestado-modal-subtitle');
+
+  if (btnAfast) btnAfast.classList.toggle('active', type === 'afastamento');
+  if (btnComp) btnComp.classList.toggle('active', type === 'comparecimento');
+  if (ctrlAfast) ctrlAfast.style.display = type === 'afastamento' ? 'block' : 'none';
+  if (ctrlComp) ctrlComp.style.display = type === 'comparecimento' ? 'block' : 'none';
+
+  if (type === 'afastamento') {
+    if (iconEl) iconEl.textContent = '🩺';
+    if (titleEl) titleEl.textContent = 'Atestado de Afastamento / Repouso';
+    if (subEl) subEl.textContent = 'Justificativa pericial de repouso clínico e convalescença (em dias).';
+    setDaysAtestado(state.certificate.days || 2);
+  } else {
+    if (iconEl) iconEl.textContent = '🕒';
+    if (titleEl) titleEl.textContent = 'Atestado de Comparecimento';
+    if (subEl) subEl.textContent = 'Declaração formal com registro do horário de início e término da consulta.';
+    const startInput = document.getElementById('field-comp-start');
+    const endInput = document.getElementById('field-comp-end');
+    if (startInput && state.certificate.startTime) startInput.value = state.certificate.startTime;
+    if (endInput && state.certificate.endTime) endInput.value = state.certificate.endTime;
+  }
+
+  renderAtestadoSheet();
+}
+
+function updateComparecimentoTimes() {
+  const start = document.getElementById('field-comp-start')?.value || '09:00';
+  const end = document.getElementById('field-comp-end')?.value || '10:30';
+  state.certificate.startTime = start;
+  state.certificate.endTime = end;
+  renderAtestadoSheet();
 }
 
 function setDaysAtestado(days) {
@@ -1437,22 +1604,38 @@ function renderAtestadoSheet() {
 
   const d = state.dentist;
   const p = state.patient;
-  const days = state.certificate.days;
-  const daysStr = days === 1 ? '1 (um) dia' : `${days} (${extensoDias(days)}) dias`;
-  const cidText = state.certificate.includeCid 
-    ? ` — CID-10: <strong>${state.certificate.cidCode}</strong> (Autorizado expressamente pelo paciente - Resolução CFO 105/2010)` 
-    : '';
+  const isAfastamento = state.certificate.type !== 'comparecimento';
   const currentDate = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+  const procTitle = state.procedure.cfoData?.title || state.procedure.title || 'Procedimento Odontológico';
+
+  const cidText = state.certificate.includeCid 
+    ? ` — CID-10: <strong>${state.certificate.cidCode || 'K08.1'}</strong> (Autorizado expressamente pelo paciente - Resolução CFO 105/2010)` 
+    : '';
+
+  let titleDoc = '';
+  let bodyText = '';
+
+  if (isAfastamento) {
+    const days = state.certificate.days || 2;
+    const daysStr = days === 1 ? '1 (um) dia' : `${days} (${extensoDias(days)}) dias`;
+    titleDoc = 'Atestado Odontológico de Afastamento';
+    bodyText = `Atesto para os devidos fins de comprovação e justificativa legal que o(a) Sr(a). <strong>${escapeHtml(p.name)}</strong>, portador(a) do CPF nº <strong>${escapeHtml(p.cpf)}</strong>, foi submetido(a) nesta data ao procedimento de <strong>${escapeHtml(procTitle)}</strong> em meu consultório profissional, necessitando de <strong>${daysStr}</strong> de afastamento de suas atividades profissionais e habituais para repouso clínico e convalescença a partir desta data${cidText}.`;
+  } else {
+    titleDoc = 'Declaração Odontológica de Comparecimento';
+    const sTime = state.certificate.startTime || '09:00';
+    const eTime = state.certificate.endTime || '10:30';
+    bodyText = `Atesto para os devidos fins de comprovação que o(a) Sr(a). <strong>${escapeHtml(p.name)}</strong>, portador(a) do CPF nº <strong>${escapeHtml(p.cpf)}</strong>, compareceu a este consultório odontológico nesta data, tendo permanecido em consulta e atendimento odontológico especializado das <strong>${escapeHtml(sTime)}</strong> às <strong>${escapeHtml(eTime)}</strong> para a realização do procedimento de <strong>${escapeHtml(procTitle)}</strong>${cidText}.`;
+  }
 
   container.innerHTML = `
     <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:12px; padding:24px; color:#1d1d1f; font-size:13.5px; line-height:1.65; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
       <div style="text-align:center; border-bottom:1.5px solid #0071e3; padding-bottom:12px; margin-bottom:18px;">
-        <h3 style="font-size:16px; font-weight:800; color:#0071e3; text-transform:uppercase; margin:0;">Atestado Odontológico de Afastamento</h3>
+        <h3 style="font-size:16px; font-weight:800; color:#0071e3; text-transform:uppercase; margin:0;">${titleDoc}</h3>
         <p style="font-size:11.5px; color:#64748b; margin:2px 0 0 0;">Lei Federal nº 5.081/66, Art. 6º, III e Resolução CFO nº 105/2010</p>
       </div>
 
       <p style="text-align:justify; margin-bottom:18px;">
-        Atesto para os devidos fins de comprovação e justificativa legal que o(a) Sr(a). <strong>${escapeHtml(p.name)}</strong>, portador(a) do CPF nº <strong>${escapeHtml(p.cpf)}</strong>, foi submetido(a) nesta data a procedimento odontológico cirúrgico/reabilitador em meu consultório profissional, necessitando de <strong>${daysStr}</strong> de afastamento de suas atividades profissionais habituais para repouso e convalescença a partir desta data${cidText}.
+        ${bodyText}
       </p>
 
       <p style="font-size:12px; color:#64748b; margin-top:24px;">
@@ -1486,7 +1669,7 @@ function printAtestadoOnly() {
       </head>
       <body>
         ${content}
-        <script>window.onload = function() { window.print(); }<\/script>
+        <script>window.onload = function() { window.print(); }</script>
       </body>
     </html>
   `);
@@ -1499,12 +1682,104 @@ function extensoDias(n) {
 }
 
 // ==========================================================================
-// Módulo Sequencial 2: "Deseja Gerar uma Receita?"
+// Módulo Sequencial 2: Receituário Inteligente Compatível
 // ==========================================================================
+function getCompatiblePrescriptionPreset() {
+  // 1. Alergia a Penicilina
+  if (state.healthConditions.has('alergia_penicilina') || state.healthConditions.has('alergias')) {
+    return {
+      presetKey: 'alergico',
+      reason: 'Paciente alérgico a Penicilina (Azitromicina selecionada com segurança)'
+    };
+  }
+
+  const procId = state.procedure.id || '';
+  const procTitle = (state.procedure.cfoData && state.procedure.cfoData.id === procId
+    ? state.procedure.cfoData.title
+    : (state.procedure.title || '')).toLowerCase();
+  const spec = (state.procedure.specialty || '').toLowerCase();
+
+  // 2. Procedimento Cirúrgico / Sisos / Implantes
+  if (
+    procId === 'implante' ||
+    procId === 'cirurgia_siso' ||
+    procTitle.includes('siso') ||
+    procTitle.includes('implante') ||
+    procTitle.includes('enxerto') ||
+    procTitle.includes('exodontia') ||
+    procTitle.includes('cirurg') ||
+    procTitle.includes('frenectomia') ||
+    procTitle.includes('apicectomia') ||
+    spec.includes('cirurgia') ||
+    spec.includes('implantodontia')
+  ) {
+    return {
+      presetKey: 'cirurgico',
+      reason: 'Procedimento Cirúrgico / Reabilitador (Antibioticoterapia + Anti-inflamatório)'
+    };
+  }
+
+  // 3. Canal / Endodontia / Dor Aguda
+  if (
+    procId === 'canal' ||
+    procTitle.includes('canal') ||
+    procTitle.includes('endodont') ||
+    procTitle.includes('pulpectomia') ||
+    procTitle.includes('abcesso') ||
+    procTitle.includes('dor aguda') ||
+    spec.includes('endodontia')
+  ) {
+    return {
+      presetKey: 'canal',
+      reason: 'Tratamento Endodôntico / Dor Aguda (Anti-inflamatório sublingual + Analgésico)'
+    };
+  }
+
+  // 4. HOF / Harmonização
+  if (
+    procId === 'harmonizacao' ||
+    procTitle.includes('harmoniza') ||
+    procTitle.includes('botox') ||
+    procTitle.includes('toxina') ||
+    procTitle.includes('preenchimento') ||
+    procTitle.includes('hialur') ||
+    procTitle.includes('fios') ||
+    spec.includes('harmonização')
+  ) {
+    return {
+      presetKey: 'hof',
+      reason: 'Harmonização Orofacial (HOF) — Analgesia que previne sangramentos + Arnica'
+    };
+  }
+
+  // 5. Procedimentos de Rotina / Conservadores
+  return {
+    presetKey: 'leve',
+    reason: 'Procedimento Conservador / Rotina (Analgesia simples para conforto)'
+  };
+}
+
+function openPrescriptionAuto() {
+  const modal = document.getElementById('post-modal-prescription');
+  if (!modal) return;
+
+  const compat = getCompatiblePrescriptionPreset();
+  selectRxPresetOption(compat.presetKey);
+
+  const reasonEl = document.getElementById('rx-compat-reason');
+  if (reasonEl) reasonEl.textContent = compat.reason;
+
+  modal.style.display = 'block';
+  modal.scrollIntoView({ behavior: 'smooth' });
+}
+
 function openPrescriptionModule() {
-  document.getElementById('post-modal-prescription').style.display = 'block';
-  selectRxPresetOption(state.prescription.presetId || 'cirurgico');
-  document.getElementById('post-modal-prescription').scrollIntoView({ behavior: 'smooth' });
+  openPrescriptionAuto();
+}
+
+function closePrescriptionModal() {
+  const modal = document.getElementById('post-modal-prescription');
+  if (modal) modal.style.display = 'none';
 }
 
 function selectRxPresetOption(presetKey) {
@@ -1585,11 +1860,55 @@ function printPrescriptionOnly() {
       </head>
       <body>
         ${content}
-        <script>window.onload = function() { window.print(); }<\/script>
+        <script>window.onload = function() { window.print(); }</script>
       </body>
     </html>
   `);
   w.document.close();
+}
+
+function finishAndConcludeService() {
+  closeAtestadoModal();
+  closePrescriptionModal();
+
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(29, 29, 31, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #ffffff;
+    padding: 16px 28px;
+    border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+    font-size: 14.5px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 999999;
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  `;
+  toast.innerHTML = `
+    <span style="font-size: 20px;">🎉</span>
+    <span>Atendimento de <strong>${escapeHtml(state.patient.name || 'Paciente')}</strong> concluído e arquivado com sucesso!</span>
+  `;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+  });
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
 }
 
 // ==========================================================================
@@ -1720,6 +2039,8 @@ function startNewService() {
     document.querySelectorAll('.condition-pill').forEach(p => p.classList.remove('active'));
     document.getElementById('cond-none')?.classList.add('active');
 
+    closeAtestadoModal();
+    closePrescriptionModal();
     renderLudicOdontogram();
     updateActiveExtendedTags();
     showScreen('screen-patient');
