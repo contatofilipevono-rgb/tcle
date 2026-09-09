@@ -791,6 +791,7 @@ function renderLudicOdontogram() {
   `;
 
   updateSelectedTeethSummary();
+  if (state.mobileArchFilter) setMobileArchFilter(state.mobileArchFilter);
 }
 
 function getToothKind(fdi) {
@@ -2082,4 +2083,31 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+
+// ==========================================================================
+// Filtro de Arcada para Mobile (Alternador Rápido Superior / Inferior)
+// ==========================================================================
+function setMobileArchFilter(arch) {
+  state.mobileArchFilter = arch;
+  const container = document.getElementById('ludic-teeth-board');
+  if (!container) return;
+  const strips = container.querySelectorAll('.arch-strip');
+  if (strips.length >= 2) {
+    if (arch === 'sup') {
+      strips[0].style.display = 'flex';
+      strips[1].style.display = 'none';
+    } else if (arch === 'inf') {
+      strips[0].style.display = 'none';
+      strips[1].style.display = 'flex';
+    } else {
+      strips[0].style.display = 'flex';
+      strips[1].style.display = 'flex';
+    }
+  }
+
+  document.querySelectorAll('.mobile-arch-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-arch') === arch);
+  });
 }

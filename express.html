@@ -6,6 +6,13 @@
   <title>DentalSafe Express — TCLE Rápido em 3 Passos</title>
   <meta name="description" content="Emissão ultra-rápida de TCLE Odontológico, Atestado e Receituário em 3 passos simples com design Apple HIG e Odontograma Lúdico.">
   <link rel="stylesheet" href="express.css">
+
+  <script>
+    if (typeof window !== 'undefined' && !window.__IS_TEST_ENV__) {
+      window.location.replace('express/' + window.location.search);
+    }
+  </script>
+
 </head>
 <body>
 

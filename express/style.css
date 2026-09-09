@@ -2344,3 +2344,66 @@ body.dark-mode .cfo-modal-box {
     page-break-after: always;
   }
 }
+
+
+/* ==========================================================================
+   Barra Seletora de Arcada Mobile
+   ========================================================================== */
+.mobile-arch-toggle-bar {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .mobile-arch-toggle-bar {
+    display: flex;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-pill);
+    padding: 3px;
+    gap: 3px;
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
+  body.dark-mode .mobile-arch-toggle-bar {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-arch-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 8px 6px;
+    border-radius: var(--radius-pill);
+    font-size: 11.5px;
+    font-weight: 650;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  .mobile-arch-btn.active {
+    background: #ffffff;
+    color: var(--apple-blue);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 750;
+  }
+
+  body.dark-mode .mobile-arch-btn.active {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+  }
+
+  /* Otimização de toque em todos os botões e inputs */
+  button, input, select, textarea, .friendly-tooth-btn, .condition-pill, .proc-card, .post-hub-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}

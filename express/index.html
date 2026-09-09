@@ -308,6 +308,14 @@
             </div>
           </div>
 
+          
+            <!-- Seletor de Arcada para Mobile (1 Toque) -->
+            <div class="mobile-arch-toggle-bar">
+              <button type="button" class="mobile-arch-btn active" data-arch="all" onclick="setMobileArchFilter('all')">👁️ Ambas</button>
+              <button type="button" class="mobile-arch-btn" data-arch="sup" onclick="setMobileArchFilter('sup')">🔼 Maxila (11-28)</button>
+              <button type="button" class="mobile-arch-btn" data-arch="inf" onclick="setMobileArchFilter('inf')">🔽 Mandíbula (31-48)</button>
+            </div>
+
           <div class="odonto-canvas-layout" id="ludic-teeth-board">
             <!-- Renderizado dinamicamente pelo express/app.js -->
           </div>
