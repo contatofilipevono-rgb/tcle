@@ -756,12 +756,11 @@ body.dark-mode .proc-card.selected {
 
 .odonto-bar-header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -1000,6 +999,22 @@ body.dark-mode .odonto-selection-summary {
   padding: 3px 10px;
   border-radius: var(--radius-pill);
   box-shadow: 0 2px 6px rgba(0, 113, 227, 0.3);
+}
+
+.btn-clear-teeth-link {
+  background: none;
+  border: none;
+  color: var(--apple-blue);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: var(--transition);
+}
+
+.btn-clear-teeth-link:hover {
+  background: rgba(0, 113, 227, 0.08);
 }
 
 /* ==========================================================================
@@ -2181,11 +2196,10 @@ body.dark-mode .cfo-cid-badge {
   }
 
   .odonto-bar-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    margin-bottom: 14px;
-    padding-bottom: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
   }
 
   .segmented-pill-control {
@@ -2198,18 +2212,6 @@ body.dark-mode .cfo-cid-badge {
     text-align: center;
     padding: 8px 6px;
     font-size: 12px;
-  }
-
-  .preset-pills-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .preset-chip {
-    padding: 6px 11px;
-    font-size: 11px;
   }
 
   .odonto-canvas-layout {

@@ -299,14 +299,6 @@
                 Decíduo (Dente de Leite)
               </button>
             </div>
-
-            <div class="preset-pills-row">
-              <button type="button" class="preset-chip" onclick="selectSingleTooth('11')">Dente 11</button>
-              <button type="button" class="preset-chip" onclick="presetSisos()">Todos os Sisos</button>
-              <button type="button" class="preset-chip" onclick="presetArch('sup')">Arcada Superior</button>
-              <button type="button" class="preset-chip" onclick="presetArch('inf')">Arcada Inferior</button>
-              <button type="button" class="preset-chip clear" onclick="clearTeethSelection()">Limpar</button>
-            </div>
           </div>
 
           
@@ -322,7 +314,10 @@
           </div>
 
           <div class="odonto-selection-summary">
-            <div><strong>Dentes Selecionados:</strong> (<span id="teeth-count-badge">0</span>)</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div><strong>Dentes Selecionados:</strong> (<span id="teeth-count-badge">0</span>)</div>
+              <button type="button" onclick="clearTeethSelection()" class="btn-clear-teeth-link" title="Limpar dentes selecionados">Limpar</button>
+            </div>
             <div class="teeth-tags-wrapper" id="selected-teeth-tags">
               <span style="color:var(--text-muted); font-size:12px;">Nenhum elemento selecionado.</span>
             </div>
