@@ -41,6 +41,10 @@ assert.ok(htmlContent.includes('id="post-modal-atestado"'), 'Modal Sequencial At
 assert.ok(htmlContent.includes('id="post-modal-prescription"'), 'Modal Sequencial Receita presente');
 assert.ok(htmlContent.includes('id="ludic-teeth-board"'), 'Tabuleiro Odontograma Lúdico presente');
 assert.ok(htmlContent.includes('id="touch-signature-canvas"'), 'Canvas Assinatura presente');
+assert.ok(htmlContent.includes('id="cfo-procedure-modal"'), 'Modal CFO presente');
+assert.ok(htmlContent.includes('id="search-cfo-input"'), 'Input de busca CFO presente');
+assert.ok(htmlContent.includes('id="cfo-specialty-filters"'), 'Filtros de especialidade CFO presentes');
+assert.ok(htmlContent.includes('id="cfo-procedures-list"'), 'Lista de procedimentos CFO presente');
 console.log('  ✓ Telas, modais e elementos visuais validados com sucesso.');
 
 // 3. Estilos no style.css
@@ -49,6 +53,8 @@ assert.ok(cssContent.includes('--apple-blue: #0071e3'), 'Apple Blue definido');
 assert.ok(cssContent.includes('.friendly-tooth-btn'), 'Estilo do dente lúdico presente');
 assert.ok(cssContent.includes('.tcle-paper-document'), 'Estilo do papel TCLE timbrado presente');
 assert.ok(cssContent.includes('@media print'), 'Regras de impressão A4 presentes');
+assert.ok(cssContent.includes('.cfo-modal-overlay.open'), 'Regra .cfo-modal-overlay.open presente no CSS');
+assert.ok(cssContent.includes('.cfo-proc-row'), 'Estilo de item do catálogo CFO presente');
 console.log('  ✓ Estilos Apple HIG e suporte à impressão validados.');
 
 // 4. Execução da Lógica em VM
@@ -353,7 +359,53 @@ vm.runInContext(`
     throw new Error('Falha ao carregar dados do paciente salvo com 1 clique');
   }
 
-  // 11. Finalização do Atendimento
+  // 11. Modal do Catálogo CFO / Outros Procedimentos e Busca
+  openCfoModal();
+  const cfoModal = document.getElementById('cfo-procedure-modal');
+  if (!cfoModal.classList.contains('open') || cfoModal.style.display !== 'flex') {
+    throw new Error('openCfoModal deveria abrir o modal e definir style.display = "flex"');
+  }
+  if (document.body.style.overflow !== 'hidden') {
+    throw new Error('openCfoModal deveria travar a rolagem de fundo');
+  }
+
+  // Busca de procedimentos no catálogo CFO
+  filterCfoProcedures('frenectomia');
+  const filteredHtml = document.getElementById('cfo-procedures-list').innerHTML;
+  if (!filteredHtml.includes('Frenectomia')) {
+    throw new Error('Busca por frenectomia falhou');
+  }
+
+  // Filtro por especialidade
+  filterCfoBySpecialty('Harmonização');
+  const hofHtml = document.getElementById('cfo-procedures-list').innerHTML;
+  if (!hofHtml.includes('Harmonização') && !hofHtml.includes('Botulínica')) {
+    throw new Error('Filtro por especialidade falhou');
+  }
+
+  // Seleção de procedimento do CFO
+  selectCfoProcedure('cfo-frenectomia');
+  if (cfoModal.classList.contains('open') || cfoModal.style.display !== 'none') {
+    throw new Error('selectCfoProcedure deveria fechar o modal');
+  }
+  if (state.procedure.id !== 'cfo-frenectomia' || !state.procedure.cfoData) {
+    throw new Error('selectCfoProcedure deveria atualizar state.procedure');
+  }
+  if (document.getElementById('cfo-selected-notice').style.display !== 'block') {
+    throw new Error('Aviso visual #cfo-selected-notice não foi exibido');
+  }
+
+  // Fechamento e restauração do body scroll
+  openCfoModal();
+  closeCfoModal();
+  if (document.body.style.overflow !== '') {
+    throw new Error('closeCfoModal deveria restaurar o body scroll');
+  }
+
+  // Acesso rápido à busca de condições
+  focusExtendedConditionsSearch();
+
+  // 12. Finalização do Atendimento
   finishAndConcludeService();
 `, sandbox);
 
@@ -365,6 +417,7 @@ console.log('  ✓ Modal sequencial de Atestado Odontológico (X dias) validado.
 console.log('  ✓ Atestado de Comparecimento (com horários de início e término) validado.');
 console.log('  ✓ Protocolo de Prescrição Inteligente com Compatibilidade Automática validado.');
 console.log('  ✓ Cadastro e Seleção Rápida de Pacientes em 1 clique validado.');
+console.log('  ✓ Modal do Catálogo CFO / Outros Procedimentos com Busca e Filtros validado com sucesso.');
 console.log('  ✓ Finalização e Conclusão de Atendimento validada.');
 
 console.log('\n============================================================');

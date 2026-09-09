@@ -1696,7 +1696,7 @@ body.dark-mode .post-step-modal {
 }
 
 /* ==========================================================================
-   Modal do Catálogo CFO / Outros Procedimentos
+   MODAL DO CATÁLOGO COMPLETO CFO / VRPO / TUSS (Lista com Busca & Filtros)
    ========================================================================== */
 .cfo-modal-overlay {
   position: fixed;
@@ -1704,12 +1704,16 @@ body.dark-mode .post-step-modal {
   background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  z-index: 2000;
+  z-index: 99999;
   display: none;
   align-items: center;
   justify-content: center;
   padding: 20px;
   animation: fadeInModal 0.2s ease-out;
+}
+
+.cfo-modal-overlay.open {
+  display: flex !important;
 }
 
 @keyframes fadeInModal {
@@ -1740,19 +1744,36 @@ body.dark-mode .cfo-modal-box {
   to { transform: scale(1); opacity: 1; }
 }
 
+.ios-sheet-handle {
+  display: none;
+  width: 40px;
+  height: 5px;
+  background: rgba(120, 120, 128, 0.35);
+  border-radius: 3px;
+  margin: 10px auto 4px;
+}
+
+body.dark-mode .ios-sheet-handle {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .cfo-modal-header {
-  padding: 20px 24px;
+  padding: 18px 24px;
   border-bottom: 1px solid var(--border-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: var(--bg-card);
 }
 
 .cfo-modal-header h3 {
-  font-size: 17px;
+  font-size: 16.5px;
   font-weight: 750;
   color: var(--text-main);
   letter-spacing: -0.015em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-close-modal {
@@ -1770,40 +1791,66 @@ body.dark-mode .cfo-modal-box {
   transition: var(--transition);
 }
 
+body.dark-mode .btn-close-modal {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
 .btn-close-modal:hover {
   background: #ff3b30;
   color: #ffffff;
 }
 
 .cfo-search-toolbar {
-  padding: 16px 24px;
+  padding: 16px 24px 14px;
   border-bottom: 1px solid var(--border-light);
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .cfo-specialties-chips {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
 }
 
+.cfo-specialties-chips::-webkit-scrollbar {
+  height: 4px;
+}
+
+.cfo-specialties-chips::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.spec-chip-btn,
 .cfo-spec-filter-chip {
   background: var(--bg-subtle);
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
-  padding: 5px 12px;
-  font-size: 11px;
+  padding: 6px 14px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-sub);
   cursor: pointer;
   transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
+.spec-chip-btn:hover,
+.spec-chip-btn.active,
 .cfo-spec-filter-chip:hover,
 .cfo-spec-filter-chip.active {
   background: var(--apple-blue);
   color: #fff;
   border-color: var(--apple-blue);
+  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.28);
 }
 
 .cfo-modal-body {
@@ -1812,40 +1859,153 @@ body.dark-mode .cfo-modal-box {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-height: 240px;
+  flex: 1;
 }
 
+.cfo-proc-row,
 .cfo-proc-item {
-  background: var(--bg-input);
+  background: var(--bg-card);
   border: 1.5px solid var(--border);
   border-radius: 16px;
   padding: 14px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 14px;
   cursor: pointer;
   transition: var(--transition-spring);
 }
 
+body.dark-mode .cfo-proc-row,
+body.dark-mode .cfo-proc-item {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.cfo-proc-row:hover,
 .cfo-proc-item:hover {
   border-color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.04);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 113, 227, 0.12);
 }
 
+body.dark-mode .cfo-proc-row:hover,
+body.dark-mode .cfo-proc-item:hover {
+  background: rgba(10, 132, 255, 0.12);
+  border-color: var(--apple-blue);
+}
+
+.cfo-proc-row:active,
 .cfo-proc-item:active {
   transform: scale(0.985);
 }
 
+.cfo-proc-row.selected,
+.cfo-proc-item.selected {
+  border-color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.08);
+  box-shadow: 0 0 0 1px var(--apple-blue);
+}
+
+.cfo-proc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.cfo-proc-title,
 .cfo-proc-item strong {
   font-size: 13.5px;
+  font-weight: 700;
   color: var(--text-main);
+  line-height: 1.35;
   display: block;
 }
 
+.cfo-proc-meta,
 .cfo-proc-item span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
   font-size: 11.5px;
-  color: var(--text-muted);
+  color: var(--text-sub);
 }
+
+.cfo-spec-badge {
+  font-weight: 600;
+  color: var(--text-sub);
+}
+
+.cfo-cid-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  background: rgba(0, 113, 227, 0.1);
+  color: var(--apple-blue);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+body.dark-mode .cfo-cid-badge {
+  background: rgba(10, 132, 255, 0.22);
+  color: #64d2ff;
+}
+
+.cfo-desc-text {
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+
+.btn-select-cfo,
+.btn-pill-subtle {
+  background: var(--apple-blue-soft);
+  color: var(--apple-blue);
+  border: 1px solid rgba(0, 113, 227, 0.25);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-select-cfo:hover,
+.btn-select-cfo.btn-selected,
+.btn-pill-subtle:hover {
+  background: var(--apple-blue);
+  color: #fff;
+  border-color: var(--apple-blue);
+}
+
+.cfo-open-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.08);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.condition-pill.pill-more-conditions {
+  border-style: dashed;
+  border-color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.04);
+  color: var(--apple-blue);
+  font-weight: 600;
+}
+
 
 /* ==========================================================================
    Impressão Padrão A4
@@ -2261,13 +2421,23 @@ body.dark-mode .cfo-modal-box {
   }
 
   .cfo-modal-box {
-    max-height: 88vh;
+    max-height: 90vh;
     border-radius: 24px 24px 0 0;
     border-bottom: none;
+    animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes slideUpSheet {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .ios-sheet-handle {
+    display: block;
   }
 
   .cfo-modal-header {
-    padding: 16px 18px;
+    padding: 12px 18px 14px;
   }
 
   .cfo-modal-header h3 {
@@ -2279,7 +2449,24 @@ body.dark-mode .cfo-modal-box {
   }
 
   .cfo-modal-body {
-    padding: 12px 16px;
+    padding: 12px 16px 32px;
+    max-height: calc(90vh - 160px);
+  }
+
+  .cfo-proc-row,
+  .cfo-proc-item {
+    padding: 12px 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .cfo-proc-row .btn-select-cfo,
+  .cfo-proc-row .btn-pill-subtle,
+  .cfo-proc-item .btn-pill-subtle {
+    width: 100%;
+    text-align: center;
+    padding: 8px 12px;
   }
 }
 

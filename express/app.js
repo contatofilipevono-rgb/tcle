@@ -989,22 +989,33 @@ function updateActiveExtendedTags() {
 }
 
 // ==========================================================================
-// Modal do Catálogo Completo CFO / VRPO / TUSS
+// Modal do Catálogo Completo CFO / VRPO / TUSS (Lista com Busca & Filtros)
 // ==========================================================================
 let activeCfoSpecialty = 'Todas';
 
 function openCfoModal() {
   const modal = document.getElementById('cfo-procedure-modal');
   if (!modal) return;
+  modal.style.display = 'flex';
   modal.classList.add('open');
+  document.body.style.overflow = 'hidden'; // trava rolagem do fundo
   renderCfoSpecialties();
-  renderCfoProceduresList();
-  document.getElementById('search-cfo-input')?.focus();
+  renderCfoProceduresList(document.getElementById('search-cfo-input')?.value || '');
+  setTimeout(() => {
+    const input = document.getElementById('search-cfo-input');
+    if (input) {
+      input.focus();
+    }
+  }, 100);
 }
 
 function closeCfoModal() {
   const modal = document.getElementById('cfo-procedure-modal');
-  if (modal) modal.classList.remove('open');
+  if (modal) {
+    modal.classList.remove('open');
+    modal.style.display = 'none';
+    document.body.style.overflow = ''; // restaura rolagem
+  }
 }
 
 function renderCfoSpecialties() {
@@ -1038,29 +1049,41 @@ function renderCfoProceduresList(query = '') {
     const matchesSpec = activeCfoSpecialty === 'Todas' || item.specialty.toLowerCase().includes(activeCfoSpecialty.toLowerCase());
     if (!matchesSpec) return false;
     if (!q) return true;
-    return item.title.toLowerCase().includes(q) || item.specialty.toLowerCase().includes(q) || item.cid.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q);
+    return item.title.toLowerCase().includes(q) || 
+           item.specialty.toLowerCase().includes(q) || 
+           item.cid.toLowerCase().includes(q) || 
+           item.desc.toLowerCase().includes(q);
   });
 
   if (list.length === 0) {
-    container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted); font-size: 13px;">Nenhum procedimento odontológico encontrado no catálogo para os filtros selecionados.</div>';
+    container.innerHTML = `
+      <div style="padding: 36px 20px; text-align: center; color: var(--text-muted);">
+        <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Nenhum procedimento encontrado</div>
+        <div style="font-size: 12px;">Tente digitar outro termo de busca ou selecione a categoria "Todas".</div>
+      </div>
+    `;
     return;
   }
 
-  container.innerHTML = list.map(item => `
-    <div class="cfo-proc-row" onclick="selectCfoProcedure('${item.id}')">
-      <div class="cfo-proc-info">
-        <div class="cfo-proc-title">${item.title}</div>
-        <div class="cfo-proc-meta">
-          <span>🏷️ ${item.specialty}</span>
-          <span class="cfo-cid-badge">CID-10: ${item.cid}</span>
-          <span style="color:var(--text-muted);">• ${item.desc}</span>
+  container.innerHTML = list.map(item => {
+    const isSelected = state.procedure.cfoData && state.procedure.cfoData.id === item.id;
+    return `
+      <div class="cfo-proc-row ${isSelected ? 'selected' : ''}" onclick="selectCfoProcedure('${item.id}')">
+        <div class="cfo-proc-info">
+          <div class="cfo-proc-title">${item.title}</div>
+          <div class="cfo-proc-meta">
+            <span class="cfo-spec-badge">🏷️ ${item.specialty}</span>
+            <span class="cfo-cid-badge">CID-10: ${item.cid}</span>
+            <span class="cfo-desc-text">• ${item.desc}</span>
+          </div>
         </div>
+        <button type="button" class="btn-select-cfo ${isSelected ? 'btn-selected' : ''}">
+          ${isSelected ? '✓ Selecionado' : 'Selecionar'}
+        </button>
       </div>
-      <button type="button" class="btn-pill-subtle" style="font-size: 11.5px; padding: 4px 10px;">
-        Selecionar
-      </button>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 function selectCfoProcedure(cfoId) {
@@ -1073,12 +1096,12 @@ function selectCfoProcedure(cfoId) {
   state.procedure.cfoData = item;
   state.certificate.cidCode = item.cid;
 
-  // Desmarca os cards rápidos
+  // Desmarca os cards rápidos e marca o card CFO
   document.querySelectorAll('.proc-card').forEach(c => c.classList.remove('selected'));
   const cfoCard = document.querySelector('.proc-card[data-proc="cfo_catalog"]');
   if (cfoCard) cfoCard.classList.add('selected');
 
-  // Mostra a notificação visual na tela 2
+  // Mostra notificação visual proeminente na tela 2
   const notice = document.getElementById('cfo-selected-notice');
   const titleEl = document.getElementById('cfo-selected-title');
   const detailEl = document.getElementById('cfo-selected-details');
@@ -1088,8 +1111,30 @@ function selectCfoProcedure(cfoId) {
     notice.style.display = 'block';
   }
 
+  // Se campo custom estava aberto, fecha
+  const customWrap = document.getElementById('custom-proc-input-wrap');
+  if (customWrap) customWrap.style.display = 'none';
+
   closeCfoModal();
 }
+
+function focusExtendedConditionsSearch() {
+  const box = document.querySelector('.extended-conditions-box');
+  const input = document.getElementById('search-extended-conditions');
+  if (box && input) {
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => input.focus(), 250);
+  }
+}
+
+// Fechamento com tecla Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCfoModal();
+    closeCertificateModal();
+    closePrescriptionModal();
+  }
+});
 
 function submitProcedureScreen() {
   if (state.procedure.id === 'outro') {

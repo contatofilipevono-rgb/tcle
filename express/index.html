@@ -258,10 +258,11 @@
             <span class="card-desc">Frenectomia, apicectomia, biópsia e enucleação cística.</span>
           </div>
 
-          <div class="proc-card proc-card-cfo" data-proc="cfo_catalog" onclick="openCfoModal()">
+          <div class="proc-card proc-card-cfo" data-proc="cfo_catalog" onclick="openCfoModal()" title="Clique para abrir o catálogo completo com busca">
             <span class="card-icon">📂</span>
             <span class="card-title">Outros Procedimentos</span>
             <span class="card-desc">Tabela CFO / VRPO / TUSS com busca por especialidade.</span>
+            <span class="cfo-open-tag">🔍 Abrir Lista com Busca</span>
           </div>
         </div>
 
@@ -390,6 +391,9 @@
           </div>
           <div class="condition-pill" onclick="toggleCondition(this, 'expectativa_irreal')">
             <span>🎯 Limites Estéticos / Expectativa</span>
+          </div>
+          <div class="condition-pill pill-more-conditions" onclick="focusExtendedConditionsSearch()" title="Buscar na lista ampliada de doenças, alergias e fármacos">
+            <span>🔍 Outras Condições...</span>
           </div>
         </div>
 
@@ -698,6 +702,7 @@
   <!-- Modal CFO / Outros Procedimentos Odontológicos -->
   <div id="cfo-procedure-modal" class="cfo-modal-overlay" onclick="if(event.target === this) closeCfoModal()">
     <div class="cfo-modal-box">
+      <div class="ios-sheet-handle"></div>
       <div class="cfo-modal-header">
         <h3>📂 Catálogo de Procedimentos Odontológicos (CFO / VRPO / TUSS)</h3>
         <button type="button" class="btn-close-modal" onclick="closeCfoModal()" title="Fechar">✕</button>
