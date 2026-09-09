@@ -1988,6 +1988,8 @@ function clearSignature() {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+const clearTouchSignature = clearSignature;
+if (typeof window !== 'undefined') window.clearTouchSignature = clearSignature;
 
 // ==========================================================================
 // Ações Finais: Imprimir, WhatsApp, Copiar, Novo Atendimento
