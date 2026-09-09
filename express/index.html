@@ -2,7 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <title>DentalSafe Express — TCLE Odontológico em Poucos Cliques</title>
   <meta name="description" content="Versão simplificada, intuitiva e prática do DentalSafe com visual Apple clean, odontograma lúdico e atestado/receita rápidos.">
   <link rel="stylesheet" href="style.css">
@@ -40,15 +44,18 @@
     <nav class="stepper-nav print-hide" aria-label="Progresso do Atendimento">
       <div class="step-indicator active" data-step="1">
         <span class="step-bubble">1</span>
-        <span>Profissional & Paciente</span>
+        <span class="step-label-desktop">Profissional & Paciente</span>
+        <span class="step-label-mobile">Partes</span>
       </div>
       <div class="step-indicator" data-step="2">
         <span class="step-bubble">2</span>
-        <span>Procedimento & Dentes</span>
+        <span class="step-label-desktop">Procedimento & Dentes</span>
+        <span class="step-label-mobile">Dentes</span>
       </div>
       <div class="step-indicator" data-step="3">
         <span class="step-bubble">3</span>
-        <span>Revisar & Gerar</span>
+        <span class="step-label-desktop">Revisar & Gerar</span>
+        <span class="step-label-mobile">Gerar</span>
       </div>
     </nav>
 

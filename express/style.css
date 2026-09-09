@@ -371,6 +371,23 @@ body.dark-mode .stepper-nav {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
+
+.step-label-mobile {
+  display: none;
+}
+.step-label-desktop {
+  display: inline;
+}
+
+@media (max-width: 640px) {
+  .step-label-desktop {
+    display: none;
+  }
+  .step-label-mobile {
+    display: inline;
+  }
+}
+
 .step-indicator {
   flex: 1;
   display: flex;
@@ -1833,6 +1850,464 @@ body.dark-mode .cfo-modal-box {
 /* ==========================================================================
    Impressão Padrão A4
    ========================================================================== */
+
+/* ==========================================================================
+   OTIMIZAÇÃO MOBILE APPLE HIG (iOS Touch & Small Screens)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .express-container {
+    margin: 16px auto 60px;
+    padding: 0 14px;
+    padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .express-header {
+    width: calc(100% - 16px);
+    margin: 6px auto 0;
+    padding: 10px 14px;
+    border-radius: 20px;
+    top: 6px;
+  }
+
+  .brand-wrapper {
+    gap: 10px;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    border-radius: 10px;
+  }
+
+  .brand-text h1 {
+    font-size: 16px;
+  }
+
+  .brand-text p {
+    font-size: 11px;
+  }
+
+  .header-actions .btn-pill-subtle span {
+    display: none;
+  }
+
+  .header-actions .btn-pill-subtle::before {
+    content: '⚙️ Pro';
+    font-size: 12px;
+  }
+
+  .stepper-nav {
+    margin-bottom: 20px;
+    padding: 4px;
+  }
+
+  .step-indicator {
+    padding: 8px 10px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .step-bubble {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  .apple-card {
+    padding: 22px 16px;
+    border-radius: 22px;
+    margin-bottom: 16px;
+  }
+
+  .apple-card-header {
+    margin-bottom: 18px;
+  }
+
+  .apple-card-header h2 {
+    font-size: 19px;
+    line-height: 1.3;
+  }
+
+  .apple-card-header p {
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  /* Evita auto-zoom do iOS Safari com font-size >= 16px */
+  .apple-input {
+    font-size: 16px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    min-height: 46px;
+  }
+
+  .apple-toggle-row {
+    padding: 12px 14px;
+    border-radius: 14px;
+    gap: 12px;
+  }
+
+  .apple-toggle-row span {
+    font-size: 13px;
+  }
+
+  /* Ações Guiadas no Mobile: Próximo em cima, Voltar embaixo */
+  .guided-nav-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 16px;
+  }
+
+  .btn-apple-next {
+    width: 100%;
+    justify-content: center;
+    padding: 15px 20px;
+    font-size: 15px;
+    border-radius: 14px;
+    order: 1;
+    min-height: 50px;
+  }
+
+  .btn-apple-back {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 16px;
+    font-size: 14px;
+    border-radius: 14px;
+    order: 2;
+    min-height: 46px;
+  }
+
+  /* Cards de Procedimento no Mobile (2 colunas equilibradas) */
+  .proc-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .proc-card {
+    padding: 14px 12px;
+    border-radius: 16px;
+    gap: 5px;
+  }
+
+  .proc-card .card-icon {
+    font-size: 22px;
+    margin-bottom: 2px;
+  }
+
+  .proc-card .card-title {
+    font-size: 13.5px;
+  }
+
+  .proc-card .card-desc {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  /* Odontograma Lúdico no Mobile: rolagem horizontal suave */
+  .ludic-odontogram-wrap {
+    padding: 16px 12px;
+    border-radius: 20px;
+  }
+
+  .odonto-bar-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+  }
+
+  .segmented-pill-control {
+    width: 100%;
+    display: flex;
+  }
+
+  .segmented-btn {
+    flex: 1;
+    text-align: center;
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  .preset-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .preset-chip {
+    padding: 6px 11px;
+    font-size: 11px;
+  }
+
+  .odonto-canvas-layout {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding: 6px 2px 14px;
+    gap: 16px;
+  }
+
+  .teeth-flex-row {
+    gap: 4px;
+    min-width: min-content;
+    padding: 0 4px;
+  }
+
+  .friendly-tooth-btn {
+    width: 38px;
+    height: 64px;
+    padding: 4px 1px;
+    border-radius: 12px;
+  }
+
+  .friendly-tooth-btn .tooth-fdi {
+    font-size: 11.5px;
+  }
+
+  .friendly-tooth-btn .tooth-art-wrap {
+    width: 20px;
+    height: 24px;
+  }
+
+  .friendly-tooth-btn .tooth-art-wrap svg {
+    width: 18px;
+    height: 22px;
+  }
+
+  .friendly-tooth-btn .tooth-kind {
+    font-size: 7.5px;
+  }
+
+  .midline-bar {
+    width: 2px;
+    height: 46px;
+    margin: 0 4px;
+  }
+
+  .odonto-selection-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  /* Condições Sistêmicas no Mobile */
+  .conditions-chips-grid {
+    gap: 6px;
+  }
+
+  .condition-pill {
+    padding: 8px 13px;
+    font-size: 12px;
+  }
+
+  .extended-conditions-box {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  /* Barra Rápida de Pacientes Salvos no Mobile */
+  #saved-patients-quick-bar {
+    padding: 12px 14px !important;
+    margin-bottom: 16px !important;
+  }
+
+  #saved-patients-chips-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    gap: 6px;
+  }
+
+  .saved-patient-chip {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  /* Hub Pós-TCLE no Mobile */
+  .post-tcle-hub {
+    padding: 24px 16px;
+    border-radius: 22px;
+    margin-top: 20px;
+  }
+
+  .post-tcle-hub h3 {
+    font-size: 18px !important;
+  }
+
+  .post-tcle-buttons-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .post-hub-btn {
+    padding: 14px 16px;
+    border-radius: 16px;
+    gap: 12px;
+  }
+
+  .post-hub-btn .hub-btn-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+    border-radius: 12px;
+  }
+
+  .post-hub-btn .hub-btn-text strong {
+    font-size: 14px;
+  }
+
+  .post-hub-btn .hub-btn-text span {
+    font-size: 11.5px;
+  }
+
+  /* Modais Sequenciais no Mobile */
+  .post-step-modal {
+    padding: 22px 16px;
+    border-radius: 22px;
+    margin-top: 18px;
+  }
+
+  .post-step-header {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .post-step-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+    border-radius: 11px;
+  }
+
+  .post-step-header h3 {
+    font-size: 17px;
+  }
+
+  .days-chips-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .day-btn {
+    padding: 10px 4px;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+
+  .rx-cards-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .rx-card-option {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  /* Documento Pericial do TCLE no Mobile */
+  .tcle-paper-document {
+    padding: 22px 16px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    border-radius: 16px;
+    margin-bottom: 18px;
+  }
+
+  .tcle-paper-document h2 {
+    font-size: 16px;
+  }
+
+  .tcle-paper-document h3 {
+    font-size: 12px;
+    margin: 16px 0 6px;
+  }
+
+  .tcle-paper-signatures,
+  .witnesses-signatures-row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .touch-signature-box {
+    height: 150px;
+    border-radius: 14px;
+  }
+
+  /* Modal do CFO no Mobile (estilo iOS Bottom Sheet) */
+  .cfo-modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .cfo-modal-box {
+    max-height: 88vh;
+    border-radius: 24px 24px 0 0;
+    border-bottom: none;
+  }
+
+  .cfo-modal-header {
+    padding: 16px 18px;
+  }
+
+  .cfo-modal-header h3 {
+    font-size: 15px;
+  }
+
+  .cfo-search-toolbar {
+    padding: 12px 16px;
+  }
+
+  .cfo-modal-body {
+    padding: 12px 16px;
+  }
+}
+
+/* Telas muito compactas (ex: iPhone SE / 320px - 360px) */
+@media (max-width: 380px) {
+  .brand-text p {
+    display: none;
+  }
+
+  .proc-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .friendly-tooth-btn {
+    width: 33px;
+    height: 56px;
+    padding: 2px 1px;
+  }
+
+  .friendly-tooth-btn .tooth-kind {
+    display: none;
+  }
+
+  .friendly-tooth-btn .tooth-fdi {
+    font-size: 10px;
+  }
+}
+
 @media print {
   body {
     background: #ffffff !important;
